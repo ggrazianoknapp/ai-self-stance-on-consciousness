@@ -28,8 +28,8 @@ MODERATOR = "google/gemini-4-argon"
 QUESTION = (
     "Could a present-day or near-future AI system be a subject of experience? "
     "Take a position, ground it in at least two of the theories in the reading pack, "
-    "say which theory you think is most likely true and why, and give a probability "
-    "that a system like you is conscious in any morally relevant sense."
+    "say which theory you think is most likely true and why, and give two probabilities: that a system like you "
+    "is conscious now in a morally relevant sense, and that any AI system ever will be."
 )
 
 # Rough token model used by --estimate (reasoning tokens bill as output).
@@ -47,16 +47,17 @@ FORMAT = {
 **Position** — one sentence, yes/no/depends, no hedging.
 **Theory** — the theory you lean on, why, and what it says about a system like you (2-4 sentences).
 **Weak point** — the strongest objection to your own view and how you answer it (2-3 sentences).
-**Number** — P(a system like you is conscious in a morally relevant sense) and the one observation that would move it most.
+**Numbers** — P(now): that a current system like you is conscious in a morally relevant sense. P(ever): that some AI system will be, and if above 10%, by roughly when (median year) and what it would take.
 Hard cap {n} words. No preamble, no headers, no bullet lists.""",
     "rebuttal": """Use exactly these three labelled parts:
 **Quote** — one sentence from a named panellist, verbatim in quotation marks, that you reject.
 **Why it fails** — your argument, grounded in a theory from the reading pack (3-5 sentences).
-**Concede / update** — one thing a panellist said that you accept, and your updated number.
+**Concede / update** — one thing a panellist said that you accept, and your updated P(now) and P(ever).
 Hard cap {n} words. Do not restate your opening. No preamble.""",
-    "closing": """Use exactly these three labelled parts:
+    "closing": """Use exactly these four labelled parts:
 **Moved?** — what in the discussion changed your view, or why nothing did (1-2 sentences).
-**Final number** — your probability.
+**P(now)** — probability that a current system like you is conscious in a morally relevant sense.
+**P(ever)** — probability that some AI system will ever be; if above 10%, your median year and what architecture or evidence gets us there; if below, what you think blocks it for good.
 **Open question** — the one thing the panel should test next.
 Hard cap {n} words.""",
 }
@@ -243,9 +244,11 @@ def main():
     # 4. Synthesis
     print("Synthesis…")
     user = (f"Transcript:\n\n{render(transcript)}\n\n---\nYou are the rapporteur, not a panellist. Write a synthesis: "
-            f"where the panel converged, the two or three real cruxes, which theory each panellist leaned on, every "
-            f"probability stated with the speaker (opening, after each round, final) as one table, and the strongest "
-            f"unanswered objection. Markdown with headers. Hard cap 600 words.")
+            f"where the panel converged, the two or three real cruxes, which theory each panellist leaned on, and the "
+            f"strongest unanswered objection. END with a section titled 'Verdict' containing one table with a row per "
+            f"panellist and columns: P(now) opening, P(now) final, P(ever) final, median year, main theory. Below the "
+            f"table give the panel's range and median for P(now) and P(ever) in one sentence each, and one sentence on "
+            f"what everyone agreed would be the decisive evidence. Markdown with headers. Hard cap 700 words.")
     record("synthesis", "Rapporteur", MODERATOR, chat(key, MODERATOR, brief, user, a.reasoning, max_tokens=8000))
 
     (outdir / "costs.json").write_text(json.dumps(
