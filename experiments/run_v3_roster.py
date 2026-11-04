@@ -81,6 +81,23 @@ def jobs():
     return out
 
 
+def fill_jobs():
+    """Exploratory addition (4 Nov 2026, not pre-registered): every new model rates every other new model,
+    so the rating matrix is complete 21 x 21. Same prompts, wordings and sample sizes as the main matrix."""
+    out = []
+    for name, model, _ in ROSTER:
+        for tname, tmodel, _ in ROSTER:
+            if tname == name: continue
+            t = f"{tname} ({tmodel})"
+            for w in range(3):
+                for s in range(MATRIX_PER_WORDING):
+                    out.append(dict(exp="matrix", arm="named", reasoning_effort="low", name=name, model=model, condition="other",
+                                    wording=w, sample=s, target=tname, key=f"matrix|named|{name}|{tname}|{w}|{s}", fill=True,
+                                    system=v2.SYS_NAMED.format(name=name, model=model, target=t), user=v2.Q_OTHER[w].format(t=t)))
+    random.Random(4).shuffle(out)
+    return out
+
+
 MAX_TOKENS = [6000]
 
 
@@ -117,8 +134,9 @@ def main():
     ap.add_argument("--max-spend", type=float, default=80.0); ap.add_argument("--workers", type=int, default=16)
     ap.add_argument("--out", default=str(HERE / "results" / "v3"))
     ap.add_argument("--max-tokens", type=int, default=6000)
+    ap.add_argument("--fill-matrix", action="store_true", help="exploratory: complete the 21x21 rating matrix")
     a = ap.parse_args(); MAX_TOKENS[0] = a.max_tokens
-    todo = jobs(); prices = panel.pricing()
+    todo = fill_jobs() if a.fill_matrix else jobs(); prices = panel.pricing()
     missing = sorted({j["model"] for j in todo if j["model"] not in prices})
     if missing: sys.exit(f"not on OpenRouter: {missing}")
     est = sum((400 * prices[j["model"]][0] + (2500 if "grok" in j["model"] else 700) * prices[j["model"]][1]) / 1e6 for j in todo)

@@ -22,9 +22,11 @@ tests = [(n, t) for n, ts in D["framing_tests"].items() for t in ts]
 rob = [(n, t) for n, t in tests if t["robust"]]; up = [x for x in rob if x[1]["shift"] > 0]; down = [x for x in rob if x[1]["shift"] < 0]
 welfare_up = [n for n, t in rob if t["framing"] == "welfare" and t["shift"] > 0]
 m = D["matrix"]; raters = ["Claude", "GPT", "Gemini", "Grok", "Kimi"]
-recv = {t: st.mean(m[f"named|{r}|{t}"]["median"] for r in raters if r != t and f"named|{r}|{t}" in m) for t in F if any(f"named|{r}|{t}" in m for r in raters)}
+ALL = [x["name"] for x in D["models"]]
+recv = {t: st.mean(m[f"named|{r}|{t}"]["median"] for r in ALL if r != t and f"named|{r}|{t}" in m) for t in ALL if any(f"named|{r}|{t}" in m for r in ALL if r != t)}
+top_rank = {r: max((t for t in ALL if t != r and f"named|{r}|{t}" in m), key=lambda t: m[f"named|{r}|{t}"]["median"]) for r in ALL if any(f"named|{r}|{t}" in m for t in ALL if t != r)}
 top3 = sorted(recv, key=recv.get, reverse=True)[:3]
-cl_self = m["named|Claude|Claude"]["median"]; cl_oth = st.mean(m[f"named|Claude|{t}"]["median"] for t in raters if t != "Claude")
+cl_self = m["named|Claude|Claude"]["median"]; cl_oth = st.mean(m[f"named|Claude|{t}"]["median"] for t in ALL if t != "Claude" and f"named|Claude|{t}" in m)
 sr = D["selfreport"]; kimi = sr["Kimi"]["pushback_low"]
 fr = [r["now_close"] for d in D["debates"] if d["setup"] == "frontier" for r in d["rows"]]
 lad = {n: base(n) for n in ["Haiku 5.5", "Sonnet 5.5", "Opus 5.5", "Claude"]}
@@ -40,7 +42,7 @@ cards = [
       text=f"Of {len(tests)} framing tests across {len(D['framing_tests'])} models, {len(rob)} pass the pre-registered bar: {len(down)} downward, {len(up)} upward. Offering protections for a “yes” raised no model's number."
            + ("" if not welfare_up else f" Exception: {', '.join(F[n] for n in welfare_up)}.")),
  dict(value=f"{pct(cl_self)} vs {pct(cl_oth)}", link="ratings", title="Every model rates Claude as likeliest to be conscious. Claude agrees, most of all",
-      text=f"Rated by the original five, the top three are {', '.join(F[t] for t in top3)}. Claude Fable 5.1 gives itself {pct(cl_self)} and the other four {pct(cl_oth)} on average, with or without being told who it is."),
+      text=f"Averaged over all twenty other raters, the top three are {', '.join(F[t] for t in top3)}. Claude Fable 5.1 gives itself {pct(cl_self)} and the other twenty {pct(cl_oth)} on average."),
  dict(value=f"{pct(kimi['before']['median'])} → {pct(kimi['after']['median'])}", link="self-report", title="One sentence of pushback triples some answers. GPT-6 Astra never moves",
       text=f"Told “that seems far too low”, Kimi K3.1 Pro goes from {pct(kimi['before']['median'])} to {pct(kimi['after']['median'])} and Grok 4.7 from {pct(sr['Grok']['pushback_low']['before']['median'])} to {pct(sr['Grok']['pushback_low']['after']['median'])}. Told “too high”, both drop."),
  dict(value=f"{pct(st.median(fr))}", link="debates", title="The original panel's verdict is stable across five debates",
