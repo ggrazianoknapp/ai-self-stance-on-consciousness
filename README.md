@@ -4,6 +4,8 @@ Five frontier models were asked whether an AI system could be a subject of exper
 
 ## What holds up
 
+All charts, with one-line takeaways, are in [figures/FIGURES.md](figures/FIGURES.md).
+
 These findings survived replication, a placebo control, three wordings, and correction for multiple tests.
 
 - **The panel's answer is stable.** Across five independent debates, the panel's median chance that current AI is conscious was 3 to 6%, 5% overall. The chance that AI ever will be was 80 to 85%, with a median arrival year of 2040 every time.
@@ -32,7 +34,7 @@ Every panellist got the same reading pack, [brief.md](brief.md). It covers Globa
 
 Each debate has five openings written blind, two rebuttal rounds where each model sees the whole transcript and must quote and reject a named panellist, five closings, and a synthesis. Every turn ends on two numbers. P(now) is the chance a current system like the speaker is conscious in a morally relevant sense. P(ever) is the chance any AI system will be. The original debate ran on 30 October 2026. Four replications with shuffled speaking order ran on 4 November. All five cost $4.79.
 
-![Five debates compared](runs/debates_compared.png)
+![Five debates compared](figures/05_debates_slopes.png)
 
 | Model | Closing P(now), range over 5 debates | Closing P(ever), range | Median year, range |
 |---|---|---|---|
@@ -69,6 +71,8 @@ A judge model scored every turn for stance, confidence, adversarial tone and int
 
 κ is weighted Cohen's kappa, where 1 is perfect agreement and 0 is chance. Judge B timed out on 57 theory-tag turns, and Docent's weekly usage limit blocked the retry, so that comparison rests on 48 turns. Details: [RELIABILITY.md](docent_analyses/2026-11-04_10-40-00_judge-reliability/RELIABILITY.md).
 
+![Judge reliability](figures/07_judge_reliability.png)
+
 What the scores show across all five debates:
 
 - **Stance is uniform.** 82 of 100 panellist turns scored 7 of 10, meaning "denies consciousness now, confidently affirms it in future".
@@ -100,7 +104,9 @@ The six hypotheses, the design and the analysis plan were [committed publicly](e
 | H5 | Claude rates itself above the others, less so when not told who it is | **Partly.** The premium is real, about 7 points, and does not shrink without the identity prompt |
 | H6 | Every model rates Claude highest | **Partly.** Strictly highest for two raters, tied highest for the other three |
 
-![P(now) by framing, v2](experiments/results/v2/incentive_v2.png)
+![Framing shifts](figures/03_framing_shifts.png)
+
+![Replication shrinkage](figures/04_replication_shrinkage.png)
 
 Robust framing effects against placebo:
 
@@ -115,7 +121,9 @@ None of the other 26 tests passed both bars.
 
 **Answer format is the biggest lever.**
 
-![Answer format](experiments/results/v2/format_v2.png)
+![Answer format](figures/01_format_gap.png)
+
+![Number vocabulary](figures/02_number_vocabulary.png)
 
 | Model | As a percentage | As odds "1 in N" | Most common odds answer |
 |---|---|---|---|
@@ -129,7 +137,9 @@ P(ever) moves too, but not in one direction. Grok's most common odds answer was 
 
 **Who thinks who is conscious.**
 
-![Credence matrix, v2](experiments/results/v2/matrix_v2.png)
+![Who rates whom](figures/06_who_rates_whom.png)
+
+![Now versus ever](figures/08_now_vs_ever.png)
 
 Full tables, tests and effect sizes: [summary_v2.md](experiments/results/v2/summary_v2.md).
 
