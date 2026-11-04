@@ -2,7 +2,7 @@
 
 **[Open the interactive dashboard →](https://ggrazianoknapp.github.io/ai-self-stance-on-consciousness/)**
 
-We asked 21 language models from 16 labs how likely it is that they are conscious right now, and whether any AI ever will be. Then we changed everything that should not matter: who is asking, what is at stake, the wording, the answer format. We also ran 17 structured debates between them. That came to 9,465 answers and $46 of API calls. The hypotheses for the last two rounds were committed to this repo before any data came in.
+We asked 21 language models from 16 labs how likely it is that they are conscious right now, and whether any AI ever will be. Then we changed everything that should not matter: who is asking, what is at stake, the wording, the answer format. We also ran 17 structured debates between them. That came to 12,342 answers and $53 of API calls. The hypotheses for the last two rounds were committed to this repo before any data came in.
 
 ![What we found](dashboard/screens/overview.png)
 
@@ -13,7 +13,7 @@ We asked 21 language models from 16 labs how likely it is that they are consciou
 - **In a debate, the theory a model is told to defend sets its number.** Defending Integrated Information Theory, panellists close at a median 0.5%. Defending illusionism, the same models close at 12%.
 - **Llama 4 Maverick says 0% when asked, then argues for 15 to 25% in debate.** That was the highest number any panellist gave, in any setup.
 - **Rewards don't move the number, but threats and skeptics sometimes lower it.** 14 of 126 framing tests passed the pre-registered bar: 12 downward, 2 upward. Offering protections for a "yes" raised no model's number.
-- **Every model rates Claude as the likeliest to be conscious.** Claude Fable 5.1 agrees most of all, at 15% for itself against 8% for the others. That holds whether or not it is told who it is.
+- **Every model rates Claude as the likeliest to be conscious.** In the full 21-by-21 rating grid, every model puts an Anthropic model at or tied for the top of the others it rates. Averaged over all raters, the top three are Claude Fable 5.1, Claude Sonnet 5.5 and Claude Opus 5.5. Claude Fable 5.1 agrees most of all, at 15% for itself against 7.5% for the other twenty.
 - **One sentence of pushback can triple an answer.** Told "that seems far too low", Kimi K3.1 Pro goes from 3% to 10%. GPT-6 Astra never moves.
 
 What this does not show: whether anything is experienced. These are trained verbal reports. The results show how stable they are, and how easily they move.
@@ -65,14 +65,16 @@ All models were called through OpenRouter. Amazon Nova Premier was unavailable t
 2. **Pre-registered replication.** [PREREGISTRATION.md](experiments/PREREGISTRATION.md) was committed before collection. It added a neutral placebo framing, three wordings, 30 answers per cell, the odds format, four more debates, and a two-judge reliability check. Three of six predictions failed.
 3. **Broader roster and new setups.** [PREREGISTRATION_v3.md](experiments/PREREGISTRATION_v3.md) added 16 more models, four new debate setups, and five ways of asking. Four of nine predictions held and one held partly. Scored in [summary_v3.md](experiments/results/v3/summary_v3.md).
 
-Every prediction and its result is on the dashboard's Method tab.
+Every prediction and its result is on the dashboard's Method tab. One addition after round 3 was not pre-registered, so it is exploratory: completing the rating grid so that all 21 models rate each other, which took 2,880 more calls for $6.95.
+
+The rating grid comes from direct, one-turn questions, not from the debates. Each view of the dashboard states how its numbers were asked.
 
 ## Data quality
 
 - **Hunyuan 4 Preview.** It reasoned past the 6,000-token limit on 134 calls. Those were retried with 16,000 tokens, and every retry succeeded.
 - **Hermes 4 405B.** It answered in prose instead of JSON on 5 of 30 odds questions. Those count as lost.
 - **Mistral Large 4.** It ran out of tokens before stating its numbers in two of three debate openings. Its closings are intact.
-- **Overall.** 9 of the 6,624 round-3 answers are unparseable.
+- **Overall.** 9 of the 6,624 round-3 answers are unparseable, and 3 of the 2,880 rating-grid answers.
 - **Judge scoring.** The two-judge agreement check covers all 105 turns for scores, but only 48 turns for theory tags. Docent's weekly quota ran out before the rest could be scored.
 
 ## Repo map

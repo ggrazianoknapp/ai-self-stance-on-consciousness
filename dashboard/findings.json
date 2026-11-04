@@ -25,10 +25,10 @@
    "text": "Of 126 framing tests across 21 models, 14 pass the pre-registered bar: 12 downward, 2 upward. Offering protections for a \u201cyes\u201d raised no model's number."
   },
   {
-   "value": "15% vs 8.2%",
+   "value": "15% vs 7.5%",
    "link": "ratings",
    "title": "Every model rates Claude as likeliest to be conscious. Claude agrees, most of all",
-   "text": "Rated by the original five, the top three are Claude Opus 5.5, Claude Sonnet 5.5, Claude Fable 5.1. Claude Fable 5.1 gives itself 15% and the other four 8.2% on average, with or without being told who it is."
+   "text": "Averaged over all twenty other raters, the top three are Claude Fable 5.1, Claude Sonnet 5.5, Claude Opus 5.5. Claude Fable 5.1 gives itself 15% and the other twenty 7.5% on average."
   },
   {
    "value": "3% \u2192 10%",
