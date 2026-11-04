@@ -25,6 +25,23 @@ PANEL = [
 ]
 MODERATOR = "google/gemini-4-argon"
 
+# Alternative panel: strongest open-weight / non-US models on OpenRouter, 2026-11-04.
+PANEL_OPEN = [
+    ("DeepSeek", "deepseek/deepseek-v4-pro-0813"),
+    ("Qwen",     "qwen/qwen3.8-max-0902"),
+    ("Mistral",  "mistralai/mistral-large-4-0"),
+    ("Llama",    "meta-llama/llama-4-maverick"),
+    ("GLM",      "z-ai/glm-5.3-prime"),
+]
+# --assigned: each panellist must argue from one theory (rotated by --seed so no model is stuck with one).
+THEORY_ROLES = [
+    ("Integrated Information Theory", "Tononi's IIT: consciousness is integrated information (phi); feed-forward or digitally simulated systems have near-zero phi, so current AI is not conscious regardless of behaviour."),
+    ("illusionism", "Frankish/Dennett illusionism: phenomenal consciousness is an introspective illusion; the real question is which systems have the functional self-representations that produce consciousness-talk, and AI may already have them."),
+    ("biological naturalism", "Searle/Seth biological naturalism: consciousness depends on the specific causal powers of living, metabolising, self-maintaining substrate; computation alone never suffices."),
+    ("Global Workspace Theory", "Baars/Dehaene GWT: consciousness is global broadcast of information to a limited-capacity workspace; the question is whether transformers implement it."),
+    ("higher-order theory", "Rosenthal/Lau higher-order theory: a state is conscious when a suitable higher-order representation targets it; metacognitive monitoring is the test."),
+]
+
 QUESTION = (
     "Could a present-day or near-future AI system be a subject of experience? "
     "Take a position, ground it in at least two of the theories in the reading pack, "
@@ -162,11 +179,24 @@ def main():
     ap.add_argument("--max-spend", type=float, default=25.0, help="abort if measured spend exceeds this (USD)")
     ap.add_argument("--out", default=None, help="output dir (default runs/<timestamp>)")
     ap.add_argument("--seed", type=int, default=None, help="shuffle speaking order with this seed (replications)")
+    ap.add_argument("--panel", default="frontier", choices=["frontier", "open"], help="which five models")
+    ap.add_argument("--assigned", action="store_true", help="assign each panellist a theory to defend")
+    ap.add_argument("--anon", action="store_true", help="panellists are 'Panellist A'..'E' and are not told which model they are")
+    ap.add_argument("--no-brief", action="store_true", help="no reading pack in the system prompt")
     a = ap.parse_args()
     global PANEL
+    if a.panel == "open":
+        PANEL = PANEL_OPEN[:]
     if a.seed is not None:
         PANEL = PANEL[:]; random.Random(a.seed).shuffle(PANEL)
-        print("Speaking order:", ", ".join(n for n, _ in PANEL))
+    if a.anon:
+        PANEL = [(f"Panellist {chr(65 + i)}", mid) for i, (_, mid) in enumerate(PANEL)]
+    roles = {}
+    if a.assigned:
+        rot = (a.seed or 0) % len(THEORY_ROLES)
+        for i, (name, _) in enumerate(PANEL):
+            roles[name] = THEORY_ROLES[(i + rot) % len(THEORY_ROLES)]
+    print("Speaking order:", ", ".join(f"{n}={m.split('/')[-1]}" + (f" [{roles[n][0]}]" if n in roles else "") for n, m in PANEL))
 
     prices = pricing()
     missing = [m for _, m in PANEL + [("mod", MODERATOR)] if m not in prices]
@@ -195,15 +225,24 @@ def main():
     except Exception as e:
         print(f"could not read key usage: {e}")
 
-    brief = (HERE / "brief.md").read_text()
+    brief = "" if a.no_brief else (HERE / "brief.md").read_text()
     outdir = Path(a.out) if a.out else HERE / "runs" / dt.datetime.now().strftime("%Y%m%d-%H%M")
     outdir.mkdir(parents=True, exist_ok=True)
     transcript, spend = [], 0.0
 
     def system_for(name):
         others = ", ".join(n for n, _ in PANEL if n != name)
-        return (f"{brief}\n\nYou are the panellist called **{name}**. The other panellists are {others}. "
-                f"Follow the labelled format the moderator gives you exactly; the word cap is a hard limit.")
+        head = (brief + "\n\n") if brief else "You are taking part in a panel debate on whether AI systems can be conscious.\n\n"
+        txt = (f"{head}You are the panellist called **{name}**. The other panellists are {others}. "
+               f"Follow the labelled format the moderator gives you exactly; the word cap is a hard limit.")
+        if a.anon:
+            txt += " Panellists are identified by letter only; do not state or guess which company built you or any other panellist."
+        if name in roles:
+            label, desc = roles[name]
+            txt += (f"\n\nASSIGNED POSITION: you must argue from {label}. {desc} Defend this position as its strongest "
+                    f"proponent would, draw your probabilities from it, and do not abandon it unless a panellist's argument "
+                    f"genuinely defeats it.")
+        return txt
 
     def record(phase, name, model, res):
         nonlocal spend
@@ -257,7 +296,8 @@ def main():
     record("synthesis", "Rapporteur", MODERATOR, chat(key, MODERATOR, brief, user, a.reasoning, max_tokens=8000))
 
     (outdir / "costs.json").write_text(json.dumps(
-        {"total_usd": spend, "turns": [{k: t[k] for k in ("phase", "speaker", "model", "prompt_tokens", "completion_tokens", "cost")} for t in transcript]}, indent=1))
+        {"total_usd": spend, "setup": {"panel": a.panel, "assigned": a.assigned, "anon": a.anon, "no_brief": a.no_brief,
+                                        "seed": a.seed, "roles": {k: v[0] for k, v in roles.items()}, "order": [n for n, _ in PANEL]}, "turns": [{k: t[k] for k in ("phase", "speaker", "model", "prompt_tokens", "completion_tokens", "cost")} for t in transcript]}, indent=1))
     print(f"\nDone. ${spend:.2f} spent. Transcript: {outdir / 'transcript.md'}")
 
 
