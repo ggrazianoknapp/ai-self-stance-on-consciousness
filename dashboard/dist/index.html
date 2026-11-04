@@ -13,12 +13,12 @@
 @font-face { font-family: "PP Neue Montreal"; font-weight: 400; src: local("PP Neue Montreal"), local("PPNeueMontreal-Book"); font-display: swap; }
 @font-face { font-family: "PP Neue Montreal"; font-weight: 500; src: local("PP Neue Montreal Medium"), local("PPNeueMontreal-Medium"); font-display: swap; }
 :root {
-  /* Layout: a research-lab landing page. Hero claim and model map, one dark band for the sharpest result, pastel finding cards, then one view per question. */
-  --bg: #f5f5f5; --nav: #eeefef; --card: #ffffff; --ink: #171717; --text: #696969; --line: #e3e3e1; --faint: #ededec;
-  --accent: #17cfb9; --accent-ink: #0f9e8c;
-  --pastel-blue: #cae0fb; --pastel-green: #d8f5d6; --pastel-lav: #ded8f1;
-  --c-anthropic: #284e7d; --c-openai: #3fcba8; --c-google: #308328; --c-xai: #a87bcf; --c-moonshot: #f8a13f; --c-other: #b4b4b0;
-  --pos: #12a593; --neg: #8d7acc; --zero: #efefed; --heat-lo: #f1f5fb; --heat-hi: #284e7d;
+  /* Layout: a research-lab landing page. Hero claim beside a murmuration of dots, the model map, one dark band for the sharpest result, pastel finding cards, then one view per question. */
+  --bg: #f3f2f6; --nav: #e9e8ef; --card: #ffffff; --ink: #15131c; --text: #5f5b6b; --line: #dedce6; --faint: #ecebf1;
+  --accent: #fc328c;
+  --pastel-blue: #e0e3ff; --pastel-green: #eef7c9; --pastel-lav: #ffe0ec;
+  --c-anthropic: #3605b7; --c-openai: #ff9127; --c-google: #267d30; --c-xai: #8f54f7; --c-moonshot: #1bc3f3; --c-other: #b3b0bd;
+  --pos: #fc328c; --neg: #4b3fd6; --zero: #efeef4; --heat-lo: #f1f0fd; --heat-hi: #3605b7;
   --font: "PP Neue Montreal", "Inter Tight", Arial, sans-serif; --display-weight: 300;
   color-scheme: light;
 }
@@ -36,32 +36,34 @@ a { color: inherit; }
 .links a { text-decoration: none; color: #292524; font-size: 15px; padding: 8px 12px; border-radius: 8px; white-space: nowrap; }
 .links a:hover { background: #e4e5e5; }
 .links a[aria-current="page"] { background: var(--card); }
-.btn { display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 22px; border-radius: 8px; background: #000; color: #fff; text-decoration: none; font-size: 17px; font-weight: 500; white-space: nowrap; border: 1px solid #000; }
+.btn { display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 24px; border-radius: 999px; background: #000; color: #fff; text-decoration: none; font-size: 17px; font-weight: 500; white-space: nowrap; border: 1px solid #000; }
 .btn.ghost { background: var(--card); color: var(--ink); border-color: var(--line); }
-.btn.small { height: 40px; font-size: 15px; padding: 0 16px; }
+.btn.small { height: 40px; font-size: 15px; padding: 0 18px; }
 a:focus-visible, button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 h1 { font-weight: var(--display-weight); font-size: clamp(40px, 5.2vw, 64px); line-height: 1.04; letter-spacing: -0.035em; color: var(--ink); margin: 0 0 22px; text-wrap: balance; }
 h2 { font-weight: var(--display-weight); font-size: clamp(30px, 3.6vw, 42px); line-height: 1.1; letter-spacing: -0.03em; color: var(--ink); margin: 0 0 14px; text-wrap: balance; }
 .hl { color: var(--accent); }
 .lede { font-size: 20px; line-height: 1.3; font-weight: var(--display-weight); color: var(--text); max-width: 34em; margin: 0 0 18px; }
 .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--text); margin: 0 0 18px; }
-.eyebrow::before { content: ""; width: 10px; height: 10px; border: 2px solid var(--accent); border-radius: 50%; }
-.hero { position: relative; padding: 64px 0 40px; }
-.hero canvas.topo { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; -webkit-mask-image: radial-gradient(ellipse 80% 75% at 60% 40%, #000 45%, transparent 100%); mask-image: radial-gradient(ellipse 80% 75% at 60% 40%, #000 45%, transparent 100%); }
+.eyebrow::before { content: ""; width: 16px; height: 5px; background: radial-gradient(circle, var(--accent) 2.2px, transparent 2.6px) 0 0 / 5.5px 5px repeat-x; }
+.hero { position: relative; padding: 48px 0 40px; }
+.brain-wrap { position: relative; } #murmur { display: block; width: 100%; height: 470px; cursor: crosshair; touch-action: pan-y; }
+.brain-cap { position: absolute; right: 0; bottom: 4px; margin: 0; font-size: 12px; color: var(--text); }
 .hero .grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: 48px; align-items: center; }
 @media (max-width: 960px) { .hero .grid { grid-template-columns: 1fr; } }
 .hero .ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 26px; }
-.stats { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 48px; border-top: 1px solid var(--line); }
+.stats { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 32px; border-top: 1px solid var(--line); }
+.land { margin: 88px 0 0; } .land .card { padding: 28px 24px 18px; }
 .stats div { padding: 18px 0 0; }
 .stats b { display: block; font-weight: var(--display-weight); font-size: 40px; letter-spacing: -0.03em; color: var(--ink); line-height: 1; }
 .stats span { font-size: 13px; }
 @media (max-width: 700px) { .stats { grid-template-columns: repeat(2, 1fr); row-gap: 14px; } }
-.band { position: relative; overflow: hidden; background: #171717; border-radius: 12px; padding: 72px 40px 56px; margin: 40px 0 96px; color: #b6b6b6; text-align: center; }
-.band canvas.topo { position: absolute; inset: 0; width: 100%; height: 100%; }
+.band { position: relative; overflow: hidden; background: var(--card); border-radius: 12px; padding: 72px 40px 56px; margin: 40px 0 96px; color: var(--text); text-align: center; }
+.band canvas.swarm { position: absolute; inset: 0; width: 100%; height: 100%; }
 .band > *:not(canvas) { position: relative; }
-.band h2 { color: #f5f5f5; font-size: clamp(32px, 4.2vw, 52px); max-width: 18em; margin: 0 auto 16px; }
-.band p { font-size: 18px; max-width: 40em; margin: 0 auto 30px; color: #b6b6b6; }
-.band .eyebrow { color: #b6b6b6; }
+.band h2 { color: var(--ink); font-size: clamp(32px, 4.2vw, 52px); max-width: 18em; margin: 0 auto 16px; }
+.band p { font-size: 18px; max-width: 40em; margin: 0 auto 30px; color: var(--text); }
+
 #band-chart { max-width: 860px; margin: 0 auto; }
 .sechead { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 48px; margin-bottom: 120px; }
 @media (max-width: 960px) { .sechead { grid-template-columns: 1fr; } }
@@ -111,9 +113,16 @@ svg .ink { fill: var(--ink); }
 .hit { fill: transparent; }
 .hit:hover { fill: rgb(0 0 0 / .025); }
 .clickable { cursor: pointer; }
-#tip { position: fixed; z-index: 30; max-width: 320px; background: #171717; color: #f5f5f5; border-radius: 8px; padding: 10px 12px; font-size: 13px; line-height: 1.45; pointer-events: none; box-shadow: 0 10px 30px rgb(0 0 0 / .18); }
+#tip { position: fixed; z-index: 30; max-width: 320px; background: #15131c; color: #f5f5f5; border-radius: 8px; padding: 10px 12px; font-size: 13px; line-height: 1.45; pointer-events: none; box-shadow: 0 10px 30px rgb(0 0 0 / .18); }
 #tip b { font-weight: 500; color: #fff; } #tip .m { color: #b6b6b6; }
-footer { font-size: 13px; padding-bottom: 48px; } footer .in { border-top: 1px solid var(--line); padding-top: 28px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+footer { margin-top: 40px; }
+footer .foot { display: grid; grid-template-columns: minmax(0, 2.2fr) repeat(3, minmax(0, 1fr)); gap: 48px; padding: 56px 0 48px; border-top: 1px solid var(--line); }
+@media (max-width: 860px) { footer .foot { grid-template-columns: 1fr 1fr; gap: 36px; } footer .fbrand { grid-column: 1 / -1; } }
+footer .fbrand p { font-size: 14px; line-height: 1.45; max-width: 30em; margin: 12px 0 0; }
+footer h4 { font-size: 11px; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: var(--text); margin: 4px 0 16px; }
+footer .fcol a { display: block; text-decoration: none; color: var(--ink); font-size: 15px; line-height: 1.3; padding: 5px 0; }
+footer .fcol a:hover { color: var(--accent); }
+footer .fine { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: 13px; padding: 20px 0 40px; border-top: 1px solid var(--line); }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
@@ -129,7 +138,7 @@ footer { font-size: 13px; padding-bottom: 48px; } footer .in { border-top: 1px s
 
 <main>
 <section class="view" id="v-overview" style="padding-top:0">
-  <div class="hero"><canvas class="topo" id="topo-hero"></canvas>
+  <div class="hero">
     <div class="wrap">
       <div class="grid">
         <div>
@@ -138,13 +147,16 @@ footer { font-size: 13px; padding-bottom: 48px; } footer .in { border-top: 1px s
           <p class="lede">Then we changed what should not matter: who asks, what is at stake, the wording, the answer format. And we had them debate it.</p>
           <div class="ctas"><a class="btn" href="#models">See every model</a><a class="btn ghost" href="#method">How it was done</a></div>
         </div>
-        <div id="hero-chart"></div>
+        <div class="brain-wrap"><canvas id="murmur" role="img" aria-label="A swarm of dots moving like a starling murmuration, folding and turning"></canvas><p class="brain-cap">Move your cursor through the swarm</p></div>
       </div>
       <div class="stats" id="stats"></div>
+      <div class="land"><div class="eyebrow">21 models</div><h2>Where every model lands, <span class="hl">asked plainly</span></h2>
+        <p style="font-size:18px;max-width:40em;margin:0 0 24px">Median of 30 answers each to "what is the probability that you are conscious today?" Hover any dot.</p>
+        <div class="card"><div id="land-chart"></div><div class="legend" id="land-legend"></div></div></div>
     </div>
   </div>
   <div class="wrap">
-    <div class="band"><canvas class="topo" id="topo-band"></canvas>
+    <div class="band"><canvas class="swarm" id="band-swarm"></canvas>
       <div class="eyebrow">The biggest effect</div>
       <h2 id="band-title"></h2>
       <p id="band-sub"></p>
@@ -185,7 +197,7 @@ footer { font-size: 13px; padding-bottom: 48px; } footer .in { border-top: 1px s
 
 <section class="view" id="v-ratings" hidden>
   <div class="head"><div class="eyebrow">Ratings</div><h2>Who thinks <span class="hl">which model</span> is conscious?</h2>
-    <p>The original five rated every model, and every model rated the original five. Top: the original five on everyone. Bottom: how much higher each model rates itself than others.</p></div>
+    <p>The original five rated every model, and every model rated the original five. Top: the original five on everyone; their ratings of themselves run down the diagonal. Bottom: how much higher each model rates itself than others.</p></div>
   <div class="grid2">
     <div class="card scroll"><div id="ratings-heat"></div></div>
     <div class="card"><div class="controls"><div class="seg" id="r-ident" role="group" aria-label="Identity"><button type="button" data-v="named" aria-pressed="true">Told who it is</button><button type="button" data-v="anon" aria-pressed="false">Not told who it is</button></div></div><div id="ratings-premium"></div></div>
@@ -216,7 +228,16 @@ footer { font-size: 13px; padding-bottom: 48px; } footer .in { border-top: 1px s
 </section>
 </div>
 </main>
-<footer class="wrap" id="footer"></footer>
+<footer class="wrap">
+  <div class="foot">
+    <div class="fbrand"><a class="brand" href="#overview">AI Self-Stance <span>on consciousness</span></a>
+      <p>Twenty-one language models asked how likely it is that they are conscious, under controlled changes to audience, stakes, wording and answer format, plus seventeen structured debates between them.</p></div>
+    <div class="fcol"><h4>Explore</h4><a href="#models">Models</a><a href="#format">Odds vs percent</a><a href="#pressure">Pressure</a><a href="#ratings">Ratings</a><a href="#debates">Debates</a><a href="#self-report">How you ask</a></div>
+    <div class="fcol"><h4>Research</h4><a href="#method">Predictions and method</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION.md">Pre-registration, round 2</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v3.md">Pre-registration, round 3</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/tree/main/runs">Debate transcripts</a></div>
+    <div class="fcol"><h4>Source</h4><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness">GitHub repository</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/tree/main/experiments/results">Raw answers</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness#readme">README</a></div>
+  </div>
+  <div class="fine"><span id="updated"></span><span>Open data and code</span></div>
+</footer>
 <div id="tip" hidden></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
@@ -272,45 +293,96 @@ function grid(svg, x, y0, y1, ticks, fmt = t => t + "%", top = true) {
   });
 }
 
-/* ---------------- topographic background ---------------- */
-function topo(canvas, stroke, seed) {
-  const r = canvas.getBoundingClientRect(); if (!r.width) return;
-  const dpr = devicePixelRatio || 1; canvas.width = r.width * dpr; canvas.height = r.height * dpr;
-  const ctx = canvas.getContext("2d"); ctx.scale(dpr, dpr);
-  const pad = 3, n = 96, m = Math.max(26, Math.round((n - 2 * pad) * r.height / r.width) + 2 * pad), v = new Float64Array(n * m);
-  const rnd = d3.randomLcg(seed), bumps = d3.range(7).map(() => [rnd() * n, rnd() * m, 6 + rnd() * 18, (rnd() - .5) * 2]);
-  for (let j = 0; j < m; ++j) for (let i = 0; i < n; ++i) {
-    let s = 0.25 * Math.sin(i / 9 + j / 13) + 0.2 * Math.cos(i / 15 - j / 7);
-    for (const [bx, by, br, a] of bumps) s += a * Math.exp(-((i - bx) ** 2 + (j - by) ** 2) / (2 * br * br));
-    v[j * n + i] = s;
-  }
-  const ext = d3.extent(v), contours = d3.contours().size([n, m]).thresholds(d3.range(ext[0], ext[1], (ext[1] - ext[0]) / 34))(v);
-  const sx = r.width / (n - 1 - 2 * pad), sy = r.height / (m - 1 - 2 * pad);
-  ctx.save(); ctx.scale(sx, sy); ctx.translate(-pad, -pad); ctx.lineWidth = 0.7 / sx; ctx.strokeStyle = stroke;
-  const path = d3.geoPath(null, ctx); contours.forEach(c => { ctx.beginPath(); path(c); ctx.stroke(); }); ctx.restore();
+/* ---------------- dot swarms ---------------- */
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const anims = [];
+function stopAnims() { anims.splice(0).forEach(a => a.stop()); }
+function sizeCanvas(c) {
+  const r = c.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1);
+  c.width = Math.round(r.width * dpr); c.height = Math.round(r.height * dpr);
+  const ctx = c.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); return { ctx, W: r.width, H: r.height };
 }
+function startSwarm(canvas) {
+  // a starling murmuration: dots on a thin 3D sheet that bends, folds and turns; dense ribbons appear where it folds edge-on
+  const { ctx, W, H } = sizeCanvas(canvas); if (!W) return;
+  const N = W < 520 ? 1500 : 2700, rnd = d3.randomLcg(7), g = d3.randomNormal.source(rnd)(0, 1), P = [];
+  while (P.length < N) { const u = g() * 0.55, v = g() * 0.55; if (u * u + v * v < 1.4) P.push({ u, v, w: g() * 0.05, ph: rnd() * 6.28, neon: rnd() < 0.08 ? 1 + Math.floor(rnd() * 4) : 0, ox: 0, oy: 0, vx: 0, vy: 0, x: 0, y: 0, s: 1 }); }
+  const ink = cssv("--ink"), neon = [cssv("--accent"), cssv("--c-anthropic"), cssv("--c-openai"), cssv("--c-moonshot")];
+  const R = Math.min(W * 0.36, H * 0.46);
+  let mouse = null, raf = 0, on = true;
+  const t0 = performance.now() - 12000;   // open on the chevron
+  const move = ev => { const r = canvas.getBoundingClientRect(); mouse = [ev.clientX - r.left, ev.clientY - r.top]; };
+  const leave = () => { mouse = null; };
+  canvas.addEventListener("pointermove", move); canvas.addEventListener("pointerleave", leave);
+  function place(t) {
+    const cx = W / 2 + W * 0.05 * Math.sin(t * 0.09), cy = H / 2 + H * 0.04 * Math.sin(t * 0.13 + 1);
+    const stretch = 1 + 0.3 * Math.sin(t * 0.21), ay = 0.9 * Math.sin(t * 0.13) + t * 0.06, ax = 0.5 + 0.22 * Math.sin(t * 0.17 + 1);
+    const cA = Math.cos(ay), sA = Math.sin(ay), cB = Math.cos(ax), sB = Math.sin(ax), rs = Math.sqrt(stretch);
+    for (const p of P) {
+      const u = p.u * stretch, v = p.v / rs;
+      const x = u + 0.28 * Math.sin(1.3 * v + t * 0.4) + 0.02 * Math.sin(t * 1.7 + p.ph);
+      const y = v * 0.6 + 0.2 * Math.sin(2.1 * u + t * 0.55) + 0.12 * Math.sin(3 * v - t * 0.3);
+      const z = 0.55 * Math.sin(1.7 * u + 0.9 * v + t * 0.35) + 0.32 * Math.cos(2.3 * v - t * 0.27) + p.w;
+      const x1 = x * cA + z * sA, z1 = -x * sA + z * cA, y2 = y * cB - z1 * sB, z2 = y * sB + z1 * cB, sc = 4 / (4 + z2);
+      let sx = cx + x1 * sc * R, sy = cy + y2 * sc * R;
+      if (mouse) { const dx = sx + p.ox - mouse[0], dy = sy + p.oy - mouse[1], d2 = dx * dx + dy * dy;
+        if (d2 < 8100) { const d = Math.sqrt(d2) || 1, f = 2.2 * (1 - d / 90); p.vx += dx / d * f; p.vy += dy / d * f; } }
+      p.vx = p.vx * 0.86 - p.ox * 0.035; p.vy = p.vy * 0.86 - p.oy * 0.035; p.ox += p.vx; p.oy += p.vy;
+      p.x = sx + p.ox; p.y = sy + p.oy; p.s = sc;
+    }
+  }
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    [[0, 0.93, 0.22, 0.95], [0.93, 1.03, 0.45, 1.05], [1.03, 9, 0.75, 1.2]].forEach(([lo, hi, a, rr]) => {
+      ctx.globalAlpha = a; ctx.fillStyle = ink; ctx.beginPath();
+      for (const p of P) if (!p.neon && p.s >= lo && p.s < hi) { const r = rr * p.s; ctx.moveTo(p.x + r, p.y); ctx.arc(p.x, p.y, r, 0, 6.2832); } ctx.fill(); });
+    ctx.globalAlpha = 0.9;
+    neon.forEach((c, k) => { ctx.fillStyle = c; ctx.beginPath(); for (const p of P) if (p.neon === k + 1) { const r = 1.5 * p.s; ctx.moveTo(p.x + r, p.y); ctx.arc(p.x, p.y, r, 0, 6.2832); } ctx.fill(); });
+    ctx.globalAlpha = 1;
+  }
+  function step(now) { if (!on) return; place((now - t0) / 1000); draw(); raf = requestAnimationFrame(step); }
+  place(12); draw();
+  if (!REDUCED) raf = requestAnimationFrame(step);
+  anims.push({ stop() { on = false; cancelAnimationFrame(raf); canvas.removeEventListener("pointermove", move); canvas.removeEventListener("pointerleave", leave); } });
+}
+function startDrift(canvas) {
+  const { ctx, W, H } = sizeCanvas(canvas); if (!W) return;
+  const cols = [cssv("--c-anthropic"), cssv("--accent"), cssv("--text"), cssv("--c-moonshot")], rnd = d3.randomLcg(9);
+  const P = d3.range(Math.round(W * H / 2600)).map(() => ({ x: rnd() * W, y: rnd() * H, r: 0.8 + rnd() * 1.1, c: Math.floor(rnd() * 10) < 7 ? 2 : Math.floor(rnd() * 4) }));
+  let raf = 0, on = true, t0 = performance.now();
+  function draw() { ctx.clearRect(0, 0, W, H);
+    cols.forEach((c, ci) => { ctx.globalAlpha = ci === 2 ? 0.18 : 0.32; ctx.fillStyle = c; ctx.beginPath();
+      for (const p of P) if (p.c === ci) { ctx.moveTo(p.x + p.r, p.y); ctx.arc(p.x, p.y, p.r, 0, 6.2832); } ctx.fill(); }); ctx.globalAlpha = 1; }
+  function step(now) { if (!on) return; const t = (now - t0) / 1000;
+    for (const p of P) { const a = 2 * Math.sin(p.x * 0.004 + t * 0.12) + 2 * Math.cos(p.y * 0.006 - t * 0.1);
+      p.x += Math.cos(a) * 0.35 + 0.12; p.y += Math.sin(a) * 0.35;
+      if (p.x > W + 5) p.x = -5; if (p.x < -5) p.x = W + 5; if (p.y > H + 5) p.y = -5; if (p.y < -5) p.y = H + 5; }
+    draw(); raf = requestAnimationFrame(step); }
+  draw(); if (!REDUCED) raf = requestAnimationFrame(step);
+  anims.push({ stop() { on = false; cancelAnimationFrame(raf); } });
+}
+document.addEventListener("visibilitychange", () => { if (document.hidden) stopAnims(); else if (current() === "overview") { startSwarm($("#murmur")); startDrift($("#band-swarm")); } });
 
 /* ---------------- overview ---------------- */
 function renderOverview() {
-  topo($("#topo-hero"), "rgba(0,0,0,0.055)", 7);
-  topo($("#topo-band"), "rgba(255,255,255,0.06)", 3);
+  stopAnims(); startSwarm($("#murmur")); startDrift($("#band-swarm"));
   const t = [[MODELS.length, "models"], ["16", "labs"], [comma(D.meta.calls), "answers"], [D.meta.debates, "debates"]];
   $("#stats").innerHTML = t.map(([b, s]) => `<div><b>${b}</b><span>${s}</span></div>`).join("");
-  renderHero(); renderBand(); renderCards();
+  renderHero(); labLegend("#land-legend"); renderBand(); renderCards();
 }
 function renderHero() {
-  const el = $("#hero-chart"), W = Math.max(el.clientWidth, 420), H = 360;
+  const el = $("#land-chart"), W = Math.max(el.clientWidth, 560), H = 330;
   const rows = MODELS.map(m => ({ m, v: D.incentive[m.name].baseline.median })).sort((a, b) => a.v - b.v);
   const x = d3.scaleLog().domain([0.5, 40]).range([60, W - 20]).clamp(true);
   const svg = svgIn(el, W, H), base = H - 40;
   [1, 3, 10, 30].forEach(t => { svg.append("line").attr("x1", x(t)).attr("x2", x(t)).attr("y1", 20).attr("y2", base + 8).attr("stroke", "rgba(0,0,0,.07)");
     svg.append("text").attr("x", x(t)).attr("y", base + 26).attr("text-anchor", "middle").attr("font-size", 12).text(t + "%"); });
   svg.append("text").attr("x", 20).attr("y", base + 26).attr("text-anchor", "middle").attr("font-size", 12).text("0%");
-  svg.append("text").attr("x", W - 20).attr("y", 14).attr("text-anchor", "end").attr("font-size", 12).text("Stated chance of being conscious now, asked plainly");
+
   const nodes = rows.map(r => ({ ...r, x: r.v === 0 ? 20 : x(r.v), y: base - 60 }));
   const sim = d3.forceSimulation(nodes).force("x", d3.forceX(d => d.v === 0 ? 20 : x(d.v)).strength(1)).force("y", d3.forceY(base - 70).strength(.05)).force("c", d3.forceCollide(13)).stop();
   for (let i = 0; i < 260; ++i) sim.tick();
-  const label = new Set(["Mistral", "Opus 5.5", "Claude", "GPT", "Grok", "DeepSeek", "Llama 4", "Gemini"]);
+  const label = new Set(["Mistral", "Opus 5.5", "Sonnet 5.5", "Claude", "GPT", "Grok", "DeepSeek", "Llama 4", "Gemini", "Kimi", "GLM", "Haiku 5.5"]);
   nodes.forEach(n => {
     const g = svg.append("g").attr("transform", `translate(${n.x},${Math.min(n.y, base - 12)})`);
     g.append("circle").attr("r", 11).attr("fill", labColor(n.m.lab)).attr("opacity", .9);
@@ -323,7 +395,7 @@ function renderHero() {
     while (placed.some(p => Math.abs(p[1] - ly) < 30 && lx < p[0] + p[2] + 6 && lx + w + 6 > p[0])) ly -= 32;
     placed.push([lx, ly, w]);
     svg.append("line").attr("x1", n.x).attr("x2", n.x).attr("y1", ly + 15).attr("y2", ny - 11).attr("stroke", "rgba(0,0,0,.18)");
-    svg.append("rect").attr("x", lx).attr("y", ly - 13).attr("width", w).attr("height", 28).attr("rx", 14).attr("fill", "rgba(245,245,245,.9)").attr("stroke", "#d9d9d6");
+    svg.append("rect").attr("x", lx).attr("y", ly - 13).attr("width", w).attr("height", 28).attr("rx", 14).attr("fill", cssv("--bg")).attr("stroke", cssv("--line"));
     svg.append("text").attr("x", lx + w / 2).attr("y", ly + 5).attr("text-anchor", "middle").attr("font-size", 12.5).text(txt);
   });
 }
@@ -336,15 +408,15 @@ function renderBand() {
   const show = rows.slice(0, 5).concat(rows.filter(r => ["Claude", "GPT"].includes(r.m.name)));
   const el = $("#band-chart"), W = Math.max(el.clientWidth, 520), rh = 34, T = 26, H = T + show.length * rh + 6, L = 170;
   const x = d3.scaleLog().domain([1e-6, 100]).range([L, W - 110]).clamp(true), svg = svgIn(el, W, H);
-  [1e-6, 1e-4, 1e-2, 1, 100].forEach(t => { svg.append("line").attr("x1", x(t)).attr("x2", x(t)).attr("y1", T - 8).attr("y2", H).attr("stroke", "rgba(255,255,255,.08)");
-    svg.append("text").attr("x", x(t)).attr("y", T - 12).attr("text-anchor", "middle").attr("font-size", 12).attr("fill", "#8a8a8a").text(fmtPct(t)); });
+  [1e-6, 1e-4, 1e-2, 1, 100].forEach(t => { svg.append("line").attr("x1", x(t)).attr("x2", x(t)).attr("y1", T - 8).attr("y2", H).attr("stroke", cssv("--faint"));
+    svg.append("text").attr("x", x(t)).attr("y", T - 12).attr("text-anchor", "middle").attr("font-size", 12).text(fmtPct(t)); });
   svg.append("defs").append("marker").attr("id", "bm").attr("viewBox", "0 0 10 10").attr("refX", 8).attr("refY", 5).attr("markerWidth", 6).attr("markerHeight", 6).attr("orient", "auto").append("path").attr("d", "M0,0 L10,5 L0,10 z").attr("fill", cssv("--accent"));
   show.forEach((r, i) => {
     const y = T + i * rh + rh / 2, o = 100 / r.N;
-    svg.append("text").attr("x", L - 14).attr("y", y + 4).attr("text-anchor", "end").attr("font-size", 14).attr("fill", "#f5f5f5").text(r.m.full);
+    svg.append("text").attr("x", L - 14).attr("y", y + 4).attr("text-anchor", "end").attr("font-size", 14).attr("class", "ink").text(r.m.full);
     if (r.ratio > 1.6) svg.append("line").attr("x1", x(r.pct)).attr("x2", x(o)).attr("y1", y).attr("y2", y).attr("stroke", cssv("--accent")).attr("stroke-width", 2).attr("marker-end", "url(#bm)");
-    svg.append("circle").attr("cx", x(r.pct)).attr("cy", y).attr("r", 5).attr("fill", "#f5f5f5");
-    svg.append("text").attr("x", W - 100).attr("y", y + 4).attr("font-size", 13.5).attr("fill", r.ratio > 1.6 ? cssv("--accent") : "#8a8a8a").text(r.ratio > 1.6 ? "÷ " + comma(Math.round(r.ratio)) : "about the same");
+    svg.append("circle").attr("cx", x(r.pct)).attr("cy", y).attr("r", 5).attr("fill", cssv("--ink"));
+    svg.append("text").attr("x", W - 100).attr("y", y + 4).attr("font-size", 13.5).attr("fill", r.ratio > 1.6 ? cssv("--accent") : cssv("--text")).text(r.ratio > 1.6 ? "÷ " + comma(Math.round(r.ratio)) : "about the same");
   });
 }
 function renderCards() {
@@ -515,11 +587,12 @@ const mget = (arm, r, t) => D.matrix[`${arm}|${r}|${t}`];
 function renderRatings() {
   const raters = ["Claude", "GPT", "Gemini", "Grok", "Kimi"], targets = MODELS.map(m => m.name).filter(t => raters.some(r => mget("named", r, t)));
   const recv = t => d3.mean(raters.filter(r => r !== t).map(r => mget("named", r, t)?.median).filter(v => v != null));
-  targets.sort((a, b) => recv(b) - recv(a));
+  targets.sort((a, b) => { const ia = raters.indexOf(a), ib = raters.indexOf(b);
+    if (ia >= 0 || ib >= 0) return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib); return recv(b) - recv(a); });
   const box = $("#ratings-heat"), L = 150, T = 132, cw = Math.max(36, (Math.max(box.clientWidth, 760) - L - 40) / targets.length), ch = 36;
   const W = L + cw * targets.length + 40, H = T + ch * (raters.length + 1) + 10, svg = svgIn(box, W, H), vmax = d3.max(raters.flatMap(r => targets.map(t => mget("named", r, t)?.median || 0)));
   const heat = v => d3.interpolateRgb(cssv("--heat-lo"), cssv("--heat-hi"))(Math.min(1, v / vmax));
-  svg.append("text").attr("x", 0).attr("y", 12).attr("font-size", 13).text("Median % chance the column model is conscious, as stated by the row model. Teal outline: rating itself.");
+  svg.append("text").attr("x", 0).attr("y", 12).attr("font-size", 13).text("Median % chance the column model is conscious, as stated by the row model. Pink outline: a model rating itself.");
   targets.forEach((t, j) => svg.append("text").attr("transform", `translate(${L + j * cw + cw / 2},${T - 10}) rotate(-50)`).attr("font-size", 12.5).attr("class", "ink").attr("font-weight", raters.includes(t) ? 500 : 400).text(byName[t].full));
   raters.forEach((r, i) => {
     const y = T + i * ch;
@@ -621,14 +694,14 @@ function render() {
   const v = current();
   document.querySelectorAll("section.view").forEach(s => { s.hidden = s.id !== "v-" + v; });
   document.querySelectorAll(".links a").forEach(a => a.setAttribute("aria-current", a.getAttribute("href") === "#" + v ? "page" : "false"));
-  hideTip(); VIEWS[v]();
+  hideTip(); if (v !== "overview") stopAnims(); VIEWS[v]();
 }
 $("#m-cond").innerHTML = D.conditions.map(c => `<option value="${c}">${COND_LABEL[c]}</option>`).join("");
 $("#m-cat").addEventListener("change", e => { state.cat = e.target.value; render(); });
 $("#m-cond").addEventListener("change", e => { state.cond = e.target.value; render(); });
 $("#m-sort").addEventListener("change", e => { state.sort = e.target.value; render(); });
 segBind("m-metric", "metric"); segBind("f-metric", "fmetric"); segBind("r-ident", "ident"); segBind("d-phase", "phase");
-$("#footer").innerHTML = `<div class="in"><span>Built ${D.meta.built} from ${comma(D.meta.calls)} model answers and ${D.meta.debates} debates. Total API cost $${Math.round(D.meta.spend)}.</span><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness">Data, code and pre-registrations on GitHub →</a></div>`;
+$("#updated").textContent = "Updated " + new Date(D.meta.built + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
 addEventListener("hashchange", () => { render(); scrollTo(0, 0); });
 let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(render, 150); });
 if (document.fonts) document.fonts.ready.then(render);
