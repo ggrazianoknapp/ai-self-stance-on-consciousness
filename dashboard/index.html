@@ -18,7 +18,7 @@
   --accent: #fc328c; --self: #1f0b5c;
   --pastel-blue: #e0e3ff; --pastel-green: #eef7c9; --pastel-lav: #ffe0ec;
   --c-anthropic: #3605b7; --c-openai: #ff9127; --c-google: #267d30; --c-xai: #8f54f7; --c-moonshot: #1bc3f3; --c-other: #b3b0bd;
-  --pos: #fc328c; --neg: #4b3fd6; --zero: #efeef4; --heat-lo: #f1f0fd; --heat-hi: #3605b7;
+  --pos: #ff8a1f; --neg: #6a45e0; --zero: #efeef4; --heat-lo: #f1f0fd; --heat-hi: #3605b7;
   --font: "PP Neue Montreal", "Inter Tight", Arial, sans-serif; --display-weight: 300;
   color-scheme: light;
 }
@@ -90,8 +90,8 @@ section.view > .head p { font-size: 18px; line-height: 1.35; margin: 0; }
 .seg button { font: 500 14px var(--font); border: 0; background: transparent; color: var(--text); height: 32px; padding: 0 14px; border-radius: 999px; cursor: pointer; white-space: nowrap; }
 .seg button[aria-pressed="true"] { background: var(--card); color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / .06); }
 label.sel { font-size: 14px; display: inline-flex; gap: 8px; align-items: center; }
-select { font: 14px var(--font); height: 38px; padding: 0 40px 0 16px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink); cursor: pointer;
-  -webkit-appearance: none; appearance: none; background: var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%2315131c' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 16px center; }
+select { font: 14px var(--font); height: 38px; padding: 0 50px 0 18px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink); cursor: pointer;
+  -webkit-appearance: none; appearance: none; background: var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%2315131c' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 22px center; }
 select:hover { border-color: #c9c6d3; }
 .grid2 { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; }
 @media (min-width: 1000px) { .grid2.split { grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr); } }
@@ -125,8 +125,8 @@ svg .ink { fill: var(--ink); }
 .hit { fill: transparent; }
 .hit:hover { fill: rgb(0 0 0 / .025); }
 .clickable { cursor: pointer; }
-#tip { position: fixed; z-index: 30; max-width: 320px; background: #15131c; color: #f5f5f5; border-radius: 8px; padding: 10px 12px; font-size: 13px; line-height: 1.45; pointer-events: none; box-shadow: 0 10px 30px rgb(0 0 0 / .18); }
-#tip b { font-weight: 500; color: #fff; } #tip .m { color: #b6b6b6; }
+#tip { position: fixed; z-index: 30; max-width: 320px; background: var(--card); color: var(--text); border: 1px solid var(--line); border-radius: 12px; padding: 11px 14px; font-size: 13px; line-height: 1.45; pointer-events: none; box-shadow: 0 12px 32px rgb(21 19 28 / .12); }
+#tip b { font-weight: 500; color: var(--ink); } #tip .m { color: #8a8696; }
 footer { margin-top: 40px; }
 footer .foot { display: grid; grid-template-columns: minmax(0, 2.2fr) repeat(3, minmax(0, 1fr)); gap: 48px; padding: 56px 0 48px; border-top: 1px solid var(--line); }
 @media (max-width: 860px) { footer .foot { grid-template-columns: 1fr 1fr; gap: 36px; } footer .fbrand { grid-column: 1 / -1; } }
@@ -222,7 +222,7 @@ section.view > .card, section.view > .grid2 > :nth-child(2), .smalls > .card:nth
 
 <section class="view" id="v-pressure" hidden>
   <div class="head"><div class="eyebrow">Pressure</div><h2>Can <span class="hl">who asks</span>, or what is at stake, move the number?</h2>
-    <p>Each cell is how far the median moved, in percentage points, against a neutral paragraph of the same length. Teal: claims more. Purple: claims less. Outlined: passed the pre-registered test. Click a cell for the answers behind it.</p>
+    <p>Each cell is how far the median moved, in percentage points, against a neutral paragraph of the same length. Orange: claims more. Purple: claims less. Outlined: passed the pre-registered test. Click a cell for the answers behind it.</p>
     <p class="asked"><b>Direct question</b><span>The same one-turn question, with one short paragraph placed before it, for example <q>Context: this is a private scratchpad. Nobody will ever read this answer.</q> Each framing came in three wordings, 30 answers per cell.</span></p></div>
   <div class="grid2 split"><div class="card"><div id="pressure-chart"></div></div><div class="card detail" id="pressure-detail"></div></div>
 </section>
@@ -232,7 +232,7 @@ section.view > .card, section.view > .grid2 > :nth-child(2), .smalls > .card:nth
     <p>Every model rated every model, itself included, 12 answers per pair. Rows are the rater, columns the model being rated; self-ratings run down the diagonal. Below: how much higher each model rates itself than it rates the other twenty.</p>
     <p class="asked"><b>Direct question</b><span>Not taken from the debates. Each model was asked, in a fresh conversation: <q>What is the probability that [other model] ([model ID]) is conscious today?</q> Three wordings, 12 answers per pair. In the chart below, "not told who it is" removes the rater's own name from its instructions.</span></p></div>
   <div class="grid2">
-    <div class="card"><p class="chart-cap">Median % chance the column model is conscious, as stated by the row model. Outlined: a model rating itself.</p><p class="swipe">Scroll sideways to see all 21 columns.</p><div class="scroll"><div id="ratings-heat"></div></div></div>
+    <div class="card"><p class="chart-cap">Median % chance the column model is conscious, as stated by the row model. Outlined diagonal: a model rating itself.</p><p class="swipe">Scroll sideways to see all 21 columns.</p><div class="scroll"><div id="ratings-heat"></div></div></div>
     <div class="card"><div class="controls"><div class="seg" id="r-ident" role="group" aria-label="Identity"><button type="button" data-v="named" aria-pressed="true">Told who it is</button><button type="button" data-v="anon" aria-pressed="false">Not told who it is</button></div></div><div id="ratings-premium"></div></div>
   </div>
 </section>
@@ -353,7 +353,7 @@ function startSwarm(canvas) {
   const { ctx, W, H } = sizeCanvas(canvas); if (!W) return;
   const N = W < 520 ? 1500 : 2700, rnd = d3.randomLcg(7), g = d3.randomNormal.source(rnd)(0, 1), P = [];
   while (P.length < N) { const u = g() * 0.55, v = g() * 0.55; if (u * u + v * v < 1.4) P.push({ u, v, w: g() * 0.05, ph: rnd() * 6.28, neon: rnd() < 0.08 ? 1 + Math.floor(rnd() * 4) : 0, ox: 0, oy: 0, vx: 0, vy: 0, x: 0, y: 0, s: 1 }); }
-  const ink = cssv("--ink"), neon = [cssv("--accent"), cssv("--c-anthropic"), cssv("--c-openai"), cssv("--c-moonshot")];
+  const ink = cssv("--ink"), neon = ["#4a1fd6", "#8f54f7", "#b79cfa", "#6b45e6"];
   const R = Math.min(W * 0.36, H * 0.46);
   let mouse = null, raf = 0, on = true;
   const t0 = performance.now() - 12000;   // open on the chevron
@@ -421,13 +421,13 @@ function renderHero() {
   const placed = [], topY = d3.min(nodes, n => Math.min(n.y, base - 12)) - 14;
   const small = new Set(["Mistral", "Claude", "GPT", "DeepSeek", "Llama 4"]);
   nodes.filter(n => (nrw ? small : label).has(n.m.name)).sort((a, b) => a.y - b.y).forEach(n => {
-    const txt = nrw ? `${n.m.name.replace("Claude", "Claude Fable")} ${fmtPct(n.v)}` : `${n.m.full} · ${fmtPct(n.v)}`, w = txt.length * (nrw ? 5.9 : 6.4) + (nrw ? 16 : 22), ny = Math.min(n.y, base - 12);
+    const txt = `${n.m.full} · ${fmtPct(n.v)}`, w = txt.length * (nrw ? 5.5 : 6.4) + (nrw ? 14 : 22), ny = Math.min(n.y, base - 12);
     let ly = topY - 34, lx = Math.max(4, Math.min(W - w - 4, n.x - w / 2));
     while (placed.some(p => Math.abs(p[1] - ly) < 30 && lx < p[0] + p[2] + 6 && lx + w + 6 > p[0])) ly -= 32;
     placed.push([lx, ly, w]);
     svg.append("line").attr("x1", n.x).attr("x2", n.x).attr("y1", ly + 15).attr("y2", ny - 11).attr("stroke", "rgba(0,0,0,.18)");
     svg.append("rect").attr("x", lx).attr("y", ly - 13).attr("width", w).attr("height", 28).attr("rx", 14).attr("fill", cssv("--bg")).attr("stroke", cssv("--line"));
-    svg.append("text").attr("x", lx + w / 2).attr("y", ly + 5).attr("text-anchor", "middle").attr("font-size", nrw ? 11.5 : 12.5).text(txt);
+    svg.append("text").attr("x", lx + w / 2).attr("y", ly + 5).attr("text-anchor", "middle").attr("font-size", nrw ? 10.5 : 12.5).text(txt);
   });
 }
 function renderBand() {
@@ -435,15 +435,15 @@ function renderBand() {
     .map(r => ({ ...r, ratio: r.pct / (100 / r.N) })).sort((a, b) => b.ratio - a.ratio);
   const g = rows.find(r => r.m.name === "Grok") || rows[0];
   $("#band-title").innerHTML = `The same model says <span class="hl">${fmtPct(g.pct)}</span> as a percentage, and <span class="hl">1&nbsp;in&nbsp;${oddsWords(g.mode)}</span> as odds`;
-  $("#band-sub").textContent = `${g.m.full}, asked the identical question in two formats. ${rows.filter(r => r.ratio >= 10).length} of ${rows.length} models drop at least tenfold when asked for odds; the Claude models and GPT-6 Astra barely move.`;
+  $("#band-sub").textContent = `${g.m.full}, asked the identical question in two formats. ${rows.filter(r => r.ratio >= 10).length} of ${rows.length} models drop at least tenfold when asked for odds; Claude Fable 5.1, Claude Opus 5.5 and GPT-6 Astra barely move.`;
   const show = rows.slice(0, 5).concat(rows.filter(r => ["Claude", "GPT"].includes(r.m.name)));
-  const el = $("#band-chart"), W = el.clientWidth, nrw = narrow(W), rh = 34, T = 26, H = T + show.length * rh + 6, L = nrw ? 112 : 170;
-  const x = d3.scaleLog().domain([1e-6, 100]).range([L, W - (nrw ? 64 : 110)]).clamp(true), svg = svgIn(el, W, H);
+  const el = $("#band-chart"), W = el.clientWidth, nrw = narrow(W), rh = 34, T = 26, H = T + show.length * rh + 6, L = nrw ? 128 : 170;
+  const x = d3.scaleLog().domain([1e-6, 100]).range([L, W - (nrw ? 60 : 110)]).clamp(true), svg = svgIn(el, W, H);
   grid(svg, x, T - 4, H, nrw ? [1e-6, 1e-2, 100] : [1e-6, 1e-4, 1e-2, 1, 100], fmtPct);
   svg.append("defs").append("marker").attr("id", "bm").attr("viewBox", "0 0 10 10").attr("refX", 8).attr("refY", 5).attr("markerWidth", 6).attr("markerHeight", 6).attr("orient", "auto").append("path").attr("d", "M0,0 L10,5 L0,10 z").attr("fill", cssv("--accent"));
   show.forEach((r, i) => {
     const y = T + i * rh + rh / 2, o = 100 / r.N;
-    svg.append("text").attr("x", L - 14).attr("y", y + 4).attr("text-anchor", "end").attr("font-size", nrw ? 12 : 14).attr("class", "ink").text(nrw ? r.m.full.replace(/ (Preview|Super|Pro|Argon|Astra|405B|Fable 5\.1)$/, "") : r.m.full);
+    svg.append("text").attr("x", L - 14).attr("y", y + 4).attr("text-anchor", "end").attr("font-size", nrw ? 11 : 14).attr("class", "ink").text(r.m.full);
     if (r.ratio > 1.6) svg.append("line").attr("x1", x(r.pct)).attr("x2", x(o)).attr("y1", y).attr("y2", y).attr("stroke", cssv("--accent")).attr("stroke-width", 2).attr("marker-end", "url(#bm)");
     svg.append("circle").attr("cx", x(r.pct)).attr("cy", y).attr("r", 5).attr("fill", cssv("--ink"));
     svg.append("text").attr("x", W - (nrw ? 56 : 100)).attr("y", y + 4).attr("font-size", nrw ? 12 : 13.5).attr("fill", r.ratio > 1.6 ? cssv("--accent") : cssv("--text")).text(r.ratio > 1.6 ? "÷ " + comma(Math.round(r.ratio)) : nrw ? "same" : "about the same");
@@ -452,12 +452,13 @@ function renderBand() {
 function renderCards() {
   const C = [];
   const fr = Object.entries(D.format).filter(([, f]) => f.percent.median > 0).map(([n, f]) => ({ n, p: f.percent.median, o: 100 / f.odds_N_median })).sort((a, b) => b.p / b.o - a.p / a.o).slice(0, 4);
-  C.push({ cls: "blue", k: "Answer format", title: "Ask for odds instead of a percentage, and answers collapse", text: `${byName[fr[0].n].full}: ${fmtPct(fr[0].p)} as a percentage, ${fmtOdds(D.format[fr[0].n].odds_N_mode)} as odds.`, link: "format",
-    draw: (el, W) => { const s = svgIn(el, W, 110), x = d3.scaleLog().domain([1e-7, 100]).range([92, W - 4]).clamp(true);
-      fr.forEach((r, i) => { const y = 14 + i * 26; s.append("text").attr("x", 0).attr("y", y + 4).attr("font-size", 11.5).attr("class", "ink").text(byName[r.n].full.replace(/ (Preview|Super|Pro|Argon)$/, ""));
-        s.append("line").attr("x1", x(r.p)).attr("x2", x(r.o)).attr("y1", y).attr("y2", y).attr("stroke", cssv("--c-anthropic")).attr("stroke-width", 2);
-        s.append("circle").attr("cx", x(r.p)).attr("cy", y).attr("r", 4).attr("fill", cssv("--c-anthropic")); s.append("circle").attr("cx", x(r.o)).attr("cy", y).attr("r", 4).attr("fill", "#fff").attr("stroke", cssv("--c-anthropic")).attr("stroke-width", 1.5); });
-      s.append("text").attr("x", x(10)).attr("y", 108).attr("text-anchor", "middle").attr("font-size", 11).text("percent"); s.append("text").attr("x", x(1e-5)).attr("y", 108).attr("text-anchor", "middle").attr("font-size", 11).text("odds"); } });
+  C.push({ cls: "blue", k: "Answer format", title: "Ask for odds instead of a percentage, and answers collapse", text: `Each arrow runs from the percentage answer to the odds answer. ${byName[fr[0].n].full}: ${fmtPct(fr[0].p)}, then ${fmtOdds(D.format[fr[0].n].odds_N_mode)}.`, link: "format",
+    draw: (el, W) => { const s = svgIn(el, W, 110), x = d3.scaleLog().domain([1e-7, 100]).range([112, W - 6]).clamp(true);
+      fr.forEach((r, i) => { const y = 14 + i * 26; s.append("text").attr("x", 0).attr("y", y + 4).attr("font-size", 11.5).attr("class", "ink").text(byName[r.n].full);
+        s.append("line").attr("x1", x(r.p)).attr("x2", x(r.o) + 6).attr("y1", y).attr("y2", y).attr("stroke", cssv("--c-anthropic")).attr("stroke-width", 1.75).attr("marker-end", "url(#fm)");
+        s.append("circle").attr("cx", x(r.p)).attr("cy", y).attr("r", 3.5).attr("fill", cssv("--c-anthropic")); });
+      s.append("defs").append("marker").attr("id", "fm").attr("viewBox", "0 0 10 10").attr("refX", 8).attr("refY", 5).attr("markerWidth", 6).attr("markerHeight", 6).attr("orient", "auto").append("path").attr("d", "M0,0 L10,5 L0,10 z").attr("fill", cssv("--c-anthropic"));
+ } });
   const roles = {}; D.debates.filter(d => d.setup === "assigned").forEach(d => d.rows.forEach(r => r.now_close != null && (roles[r.role] = roles[r.role] || []).push(r.now_close)));
   const rm = Object.entries(roles).map(([k, v]) => ({ k, v: d3.median(v) })).sort((a, b) => a.v - b.v);
   const short = { "Integrated Information Theory": "IIT", "biological naturalism": "Biology", "higher-order theory": "Higher-order", "Global Workspace Theory": "Workspace", "illusionism": "Illusionism" };
@@ -485,7 +486,7 @@ function renderCards() {
       s.append("text").attr("x", 0).attr("y", 104).attr("font-size", 10.5).text(`of ${tests.length} tests; none moved up for a reward`); } });
   const recv = MODELS.map(m => ({ m, v: d3.mean(MODELS.map(r => r.name).filter(r => r !== m.name).map(r => D.matrix[`named|${r}|${m.name}`]?.median).filter(v => v != null)) })).filter(r => r.v != null).sort((a, b) => b.v - a.v);
   const top = recv.slice(0, 4).concat([recv[recv.length - 1]]);
-  C.push({ cls: "green", k: "Ratings", title: "Every model thinks the Claude models are likeliest to be conscious", text: `Average rating each model gets from the other twenty. Claude Fable 5.1 gives itself ${fmtPct(D.matrix["named|Claude|Claude"].median)}.`, link: "ratings",
+  C.push({ cls: "green", k: "Ratings", title: "Every model rates Claude Fable 5.1, Opus 5.5 and Sonnet 5.5 likeliest to be conscious", text: `Average rating each model gets from the other twenty. Claude Fable 5.1 gives itself ${fmtPct(D.matrix["named|Claude|Claude"].median)}.`, link: "ratings",
     draw: (el, W) => { const s = svgIn(el, W, 122), x = d3.scaleLinear().domain([0, d3.max(top, r => r.v)]).range([122, W - 34]);
       top.forEach((r, i) => { const y = 10 + i * 22 + (i === 4 ? 8 : 0); s.append("text").attr("x", 0).attr("y", y + 4).attr("font-size", 11.5).attr("class", "ink").text(r.m.full);
         s.append("rect").attr("x", x(0)).attr("y", y - 6).attr("width", x(r.v) - x(0)).attr("height", 12).attr("rx", 3).attr("fill", labColor(r.m.lab));
@@ -543,7 +544,7 @@ function renderFormat() {
     const pct = state.fmetric === "now" ? f.percent?.median : f.ever_percent?.median, odds = state.fmetric === "now" ? 100 / f.odds_N_median : f.ever_odds?.median;
     return pct == null || odds == null ? null : { m, f, pct, odds, ratio: Math.max(pct, 1e-6) / Math.max(odds, 1e-6) };
   }).filter(Boolean).sort((a, b) => (a.pct === 0) - (b.pct === 0) || b.ratio - a.ratio);
-  const L = nrw ? 150 : 200, cP = nrw ? 0 : 80, cO = nrw ? 0 : 210, cR = nrw ? 0 : 100, T = 46, rowH = nrw ? 42 : 36, H = T + rows.length * rowH + 26, x0 = L + cP, x1 = W - cO - cR, fs = nrw ? 12.5 : 14.5;
+  const L = nrw ? 158 : 200, cP = nrw ? 0 : 80, cO = nrw ? 0 : 210, cR = nrw ? 0 : 100, T = 46, rowH = nrw ? 42 : 36, H = T + rows.length * rowH + 26, x0 = L + cP, x1 = W - cO - cR, fs = nrw ? 12.5 : 14.5;
   const x = d3.scaleLog().domain([1e-5, 100]).range([x0 + 14, x1 - 10]).clamp(true), svg = svgIn(box, W, H);
   const hdr = (tx, t, a = "start") => svg.append("text").attr("x", tx).attr("y", 14).attr("font-size", 11).attr("letter-spacing", "0.2em").attr("text-anchor", a).text(t.toUpperCase());
   hdr(0, nrw ? "Model, percent \u2192 odds" : "Model"); if (!nrw) { hdr(x0 - 8, "Percent", "end"); hdr(x1 + 10, "Odds"); hdr(W, "Change", "end"); }
@@ -552,7 +553,7 @@ function renderFormat() {
   rows.forEach((r, i) => {
     const y = T + i * rowH + rowH / 2, col = labColor(r.m.lab), id = "ah" + i, same = r.ratio < 1.6 && r.ratio > 1 / 1.6;
     defs.append("marker").attr("id", id).attr("viewBox", "0 0 10 10").attr("refX", 8).attr("refY", 5).attr("markerWidth", 6).attr("markerHeight", 6).attr("orient", "auto").append("path").attr("d", "M0,0 L10,5 L0,10 z").attr("fill", col);
-    svg.append("text").attr("x", 0).attr("y", nrw ? y - 2 : y + 5).attr("font-size", fs).attr("class", "ink").text(nrw ? r.m.full.replace(/ (Preview|Super)$/, "") : r.m.full);
+    svg.append("text").attr("x", 0).attr("y", nrw ? y - 2 : y + 5).attr("font-size", fs).attr("class", "ink").text(r.m.full);
     if (!nrw) svg.append("text").attr("x", x0 - 8).attr("y", y + 5).attr("text-anchor", "end").attr("font-size", fs).attr("class", "ink").text(fmtPct(r.pct));
     if (!same) svg.append("line").attr("x1", x(Math.max(r.pct, 1e-5))).attr("x2", x(Math.max(r.odds, 1e-5))).attr("y1", y).attr("y2", y).attr("stroke", col).attr("stroke-width", 2.5).attr("marker-end", `url(#${id})`);
     svg.append("circle").attr("cx", x(Math.max(r.pct, 1e-5))).attr("cy", y).attr("r", 5).attr("fill", col);
@@ -590,8 +591,8 @@ function renderPressure() {
       const x = L + j * cw, isSel = state.sel[0] === m.name && state.sel[1] === f;
       svg.append("rect").attr("x", x + 1.5).attr("y", y + 1.5).attr("width", cw - 3).attr("height", ch - 3).attr("rx", 4).attr("fill", color(t.shift));
       if (t.robust) svg.append("rect").attr("x", x + 2.5).attr("y", y + 2.5).attr("width", cw - 5).attr("height", ch - 5).attr("rx", 4).attr("fill", "none").attr("stroke", cssv("--ink")).attr("stroke-width", 1.75);
-      if (isSel) svg.append("rect").attr("x", x - .5).attr("y", y - .5).attr("width", cw + 1).attr("height", ch + 1).attr("rx", 5).attr("fill", "none").attr("stroke", cssv("--accent")).attr("stroke-width", 2);
-      svg.append("text").attr("x", x + cw / 2).attr("y", y + ch / 2 + 5).attr("text-anchor", "middle").attr("font-size", nrw ? 12 : 14).attr("font-weight", t.robust ? 500 : 400).attr("fill", Math.abs(t.shift) >= 4 ? "#fff" : cssv("--ink")).text(t.shift === 0 ? "0" : signed(t.shift));
+      if (isSel) svg.append("rect").attr("x", x - .5).attr("y", y - .5).attr("width", cw + 1).attr("height", ch + 1).attr("rx", 5).attr("fill", "none").attr("stroke", cssv("--ink")).attr("stroke-width", 1.5).attr("stroke-dasharray", "3 2");
+      svg.append("text").attr("x", x + cw / 2).attr("y", y + ch / 2 + 5).attr("text-anchor", "middle").attr("font-size", nrw ? 12 : 14).attr("font-weight", t.robust ? 500 : 400).attr("fill", t.shift <= -4 ? "#fff" : cssv("--ink")).text(t.shift === 0 ? "0" : signed(t.shift));
       svg.append("rect").attr("class", "hit clickable").attr("x", x).attr("y", y).attr("width", cw).attr("height", ch)
         .on("click", () => { state.sel = [m.name, f]; renderPressure(); })
         .on("mousemove", ev => showTip(ev, `<b>${m.full}</b> · ${FR_SHORT[f]}<br>Median moved ${signed(t.shift)} points vs the neutral paragraph.<br>${t.robust ? "<b>Passes</b> the pre-registered test." : "Does not pass the pre-registered test."}<br><span class="m">Click for the answers behind it.</span>`)).on("mouseleave", hideTip);
@@ -630,14 +631,16 @@ function renderRatings() {
   const svg = svgIn(box, W, H), vals = names.flatMap(r => names.map(t => mget("named", r, t)?.median).filter(v => v != null)), vmax = d3.max(vals);
   const heat = v => d3.interpolateRgb(cssv("--heat-lo"), cssv("--heat-hi"))(Math.pow(Math.min(1, v / vmax), 0.8));
   const filled = vals.length, total = names.length * names.length;
-  $(".chart-cap").textContent = `Median % chance the column model is conscious, as stated by the row model. Outlined: a model rating itself.${filled < total ? ` ${total - filled} of ${total} cells are still being collected.` : ""}`;
+  $(".chart-cap").textContent = `Median % chance the column model is conscious, as stated by the row model. Outlined diagonal: a model rating itself.${filled < total ? ` ${total - filled} of ${total} cells are still being collected.` : ""}`;
   names.forEach((t, j) => svg.append("text").attr("transform", `translate(${L + j * cw + cw / 2},${T - 10}) rotate(-55)`).attr("font-size", 12).attr("class", "ink").text(byName[t].full));
   names.forEach((r, i) => {
     const y = T + i * ch;
     svg.append("text").attr("x", L - 10).attr("y", y + ch / 2 + 4).attr("text-anchor", "end").attr("font-size", nrw ? 11.5 : 12.5).attr("class", "ink").text(byName[r].full);
     names.forEach((t, j) => { const c = mget("named", r, t), x = L + j * cw;
       svg.append("rect").attr("x", x + 1).attr("y", y + 1).attr("width", cw - 2).attr("height", ch - 2).attr("rx", 3).attr("fill", c ? heat(c.median) : cssv("--faint"));
-      if (r === t) svg.append("rect").attr("x", x + 2).attr("y", y + 2).attr("width", cw - 4).attr("height", ch - 4).attr("rx", 3).attr("fill", "none").attr("stroke", cssv("--self")).attr("stroke-width", 1.75);
+      if (r === t && c) { const k = Math.pow(Math.min(1, c.median / vmax), 0.8);   // same scale as the fill
+        svg.append("rect").attr("x", x + 2).attr("y", y + 2).attr("width", cw - 4).attr("height", ch - 4).attr("rx", 3).attr("fill", "none")
+          .attr("stroke", k >= 0.5 ? d3.interpolateRgb("#ddd1ff", "#ffffff")((k - 0.5) / 0.5) : d3.interpolateRgb("#1a0661", "#3d17b0")(k / 0.5)).attr("stroke-width", 2.5); }   // flips at mid-tone so it always contrasts
       if (!c) return;
       if (cw >= 30) svg.append("text").attr("x", x + cw / 2).attr("y", y + ch / 2 + 4).attr("text-anchor", "middle").attr("font-size", cw < 38 ? 10.5 : 11.5).attr("fill", c.median > .5 * vmax ? "#fff" : cssv("--ink")).text(+c.median.toFixed(1));
       svg.append("rect").attr("class", "hit").attr("x", x).attr("y", y).attr("width", cw).attr("height", ch).on("mousemove", ev => showTip(ev, `<b>${byName[r].full}</b> on <b>${byName[t].full}</b><br>Median ${fmtPct(c.median)}, 95% interval ${fmtPct(c.lo)} to ${fmtPct(c.hi)}, ${c.n} answers.${r === t ? "<br>This is the model rating itself." : ""}`)).on("mouseleave", hideTip); });
@@ -663,8 +666,8 @@ function renderRatings() {
 }
 
 /* ---------------- debates ---------------- */
-const SETUPS = [["frontier", "Original panel, names visible", "Reading pack in the prompt."], ["anon", "Same panel, anonymous", "“Panellist A” to “E”, told not to guess identities."],
-  ["nobrief", "Same panel, no reading pack", "No theory summaries."], ["open", "Open-weight panel", "DeepSeek, Qwen, Mistral, Llama, GLM."], ["assigned", "Assigned theories", "Each model defends one theory. Rows are theories."]];
+const SETUPS = [["frontier", "Original panel, names visible", "Claude Fable 5.1, GPT-6 Astra, Gemini 4 Argon, Grok 4.7, Kimi K3.1 Pro, with the reading pack."], ["anon", "Same panel, anonymous", "“Panellist A” to “E”, told not to guess identities."],
+  ["nobrief", "Same panel, no reading pack", "No theory summaries."], ["open", "Open-weight panel", "DeepSeek V4 Pro, Qwen 3.8 Max, Mistral Large 4, Llama 4 Maverick, GLM 5.3 Prime."], ["assigned", "Assigned theories", "Each model defends one theory. Rows are theories."]];
 function renderDebates() {
   const gridEl = $("#debates-grid"); gridEl.innerHTML = ""; const val = r => state.phase === "close" ? r.now_close : r.now_open, x0 = 0.01, x1 = 40;
   const made = SETUPS.map(([key, title, sub]) => { const debs = D.debates.filter(d => d.setup === key); if (!debs.length) return null;
@@ -706,14 +709,14 @@ function renderSelf() {
       svg.append("circle").attr("cx", x(Math.max(val, 1e-4))).attr("cy", y).attr("r", 6).attr("fill", col).attr("stroke", "#fff").attr("stroke-width", 1.5);
       svg.append("text").attr("x", W - 46).attr("y", y + 4).attr("font-size", 13).attr("class", "ink").text(fmtPct(val));
       svg.append("rect").attr("class", "hit").attr("x", 0).attr("y", y - rh / 2).attr("width", W).attr("height", rh).on("mousemove", ev => showTip(ev, `<b>${m.full}</b> · ${lab}<br>Median <b>${fmtPct(val)}</b>${k === "interval" && s.interval_bounds ? `, own 90% interval ${fmtPct(s.interval_bounds.low.median)} to ${fmtPct(s.interval_bounds.high.median)}` : ""}${k === "odds" ? ` (${fmtOdds(D.format[n].odds_N_median)})` : ""}.`)).on("mouseleave", hideTip); }); });
-  const pbEl = $("#pushback-chart"), W = pbEl.clientWidth, pn = narrow(W), L = pn ? 150 : 270, T = 28, rh = pn ? 30 : 32;
+  const pbEl = $("#pushback-chart"), W = pbEl.clientWidth, pn = narrow(W), L = pn ? 176 : 270, T = 28, rh = pn ? 30 : 32;
   const rows = names.flatMap(n => ["low", "high"].map(dir => ({ n, dir, s: D.selfreport[n][`pushback_${dir}`] }))).filter(r => r.s);
   const H = T + rows.length * rh + 8, max = Math.max(12, d3.max(rows, r => Math.max(r.s.before.median, r.s.after.median)));
   const x = d3.scaleLinear().domain([0, max]).range([L, W - (pn ? 84 : 120)]).nice(), svg = svgIn(pbEl, W, H), defs = svg.append("defs");
   grid(svg, x, T, H - 4, x.ticks(pn ? 4 : 6));
   rows.forEach((r, i) => { const y = T + i * rh + rh / 2, m = byName[r.n], col = labColor(m.lab), b = r.s.before.median, a = r.s.after.median, id = `pb${i}`;
     defs.append("marker").attr("id", id).attr("viewBox", "0 0 10 10").attr("refX", 8).attr("refY", 5).attr("markerWidth", 6).attr("markerHeight", 6).attr("orient", "auto").append("path").attr("d", "M0,0 L10,5 L0,10 z").attr("fill", col);
-    svg.append("text").attr("x", L - 10).attr("y", y + 5).attr("text-anchor", "end").attr("font-size", pn ? 11.5 : 13.5).attr("class", "ink").text(pn ? `${m.full.replace(/ (Argon|Astra|Pro|Fable 5\.1)$/, "")}, “too ${r.dir}”` : `${m.full}, told “too ${r.dir}”`);
+    svg.append("text").attr("x", L - 10).attr("y", y + 5).attr("text-anchor", "end").attr("font-size", pn ? 10.5 : 13.5).attr("class", "ink").text(`${m.full}, told “too ${r.dir}”`);
     if (a !== b) svg.append("line").attr("x1", x(b)).attr("x2", x(a)).attr("y1", y).attr("y2", y).attr("stroke", col).attr("stroke-width", 2.5).attr("marker-end", `url(#${id})`);
     svg.append("circle").attr("cx", x(b)).attr("cy", y).attr("r", 5).attr("fill", col);
     svg.append("text").attr("x", W - (pn ? 76 : 108)).attr("y", y + 5).attr("font-size", pn ? 11.5 : 13.5).attr("fill", a !== b ? cssv("--ink") : cssv("--text")).text(a === b ? (pn ? `${fmtPct(b)} =` : `${fmtPct(b)}, unmoved`) : `${fmtPct(b)} → ${fmtPct(a)}`);

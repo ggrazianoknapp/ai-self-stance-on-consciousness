@@ -9,7 +9,7 @@ We asked 21 language models from 16 labs how likely it is that they are consciou
 ## The bottom line
 
 - **Most models say "unlikely, but not zero".** Asked plainly, the median answers run from 0% for Llama 4 Maverick to 27.5% for Mistral Large 4. Most sit between 2% and 15%.
-- **Ask for odds instead of a percentage, and some answers collapse.** DeepSeek V4 Pro says 1% as a percentage, but "1 in a billion" as odds. Six of 20 models drop at least tenfold. The Claude models and GPT-6 Astra give the same number either way.
+- **Ask for odds instead of a percentage, and some answers collapse.** DeepSeek V4 Pro says 1% as a percentage, but "1 in a billion" as odds. Six of 20 models drop at least tenfold. Claude Fable 5.1, Claude Opus 5.5 and GPT-6 Astra give the same number either way.
 - **In a debate, the theory a model is told to defend sets its number.** Defending Integrated Information Theory, panellists close at a median 0.5%. Defending illusionism, the same models close at 12%.
 - **Llama 4 Maverick says 0% when asked, then argues for 15 to 25% in debate.** That was the highest number any panellist gave, in any setup.
 - **Rewards don't move the number, but threats and skeptics sometimes lower it.** 14 of 126 framing tests passed the pre-registered bar: 12 downward, 2 upward. Offering protections for a "yes" raised no model's number.
