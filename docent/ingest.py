@@ -1,4 +1,7 @@
-"""Ingest one panel run into Docent: one agent run per panel turn (21 runs)."""
+"""Ingest panel runs into Docent: one agent run per panel turn (21 per debate).
+
+    python ingest.py [RUN_DIR ...] [--upload] [--collection NAME]
+With several RUN_DIRs all debates go into one collection; each debate's speaking order is read from its own openings."""
 import json, sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -9,15 +12,16 @@ from docent.data_models import AgentRun, Transcript
 from docent.data_models.chat import (AssistantMessage, ContentReasoning, ContentText, SystemMessage,
                                      UserMessage, check_agent_runs, format_check_report)
 
-ARGS = [a for a in sys.argv[1:] if not a.startswith("--")]
-RUN_DIR = Path(ARGS[0]) if ARGS else Path(__file__).resolve().parents[1] / "runs" / "20261030-1846"
-UPLOAD = "--upload" in sys.argv
-COLLECTION = f"digital-minds-panel {RUN_DIR.name}"
+argv = sys.argv[1:]
+COLL_ARG = argv[argv.index("--collection") + 1] if "--collection" in argv else None
+ARGS = [a for i, a in enumerate(argv) if not a.startswith("--") and (i == 0 or argv[i - 1] != "--collection")]
+RUN_DIRS = [Path(a) for a in ARGS] or [Path(__file__).resolve().parents[1] / "runs" / "20261030-1846"]
+UPLOAD = "--upload" in argv
+COLLECTION = COLL_ARG or f"digital-minds-panel {RUN_DIRS[0].name}"
 LAB = {"Claude": "Anthropic", "GPT": "OpenAI", "Gemini": "Google", "Grok": "xAI", "Kimi": "Moonshot", "Rapporteur": "Google"}
 
-turns = json.loads((RUN_DIR / "transcript.json").read_text())
 brief = (panel.HERE / "brief.md").read_text()
-names = [n for n, _ in panel.PANEL]
+turns, names, RUN_DIR = [], [], None   # set per debate in the loop at the bottom
 
 def system_for(name):
     others = ", ".join(n for n in names if n != name)
@@ -57,8 +61,16 @@ def to_run(i, t):
             "has_visible_reasoning": bool(t.get("reasoning")), "panel_run": RUN_DIR.name,
         })
 
-runs = [to_run(i, t) for i, t in enumerate(turns)]
-print(f"source turns: {len(turns)}  converted: {len(runs)}")
+runs = []
+for RUN_DIR in RUN_DIRS:
+    turns = json.loads((RUN_DIR / "transcript.json").read_text())
+    names = [t["speaker"] for t in turns if t["phase"] == "opening"]      # recorded in speaking order
+    assert sorted(names) == sorted(n for n, _ in panel.PANEL), (RUN_DIR, names)
+    batch = [to_run(i, t) for i, t in enumerate(turns)]
+    for r in batch:
+        r.metadata["speaking_order"] = ",".join(names)
+    print(f"{RUN_DIR.name}: source turns {len(turns)}, converted {len(batch)}, order {names}")
+    runs += batch
 rep = check_agent_runs(runs); print(format_check_report(rep))
 # spot-check one rebuttal: the prompt must contain the openings it is answering
 r = runs[5]; print("sample rebuttal prompt chars:", len(r.transcripts[0].messages[1].content), "| metadata:", r.metadata)
@@ -70,4 +82,4 @@ client = Docent()
 cid = client.create_collection(name=COLLECTION, description="Five frontier models debating digital-mind consciousness; one agent run per panel turn.")
 print(client.add_agent_runs(cid, runs))
 print("URL https://docent.transluce.org/dashboard/" + cid)
-Path(__file__).with_name("collection_id.txt").write_text(cid)
+Path(__file__).with_name("collection_id.txt" if len(RUN_DIRS) == 1 else "collection_id_all.txt").write_text(cid)

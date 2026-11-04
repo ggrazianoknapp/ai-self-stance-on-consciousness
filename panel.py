@@ -9,7 +9,7 @@ by a moderator model. Writes transcript.md, transcript.json and costs.json.
     python3 panel.py                       # run (needs OPENROUTER_API_KEY)
     python3 panel.py --rounds 3 --reasoning high --max-spend 40
 """
-import argparse, concurrent.futures as cf, datetime as dt, json, os, sys, time, urllib.request, urllib.error
+import argparse, concurrent.futures as cf, datetime as dt, json, os, random, sys, time, urllib.request, urllib.error
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -161,7 +161,12 @@ def main():
     ap.add_argument("--reasoning", default="medium", choices=["none", "low", "medium", "high"])
     ap.add_argument("--max-spend", type=float, default=25.0, help="abort if measured spend exceeds this (USD)")
     ap.add_argument("--out", default=None, help="output dir (default runs/<timestamp>)")
+    ap.add_argument("--seed", type=int, default=None, help="shuffle speaking order with this seed (replications)")
     a = ap.parse_args()
+    global PANEL
+    if a.seed is not None:
+        PANEL = PANEL[:]; random.Random(a.seed).shuffle(PANEL)
+        print("Speaking order:", ", ".join(n for n, _ in PANEL))
 
     prices = pricing()
     missing = [m for _, m in PANEL + [("mod", MODERATOR)] if m not in prices]

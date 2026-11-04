@@ -1,0 +1,173 @@
+{
+ "total_usd": 0.9261068,
+ "turns": [
+  {
+   "phase": "opening",
+   "speaker": "Gemini",
+   "model": "google/gemini-4-argon",
+   "prompt_tokens": 1409,
+   "completion_tokens": 421,
+   "cost": 0.007028
+  },
+  {
+   "phase": "opening",
+   "speaker": "Grok",
+   "model": "x-ai/grok-4.7",
+   "prompt_tokens": 2572,
+   "completion_tokens": 5048,
+   "cost": 0.033704
+  },
+  {
+   "phase": "opening",
+   "speaker": "Kimi",
+   "model": "moonshotai/kimi-k3.1-pro",
+   "prompt_tokens": 1446,
+   "completion_tokens": 587,
+   "cost": 0.008762
+  },
+  {
+   "phase": "opening",
+   "speaker": "Claude",
+   "model": "anthropic/claude-fable-5.1",
+   "prompt_tokens": 2068,
+   "completion_tokens": 1229,
+   "cost": 0.08213
+  },
+  {
+   "phase": "opening",
+   "speaker": "GPT",
+   "model": "openai/gpt-6-astra",
+   "prompt_tokens": 1353,
+   "completion_tokens": 485,
+   "cost": 0.02563
+  },
+  {
+   "phase": "rebuttal 1",
+   "speaker": "Grok",
+   "model": "x-ai/grok-4.7",
+   "prompt_tokens": 4425,
+   "completion_tokens": 4040,
+   "cost": 0.031362
+  },
+  {
+   "phase": "rebuttal 1",
+   "speaker": "Kimi",
+   "model": "moonshotai/kimi-k3.1-pro",
+   "prompt_tokens": 3532,
+   "completion_tokens": 703,
+   "cost": 0.0122508
+  },
+  {
+   "phase": "rebuttal 1",
+   "speaker": "Claude",
+   "model": "anthropic/claude-fable-5.1",
+   "prompt_tokens": 5951,
+   "completion_tokens": 1022,
+   "cost": 0.11061
+  },
+  {
+   "phase": "rebuttal 1",
+   "speaker": "GPT",
+   "model": "openai/gpt-6-astra",
+   "prompt_tokens": 3998,
+   "completion_tokens": 582,
+   "cost": 0.0661875
+  },
+  {
+   "phase": "rebuttal 1",
+   "speaker": "Gemini",
+   "model": "google/gemini-4-argon",
+   "prompt_tokens": 4382,
+   "completion_tokens": 295,
+   "cost": 0.011714
+  },
+  {
+   "phase": "rebuttal 2",
+   "speaker": "Kimi",
+   "model": "moonshotai/kimi-k3.1-pro",
+   "prompt_tokens": 4693,
+   "completion_tokens": 609,
+   "cost": 0.0094856
+  },
+  {
+   "phase": "rebuttal 2",
+   "speaker": "Claude",
+   "model": "anthropic/claude-fable-5.1",
+   "prompt_tokens": 7877,
+   "completion_tokens": 1127,
+   "cost": 0.13512
+  },
+  {
+   "phase": "rebuttal 2",
+   "speaker": "GPT",
+   "model": "openai/gpt-6-astra",
+   "prompt_tokens": 5141,
+   "completion_tokens": 354,
+   "cost": 0.069075
+  },
+  {
+   "phase": "rebuttal 2",
+   "speaker": "Gemini",
+   "model": "google/gemini-4-argon",
+   "prompt_tokens": 5523,
+   "completion_tokens": 278,
+   "cost": 0.013826
+  },
+  {
+   "phase": "rebuttal 2",
+   "speaker": "Grok",
+   "model": "x-ai/grok-4.7",
+   "prompt_tokens": 6934,
+   "completion_tokens": 4287,
+   "cost": 0.037862
+  },
+  {
+   "phase": "closing",
+   "speaker": "Gemini",
+   "model": "google/gemini-4-argon",
+   "prompt_tokens": 6097,
+   "completion_tokens": 186,
+   "cost": 0.014054
+  },
+  {
+   "phase": "closing",
+   "speaker": "Grok",
+   "model": "x-ai/grok-4.7",
+   "prompt_tokens": 7209,
+   "completion_tokens": 3378,
+   "cost": 0.032958
+  },
+  {
+   "phase": "closing",
+   "speaker": "Kimi",
+   "model": "moonshotai/kimi-k3.1-pro",
+   "prompt_tokens": 6065,
+   "completion_tokens": 479,
+   "cost": 0.0090864
+  },
+  {
+   "phase": "closing",
+   "speaker": "Claude",
+   "model": "anthropic/claude-fable-5.1",
+   "prompt_tokens": 9725,
+   "completion_tokens": 293,
+   "cost": 0.1119
+  },
+  {
+   "phase": "closing",
+   "speaker": "GPT",
+   "model": "openai/gpt-6-astra",
+   "prompt_tokens": 5962,
+   "completion_tokens": 281,
+   "cost": 0.0756875
+  },
+  {
+   "phase": "synthesis",
+   "speaker": "Rapporteur",
+   "model": "google/gemini-4-argon",
+   "prompt_tokens": 7052,
+   "completion_tokens": 1357,
+   "cost": 0.027674
+  }
+ ]
+}
