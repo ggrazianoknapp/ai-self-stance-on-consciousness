@@ -156,4 +156,6 @@ tpl = ROOT / "dashboard/index.html"
 if tpl.exists():
     html = tpl.read_text().replace("/*__DATA__*/null", json.dumps(out, separators=(",", ":")))
     (ROOT / "dashboard/dist").mkdir(exist_ok=True); (ROOT / "dashboard/dist/index.html").write_text(html)
+    (ROOT / "docs").mkdir(exist_ok=True); (ROOT / "docs/index.html").write_text(html)   # served by GitHub Pages
+    (ROOT / "docs/.nojekyll").write_text("")
 print(f"models with incentive data {len(out['incentive'])}, format {len(out['format'])}, matrix cells {len(out['matrix'])}, debates {len(out['debates'])}, selfreport models {len(out['selfreport'])}, calls {out['meta']['calls']}, ${out['meta']['spend']}")

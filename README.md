@@ -1,5 +1,7 @@
 # Do AI models think they are conscious?
 
+**[Open the interactive dashboard →](https://ggrazianoknapp.github.io/ai-self-stance-on-consciousness/)**
+
 We asked 21 language models from 16 labs how likely it is that they are conscious right now, and whether any AI ever will be. Then we changed everything that should not matter: who is asking, what is at stake, the wording, the answer format. We also ran 17 structured debates between them. That came to 9,465 answers and $46 of API calls. The hypotheses for the last two rounds were committed to this repo before any data came in.
 
 ![What we found](dashboard/screens/overview.png)
@@ -18,7 +20,7 @@ What this does not show: whether anything is experienced. These are trained verb
 
 ## The interactive dashboard
 
-All charts below come from one interactive page with hover detail, filters, and light and dark themes. To open it, download [dashboard/dist/index.html](dashboard/dist/index.html) and open it in a browser. Rebuild it from the raw data with `uv run --with numpy --with scipy python dashboard/build.py`.
+**Live at [ggrazianoknapp.github.io/ai-self-stance-on-consciousness/](https://ggrazianoknapp.github.io/ai-self-stance-on-consciousness/)**, with hover detail, filters, and light and dark themes. The screenshots below are static copies of its views. The page is built from the raw data by `dashboard/build.py`, which writes `docs/index.html` for GitHub Pages.
 
 ### What each model says when asked plainly
 
