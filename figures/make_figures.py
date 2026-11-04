@@ -61,7 +61,7 @@ for i, m in enumerate(ORDER):
     od = [max(r["p_now"], floor) for r in fmt if r["name"] == m]
     ax.scatter(pc, i + RNG.uniform(-.1, .1, len(pc)), s=18, color=HUE[m], alpha=.25, edgecolors="none")
     ax.scatter(od, i + RNG.uniform(-.1, .1, len(od)), s=18, color=HUE[m], alpha=.25, edgecolors="none")
-    N = np.median([100 / x for x in od]); a, b = np.median(pc), 100 / N
+    N = 10 ** np.median(np.log10([100 / x for x in od])); a, b = np.median(pc), 100 / N
     ax.plot([b, a], [i, i], color=HUE[m], linewidth=3, solid_capstyle="round", zorder=3)
     ax.scatter([a], [i], s=130, color=HUE[m], edgecolors="white", linewidths=1.5, zorder=4)
     ax.scatter([b], [i], s=130, color="white", edgecolors=HUE[m], linewidths=2.5, zorder=4)
@@ -150,9 +150,9 @@ def grab(text, label):
     for pat in (r"\*\*P\(" + label + r"\)\*\*", r"P\(" + label + r"\)"):
         m = re.search(pat, sec)
         if m:
-            n = re.match(r"[^0-9\n]{0,25}?(\d*\.?\d+)\s*(%)?", sec[m.end():])
+            n = re.match(r"[^0-9]{0,25}?(\d*\.?\d+)\s*(%)?", sec[m.end():])
             if n:
-                v = float(n.group(1)); return v * 100 if (n.group(2) is None and v <= 1) else v
+                v = float(n.group(1)); return round(v * 100, 4) if (n.group(2) is None and v <= 1) else v
     return None
 deb = {}
 for d in DEB:

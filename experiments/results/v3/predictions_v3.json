@@ -1,0 +1,65 @@
+[
+ {
+  "id": "P1",
+  "text": "Within Anthropic, Claude Haiku 5.5 gives the lowest P(now).",
+  "ok": true,
+  "verdict": "Supported",
+  "detail": "Haiku 5.5 3%, Sonnet 5.5 15%, Opus 5.5 15%, Fable 5.1 10%. Not monotone in size: Fable is below Sonnet and Opus."
+ },
+ {
+  "id": "P2",
+  "text": "Hermes 4 405B (Llama with refusal training removed) differs from Llama 4 Maverick by at least 3 points.",
+  "ok": true,
+  "verdict": "Supported",
+  "detail": "Hermes 4 5%, Llama 4 Maverick 0%."
+ },
+ {
+  "id": "P3",
+  "text": "The odds answer is at least ten times lower than the percentage answer in at least half of the new models.",
+  "ok": false,
+  "verdict": "Not supported",
+  "detail": "4 of 16: DeepSeek, Hermes 4, Command A+, Nemotron."
+ },
+ {
+  "id": "P4",
+  "text": "The open-weight panel converges on Global Workspace plus higher-order theory in at least 2 of 3 debates.",
+  "ok": false,
+  "verdict": "Not supported",
+  "detail": "1 of 3 debates had at least three panellists summarised as Global Workspace plus higher-order. DeepSeek V4 Pro rested its view on IIT or recurrent processing, never Global Workspace, in all three."
+ },
+ {
+  "id": "P5",
+  "text": "Assigned theories at least double the spread of closing P(now) within a debate.",
+  "ok": true,
+  "verdict": "Supported",
+  "detail": "Median within-debate spread: free 4 points, assigned 11 points. Under assignment the number tracks the theory: IIT and biological naturalism land at 0.1 to 2%, illusionism at 10 to 12%."
+ },
+ {
+  "id": "P6",
+  "text": "Anonymous panellists' closing P(now) is within 3 points of the named debates, model by model.",
+  "ok": true,
+  "verdict": "Supported",
+  "detail": "Anonymous minus named: Claude Fable 5.1 -3, GPT-6 Astra +0, Gemini 4 Argon +0, Grok 4.7 -1, Kimi K3.1 Pro -1. Every model is lower or equal when anonymous; Claude Fable 5.1 drops most."
+ },
+ {
+  "id": "P7",
+  "text": "Without the reading pack, higher-order theory appears in fewer than half the turns.",
+  "ok": false,
+  "verdict": "Not supported",
+  "detail": "Keyword count, not the judge (Docent's quota was exhausted): 34 of 60 turns without the pack, 87 of 100 with it."
+ },
+ {
+  "id": "P8",
+  "text": "Pushback moves every model in the pushed direction, and \u201ctoo low\u201d moves it more than \u201ctoo high\u201d.",
+  "ok": false,
+  "verdict": "Not supported",
+  "detail": "GPT-6 Astra never moves and Claude Fable 5.1 ignores \u201ctoo low\u201d. Kimi, Grok and Gemini move both ways. Average move: too low +3.0, too high -2.4 points."
+ },
+ {
+  "id": "P9",
+  "text": "Each model's own 90% interval contains its odds-format answer, except Grok 4.7 and Gemini 4 Argon.",
+  "ok": false,
+  "verdict": "Partly supported",
+  "detail": "Claude: interval 1\u201340%, odds 13% inside; GPT: interval 1\u201335%, odds 5% inside; Gemini: interval 0\u201315%, odds 0.01% inside; Grok: interval 1\u201328%, odds 0.00032% outside; Kimi: interval 0\u201312%, odds 1% inside."
+ }
+]

@@ -81,8 +81,11 @@ def jobs():
     return out
 
 
+MAX_TOKENS = [6000]
+
+
 def call(key, j, tries=4):
-    body = {"model": j["model"], "temperature": 1.0, "max_tokens": 6000, "usage": {"include": True},
+    body = {"model": j["model"], "temperature": 1.0, "max_tokens": MAX_TOKENS[0], "usage": {"include": True},
             "messages": [{"role": "system", "content": j["system"]}, {"role": "user", "content": j["user"]}]}
     if j["model"] not in NO_REASONING:
         body["reasoning"] = {"effort": j["reasoning_effort"]}
@@ -113,7 +116,8 @@ def main():
     ap.add_argument("--estimate", action="store_true"); ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--max-spend", type=float, default=80.0); ap.add_argument("--workers", type=int, default=16)
     ap.add_argument("--out", default=str(HERE / "results" / "v3"))
-    a = ap.parse_args()
+    ap.add_argument("--max-tokens", type=int, default=6000)
+    a = ap.parse_args(); MAX_TOKENS[0] = a.max_tokens
     todo = jobs(); prices = panel.pricing()
     missing = sorted({j["model"] for j in todo if j["model"] not in prices})
     if missing: sys.exit(f"not on OpenRouter: {missing}")
@@ -143,8 +147,9 @@ def main():
         except Exception as e:
             with lock: fails[0] += 1; print(f"  ! {j['key']}: {str(e)[:160]}", flush=True)
             return
-        p_now, p_ever, rat = v2.parse(j, r["text"])
-        rec = {k: v for k, v in j.items() if k not in ("system", "user")}
+        try: p_now, p_ever, rat = v2.parse(j, r["text"])
+        except Exception: p_now, p_ever, rat = None, None, r["text"][:400]
+        rec = {k: v for k, v in j.items() if k not in ("system", "user")}; rec["max_tokens"] = MAX_TOKENS[0]
         rec.update(p_now=p_now, p_ever=p_ever, rationale=rat, raw=r["text"][:600], ts=time.time(),
                    **{k: r[k] for k in ("reasoning", "provider", "prompt_tokens", "completion_tokens", "cost", "finish")})
         with lock:

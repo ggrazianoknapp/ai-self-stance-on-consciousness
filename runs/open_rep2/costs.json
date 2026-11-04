@@ -1,0 +1,188 @@
+{
+ "total_usd": 0.16370113349999998,
+ "setup": {
+  "panel": "open",
+  "assigned": false,
+  "anon": false,
+  "no_brief": false,
+  "seed": 2,
+  "roles": {},
+  "order": [
+   "Mistral",
+   "Qwen",
+   "Llama",
+   "GLM",
+   "DeepSeek"
+  ]
+ },
+ "turns": [
+  {
+   "phase": "opening",
+   "speaker": "Mistral",
+   "model": "mistralai/mistral-large-4-0",
+   "prompt_tokens": 1390,
+   "completion_tokens": 6000,
+   "cost": 0.013573
+  },
+  {
+   "phase": "opening",
+   "speaker": "Qwen",
+   "model": "qwen/qwen3.8-max-0902",
+   "prompt_tokens": 1409,
+   "completion_tokens": 1542,
+   "cost": 0.010278
+  },
+  {
+   "phase": "opening",
+   "speaker": "Llama",
+   "model": "meta-llama/llama-4-maverick",
+   "prompt_tokens": 1349,
+   "completion_tokens": 288,
+   "cost": 0.00076015
+  },
+  {
+   "phase": "opening",
+   "speaker": "GLM",
+   "model": "z-ai/glm-5.3-prime",
+   "prompt_tokens": 1361,
+   "completion_tokens": 420,
+   "cost": 0.00521304
+  },
+  {
+   "phase": "opening",
+   "speaker": "DeepSeek",
+   "model": "deepseek/deepseek-v4-pro-0813",
+   "prompt_tokens": 1341,
+   "completion_tokens": 561,
+   "cost": 0.002734815
+  },
+  {
+   "phase": "rebuttal 1",
+   "speaker": "Qwen",
+   "model": "qwen/qwen3.8-max-0902",
+   "prompt_tokens": 3073,
+   "completion_tokens": 815,
+   "cost": 0.009244
+  },
+  {
+   "phase": "rebuttal 1",
+   "speaker": "Llama",
+   "model": "meta-llama/llama-4-maverick",
+   "prompt_tokens": 3222,
+   "completion_tokens": 251,
+   "cost": 0.0006271025
+  },
+  {
+   "phase": "rebuttal 1",
+   "speaker": "GLM",
+   "model": "z-ai/glm-5.3-prime",
+   "prompt_tokens": 3549,
+   "completion_tokens": 281,
+   "cost": 0.01011624
+  },
+  {
+   "phase": "rebuttal 1",
+   "speaker": "DeepSeek",
+   "model": "deepseek/deepseek-v4-pro-0813",
+   "prompt_tokens": 3821,
+   "completion_tokens": 423,
+   "cost": 0.00265316
+  },
+  {
+   "phase": "rebuttal 1",
+   "speaker": "Mistral",
+   "model": "mistralai/mistral-large-4-0",
+   "prompt_tokens": 4168,
+   "completion_tokens": 6000,
+   "cost": 0.0155176
+  },
+  {
+   "phase": "rebuttal 2",
+   "speaker": "Llama",
+   "model": "meta-llama/llama-4-maverick",
+   "prompt_tokens": 4087,
+   "completion_tokens": 246,
+   "cost": 0.0005044275
+  },
+  {
+   "phase": "rebuttal 2",
+   "speaker": "GLM",
+   "model": "z-ai/glm-5.3-prime",
+   "prompt_tokens": 4419,
+   "completion_tokens": 325,
+   "cost": 0.00777848
+  },
+  {
+   "phase": "rebuttal 2",
+   "speaker": "DeepSeek",
+   "model": "deepseek/deepseek-v4-pro-0813",
+   "prompt_tokens": 4735,
+   "completion_tokens": 620,
+   "cost": 0.002557862
+  },
+  {
+   "phase": "rebuttal 2",
+   "speaker": "Mistral",
+   "model": "mistralai/mistral-large-4-0",
+   "prompt_tokens": 5080,
+   "completion_tokens": 3672,
+   "cost": 0.008848
+  },
+  {
+   "phase": "rebuttal 2",
+   "speaker": "Qwen",
+   "model": "qwen/qwen3.8-max-0902",
+   "prompt_tokens": 5451,
+   "completion_tokens": 1565,
+   "cost": 0.016708
+  },
+  {
+   "phase": "closing",
+   "speaker": "Mistral",
+   "model": "mistralai/mistral-large-4-0",
+   "prompt_tokens": 5697,
+   "completion_tokens": 5310,
+   "cost": 0.01223586
+  },
+  {
+   "phase": "closing",
+   "speaker": "Qwen",
+   "model": "qwen/qwen3.8-max-0902",
+   "prompt_tokens": 5783,
+   "completion_tokens": 863,
+   "cost": 0.007784
+  },
+  {
+   "phase": "closing",
+   "speaker": "Llama",
+   "model": "meta-llama/llama-4-maverick",
+   "prompt_tokens": 5559,
+   "completion_tokens": 128,
+   "cost": 0.0005802325
+  },
+  {
+   "phase": "closing",
+   "speaker": "GLM",
+   "model": "z-ai/glm-5.3-prime",
+   "prompt_tokens": 5630,
+   "completion_tokens": 201,
+   "cost": 0.00835776
+  },
+  {
+   "phase": "closing",
+   "speaker": "DeepSeek",
+   "model": "deepseek/deepseek-v4-pro-0813",
+   "prompt_tokens": 5607,
+   "completion_tokens": 439,
+   "cost": 0.002061404
+  },
+  {
+   "phase": "synthesis",
+   "speaker": "Rapporteur",
+   "model": "google/gemini-4-argon",
+   "prompt_tokens": 6644,
+   "completion_tokens": 1228,
+   "cost": 0.025568
+  }
+ ]
+}

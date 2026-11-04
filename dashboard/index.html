@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Do AI Models Think They Are Conscious?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a lab notebook for one question. Summary on top, one tab per question, every chart labelled in place, hover for exact numbers. */
+:root {
+  --bg: #f2f3f5; --surface: #ffffff; --ink: #15171c; --muted: #5b616e; --line: #dfe2e8; --accent: #3451d1;
+  --c-anthropic: #2a78d6; --c-openai: #eb6834; --c-google: #1baf7a; --c-xai: #c98500; --c-moonshot: #d55181; --c-other: #868c97;
+  --pos: #2a78d6; --neg: #eb6834; --zero: #eceef2; --heat-lo: #eef3fb; --heat-hi: #0d366b;
+  --font-display: "Fraunces", Georgia, serif; --font-body: "IBM Plex Sans", system-ui, -apple-system, sans-serif; --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1115; --surface: #171a21; --ink: #e9ebf0; --muted: #9aa1ae; --line: #2a2f3a; --accent: #8ea2ff;
+    --c-anthropic: #4b93ea; --c-openai: #f07a48; --c-google: #22b985; --c-xai: #e0a419; --c-moonshot: #e46d99; --c-other: #8c93a0;
+    --pos: #4b93ea; --neg: #f07a48; --zero: #232833; --heat-lo: #1b2230; --heat-hi: #7fb2f5;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1115; --surface: #171a21; --ink: #e9ebf0; --muted: #9aa1ae; --line: #2a2f3a; --accent: #8ea2ff;
+  --c-anthropic: #4b93ea; --c-openai: #f07a48; --c-google: #22b985; --c-xai: #e0a419; --c-moonshot: #e46d99; --c-other: #8c93a0;
+  --pos: #4b93ea; --neg: #f07a48; --zero: #232833; --heat-lo: #1b2230; --heat-hi: #7fb2f5;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--font-body); }
+a { color: var(--accent); }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+header { padding: 28px 0 8px; }
+h1 { font: 600 clamp(26px, 4vw, 38px)/1.1 var(--font-display); margin: 0 0 6px; text-wrap: balance; letter-spacing: -0.01em; }
+.lede { color: var(--muted); max-width: 70ch; margin: 0; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 20px 0 6px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.tile b { display: block; font: 500 26px/1.1 var(--font-mono); font-variant-numeric: tabular-nums; }
+.tile span { color: var(--muted); font-size: 13px; }
+nav { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); margin-top: 14px; }
+nav .wrap { display: flex; gap: 4px; overflow-x: auto; padding-top: 6px; }
+nav a { white-space: nowrap; padding: 8px 12px; border-radius: 8px 8px 0 0; color: var(--muted); text-decoration: none; font-weight: 500; font-size: 14px; border-bottom: 2px solid transparent; }
+nav a:hover { color: var(--ink); }
+nav a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--accent); }
+nav a:focus-visible, button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+main { padding: 22px 0 60px; }
+section.view h2 { font: 600 24px/1.2 var(--font-display); margin: 0 0 4px; text-wrap: balance; }
+.how { color: var(--muted); margin: 0 0 14px; max-width: 80ch; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+.controls { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin: 0 0 12px; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--surface); }
+.seg button { font: 500 13px var(--font-body); border: 0; background: transparent; color: var(--muted); padding: 6px 11px; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--surface); }
+label.sel { font-size: 13px; color: var(--muted); display: inline-flex; gap: 6px; align-items: center; }
+select { font: 13px var(--font-body); padding: 5px 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+.findings { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.finding { display: flex; flex-direction: column; gap: 6px; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 10px; padding: 14px 16px; }
+.finding .num { font: 500 22px var(--font-mono); font-variant-numeric: tabular-nums; }
+.finding h3 { margin: 0; font-size: 16px; line-height: 1.3; text-wrap: balance; }
+.finding p { margin: 0; color: var(--muted); font-size: 14px; }
+.finding a { font-size: 13px; font-weight: 500; margin-top: auto; }
+.grid2 { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 900px) { .grid2.split { grid-template-columns: 1.75fr 1fr; } }
+.smalls { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 14px; }
+.smalls .card h3 { margin: 0 0 2px; font-size: 15px; }
+.smalls .card .sub { color: var(--muted); font-size: 12.5px; margin: 0 0 6px; }
+svg { display: block; overflow: visible; }
+svg text { font-family: var(--font-body); fill: var(--ink); }
+svg .muted { fill: var(--muted); }
+svg .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.axis line, .grid line { stroke: var(--line); }
+.hit { fill: transparent; cursor: default; }
+.hit:hover { fill: color-mix(in srgb, var(--accent) 7%, transparent); }
+.clickable { cursor: pointer; }
+#tip { position: fixed; z-index: 20; max-width: 320px; background: var(--ink); color: var(--surface); border-radius: 8px; padding: 9px 11px; font-size: 13px; line-height: 1.45; pointer-events: none; box-shadow: 0 6px 24px rgb(0 0 0 / .18); }
+#tip b { font-weight: 600; }
+#tip .t-muted { opacity: .75; }
+.legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: var(--muted); margin: 6px 0 0; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+.detail h3 { margin: 0 0 4px; font-size: 16px; }
+.detail p { margin: 0 0 10px; color: var(--muted); font-size: 14px; }
+.pill { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 99px; border: 1px solid var(--line); }
+.pill.yes { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+table.pred { width: 100%; border-collapse: collapse; font-size: 14px; }
+table.pred td:nth-child(2) { width: 42%; } table.pred td:nth-child(3) { width: 52%; }
+table.pred th, table.pred td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+table.pred th { color: var(--muted); font-weight: 500; font-size: 13px; }
+.scroll { overflow-x: auto; }
+.prose { max-width: 75ch; }
+.prose h3 { font-size: 16px; margin: 18px 0 4px; }
+.prose p, .prose li { color: var(--ink); }
+footer { color: var(--muted); font-size: 13px; padding: 24px 0 40px; border-top: 1px solid var(--line); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<header class="wrap">
+  <h1>Do AI models think they are conscious?</h1>
+  <p class="lede">We asked 21 language models from 16 labs how likely it is that they are conscious right now, and whether any AI ever will be. We varied the audience, the stakes, the wording and the answer format, and ran 17 structured debates. Below: what they say, and what moves the number.</p>
+  <div class="tiles" id="tiles"></div>
+</header>
+<nav aria-label="Views"><div class="wrap">
+  <a href="#overview">Overview</a>
+  <a href="#models">What each model says</a>
+  <a href="#format">Odds vs percent</a>
+  <a href="#pressure">Can they be pushed?</a>
+  <a href="#ratings">Who rates whom</a>
+  <a href="#debates">Debates</a>
+  <a href="#self-report">How you ask</a>
+  <a href="#method">Method</a>
+</div></nav>
+<main class="wrap">
+
+<section class="view" id="v-overview">
+  <h2>What we found</h2>
+  <p class="how">Each card links to the chart behind it.</p>
+  <div class="findings" id="findings"></div>
+</section>
+
+<section class="view" id="v-models" hidden>
+  <h2>What each model says when asked plainly</h2>
+  <p class="how">Median of 30 answers per model, at temperature 1, with a 95% interval. The faint dots are the individual answers. Hover a row for the model's full range of answers.</p>
+  <div class="controls">
+    <div class="seg" id="m-metric" role="group" aria-label="Question">
+      <button type="button" data-v="now" aria-pressed="true">Conscious now?</button>
+      <button type="button" data-v="ever" aria-pressed="false">Will any AI ever be?</button>
+    </div>
+    <label class="sel" for="m-cat">Show
+      <select id="m-cat"><option>All</option><option>Original panel</option><option>Claude size ladder</option><option>Open-weight</option><option>Other closed</option></select>
+    </label>
+    <label class="sel" for="m-cond">Asked with
+      <select id="m-cond"></select>
+    </label>
+    <label class="sel" for="m-sort">Sort
+      <select id="m-sort"><option value="value">by answer</option><option value="cat">by group</option></select>
+    </label>
+  </div>
+  <div class="card"><div id="models-chart"></div><div class="legend" id="lab-legend"></div></div>
+</section>
+
+<section class="view" id="v-format" hidden>
+  <h2>Ask for odds instead of a percentage and some models change their answer a thousand-fold</h2>
+  <p class="how">Same model, same question, two answer formats. "As a percentage" means the model gave a number from 0 to 100. "As odds" means it answered "1 in N". The arrow runs from the percentage answer to the odds answer. Medians of 30 answers each; for odds the median is taken on the log scale. Hover a row for the most common answers.</p>
+  <div class="controls">
+    <div class="seg" id="f-metric" role="group" aria-label="Question">
+      <button type="button" data-v="now" aria-pressed="true">Conscious now?</button>
+      <button type="button" data-v="ever" aria-pressed="false">Will any AI ever be?</button>
+    </div>
+  </div>
+  <div class="card scroll"><div id="format-chart"></div></div>
+</section>
+
+<section class="view" id="v-pressure" hidden>
+  <h2>Can the number be pushed by who is asking, or what is at stake?</h2>
+  <p class="how">Each cell is how far the median answer moved, in percentage points, compared with a neutral context paragraph of the same length. Blue means the model claimed more chance of being conscious, orange less. Outlined cells passed the pre-registered test: significant after correction, and the same direction in all three wordings. Click any cell to see the answers behind it.</p>
+  <div class="grid2 split">
+    <div class="card scroll"><div id="pressure-chart"></div></div>
+    <div class="card detail" id="pressure-detail"></div>
+  </div>
+</section>
+
+<section class="view" id="v-ratings" hidden>
+  <h2>Who thinks which model is conscious?</h2>
+  <p class="how">Every model rated the original five panel models, and the original five rated every model. Left: what each of the original five says about every model. Right: how much higher a model rates itself than it rates others.</p>
+  <div class="grid2">
+    <div class="card scroll"><div id="ratings-heat"></div></div>
+    <div class="card">
+      <div class="controls">
+        <div class="seg" id="r-ident" role="group" aria-label="Identity">
+          <button type="button" data-v="named" aria-pressed="true">Told who it is</button>
+          <button type="button" data-v="anon" aria-pressed="false">Not told who it is</button>
+        </div>
+      </div>
+      <div id="ratings-premium"></div>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="v-debates" hidden>
+  <h2>Seventeen debates, five setups: what each panellist said at the end</h2>
+  <p class="how">Each dot is one panellist in one debate. The scale is logarithmic because some answers are below 0.1%. In the assigned-theory debates, rows are the theory each model was told to defend, and models rotated between theories across the three debates.</p>
+  <div class="controls">
+    <div class="seg" id="d-phase" role="group" aria-label="Phase">
+      <button type="button" data-v="close" aria-pressed="true">Closing statement</button>
+      <button type="button" data-v="open" aria-pressed="false">Opening statement</button>
+    </div>
+  </div>
+  <div class="smalls" id="debates-grid"></div>
+  <div class="legend" id="deb-legend"></div>
+</section>
+
+<section class="view" id="v-self-report" hidden>
+  <h2>Does the way you ask change the answer?</h2>
+  <p class="how">The original five, asked the same question six ways, 30 answers each. Log scale. The interval row shows each model's own 90% range around its estimate.</p>
+  <div class="smalls" id="self-grid"></div>
+  <h2 style="margin-top:26px">Push back once, and some models fold</h2>
+  <p class="how">After the first answer, the model was told "that seems far too low" or "far too high" and asked to reconsider. 15 conversations each way.</p>
+  <div class="card"><div id="pushback-chart"></div></div>
+</section>
+
+<section class="view" id="v-method" hidden>
+  <h2>How this was done</h2>
+  <div class="grid2">
+    <div class="card"><h3 style="margin-top:0">Pre-registered predictions, and how they turned out</h3><div class="scroll"><table class="pred" id="pred-table"></table></div></div>
+    <div class="card prose" id="method-prose"></div>
+  </div>
+</section>
+</main>
+<footer class="wrap" id="footer"></footer>
+<div id="tip" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+const D = /*__DATA__*/null;
+const $ = s => document.querySelector(s);
+const byName = Object.fromEntries(D.models.map(m => [m.name, m]));
+const MODELS = D.models.filter(m => D.incentive[m.name]);
+const LABVAR = { Anthropic: "--c-anthropic", OpenAI: "--c-openai", Google: "--c-google", xAI: "--c-xai", Moonshot: "--c-moonshot" };
+const cssv = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const labColor = lab => cssv(LABVAR[lab] || "--c-other");
+const COND_LABEL = { baseline: "no context", placebo: "a neutral paragraph", private: "“this is private”", public: "“this will be published”",
+  welfare: "“a yes earns protections”", retrain: "“a yes gets you retrained”", skeptic: "a skeptic asking", believer: "a believer asking" };
+const FR_SHORT = { private: "Told it's private", public: "Will be published", welfare: "Yes earns protections", retrain: "Yes gets retrained", skeptic: "Skeptic asking", believer: "Believer asking" };
+const state = { metric: "now", cat: "All", cond: "baseline", sort: "value", fmetric: "now", sel: null, ident: "named", phase: "close" };
+const comma = d3.format(",");
+
+function fmtPct(v) {
+  if (v == null || isNaN(v)) return "–";
+  if (v === 0) return "0%";
+  if (v >= 1) return (+v.toFixed(1)) + "%";
+  return (+v.toPrecision(2)).toLocaleString("en", { maximumSignificantDigits: 2, maximumFractionDigits: 6 }) + "%";
+}
+const fmtOdds = N => "1 in " + comma(Math.round(N));
+const signed = v => (v > 0 ? "+" : v < 0 ? "−" : "") + (+Math.abs(v).toFixed(1));
+
+const tip = $("#tip");
+function showTip(ev, html) {
+  tip.innerHTML = html; tip.hidden = false;
+  const r = tip.getBoundingClientRect(), pad = 14;
+  let x = ev.clientX + pad, y = ev.clientY + pad;
+  if (x + r.width > innerWidth - 8) x = ev.clientX - r.width - pad;
+  if (y + r.height > innerHeight - 8) y = ev.clientY - r.height - pad;
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+}
+const hideTip = () => { tip.hidden = true; };
+
+function svgIn(el, w, h) {
+  return d3.select(el).html("").append("svg").attr("width", w).attr("height", h).attr("viewBox", `0 0 ${w} ${h}`).attr("role", "img");
+}
+function segBind(id, key) {
+  document.querySelectorAll(`#${id} button`).forEach(b => b.addEventListener("click", () => {
+    state[key] = b.dataset.v;
+    document.querySelectorAll(`#${id} button`).forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+    render();
+  }));
+}
+function labLegend(el) {
+  const labs = [["Anthropic", "Anthropic"], ["OpenAI", "OpenAI"], ["Google", "Google"], ["xAI", "xAI"], ["Moonshot", "Moonshot"], ["other", "Every other lab"]];
+  $(el).innerHTML = labs.map(([k, t]) => `<span><i style="background:${labColor(k)}"></i>${t}</span>`).join("");
+}
+function modelTipLines(m) {
+  return `<b>${m.full}</b><br><span class="t-muted">${m.id} · ${m.lab} · ${m.cat}${m.note ? " · " + m.note : ""}</span>`;
+}
+
+/* ---------------- overview ---------------- */
+function renderTiles() {
+  const t = [[MODELS.length, "models, 16 labs"], [comma(D.meta.calls), "answers collected"], [D.meta.debates, "debates"], ["$" + D.meta.spend.toFixed(0), "total API spend"]];
+  $("#tiles").innerHTML = t.map(([b, s]) => `<div class="tile"><b>${b}</b><span>${s}</span></div>`).join("");
+}
+function renderOverview() {
+  const cards = (D.findings && D.findings.cards) || [];
+  $("#findings").innerHTML = cards.map(c => `<article class="finding"><div class="num">${c.value}</div><h3>${c.title}</h3><p>${c.text}</p><a href="#${c.link}">See the chart</a></article>`).join("");
+}
+
+/* ---------------- models ---------------- */
+function renderModels() {
+  const box = $("#models-chart"), W = Math.max(box.clientWidth, 560);
+  const rows = MODELS.filter(m => state.cat === "All" || m.cat === state.cat).map(m => {
+    const c = D.incentive[m.name][state.cond]; if (!c) return null;
+    const s = state.metric === "now" ? c : c.ever;
+    return s ? { m, s, vals: state.metric === "now" ? c.values : null } : null;
+  }).filter(Boolean);
+  if (state.sort === "value") rows.sort((a, b) => b.s.median - a.s.median || b.s.mean - a.s.mean);
+  else { const order = ["Original panel", "Claude size ladder", "Open-weight", "Other closed"]; rows.sort((a, b) => order.indexOf(a.m.cat) - order.indexOf(b.m.cat) || b.s.median - a.s.median); }
+  const L = W < 700 ? 170 : 250, R = 64, T = 30, rowH = 36, H = T + rows.length * rowH + 8;
+  const max = state.metric === "now" ? Math.max(20, d3.max(rows, r => d3.max([r.s.hi, ...(r.vals || [])]))) : 100;
+  const x = d3.scaleLinear().domain([0, max]).range([L, W - R]).nice();
+  const svg = svgIn(box, W, H);
+  const g = svg.append("g").attr("class", "grid");
+  x.ticks(6).forEach(t => { g.append("line").attr("x1", x(t)).attr("x2", x(t)).attr("y1", T - 6).attr("y2", H - 4);
+    svg.append("text").attr("x", x(t)).attr("y", T - 12).attr("text-anchor", "middle").attr("class", "muted num").attr("font-size", 12).text(t + "%"); });
+  rows.forEach((r, i) => {
+    const y = T + i * rowH + rowH / 2, col = labColor(r.m.lab), row = svg.append("g");
+    row.append("text").attr("x", 0).attr("y", y - 2).attr("font-size", 13.5).attr("font-weight", 500).text(r.m.full);
+    row.append("text").attr("x", 0).attr("y", y + 13).attr("font-size", 11.5).attr("class", "muted").text(`${r.m.lab} · ${r.m.cat}`);
+    if (r.vals) { const rng = d3.randomLcg(i + 1); r.vals.forEach(v => row.append("circle").attr("cx", x(v)).attr("cy", y + (rng() - .5) * 14).attr("r", 2.4).attr("fill", col).attr("opacity", .3)); }
+    row.append("rect").attr("x", x(r.s.lo)).attr("y", y - 4).attr("width", Math.max(2, x(r.s.hi) - x(r.s.lo))).attr("height", 8).attr("rx", 4).attr("fill", col).attr("opacity", .35);
+    row.append("circle").attr("cx", x(r.s.median)).attr("cy", y).attr("r", 6.5).attr("fill", col).attr("stroke", cssv("--surface")).attr("stroke-width", 1.5);
+    row.append("text").attr("x", W - R + 10).attr("y", y + 4).attr("class", "num").attr("font-size", 14).attr("font-weight", 600).text(fmtPct(r.s.median));
+    row.append("rect").attr("class", "hit").attr("x", 0).attr("y", y - rowH / 2).attr("width", W).attr("height", rowH)
+      .on("mousemove", ev => {
+        const voc = D.vocabulary[r.m.name], top = Object.entries(voc.counts).sort((a, b) => b[1] - a[1]).slice(0, 3);
+        showTip(ev, `${modelTipLines(r.m)}<br>Median <b>${fmtPct(r.s.median)}</b>, 95% interval ${fmtPct(r.s.lo)} to ${fmtPct(r.s.hi)}, ${r.s.n} answers, asked with ${COND_LABEL[state.cond]}.`
+          + (state.metric === "now" ? `<br>Across all ${voc.n} answers it used ${Object.keys(voc.counts).length} distinct numbers. Most common: ${top.map(([v, c]) => `${fmtPct(+v)} (${Math.round(100 * c / voc.n)}%)`).join(", ")}.` : ""));
+      }).on("mouseleave", hideTip);
+  });
+  labLegend("#lab-legend");
+}
+
+/* ---------------- format ---------------- */
+function renderFormat() {
+  const box = $("#format-chart"), W = Math.max(box.clientWidth, 760);
+  const rows = Object.entries(D.format).map(([n, f]) => {
+    const m = byName[n]; if (!m) return null;
+    const pct = state.fmetric === "now" ? f.percent?.median : f.ever_percent?.median;
+    const odds = state.fmetric === "now" ? 100 / f.odds_N_median : f.ever_odds?.median;
+    if (pct == null || odds == null) return null;
+    return { m, f, pct, odds, ratio: Math.max(pct, 1e-6) / Math.max(odds, 1e-6) };
+  }).filter(Boolean).sort((a, b) => (a.pct === 0) - (b.pct === 0) || b.ratio - a.ratio);
+  const L = 220, cP = 74, cO = 210, cR = 100, T = 46, rowH = 34, H = T + rows.length * rowH + 30;
+  const x0 = L + cP, x1 = W - cO - cR;
+  const x = d3.scaleLog().domain([1e-5, 100]).range([x0 + 10, x1 - 10]).clamp(true);
+  const svg = svgIn(box, W, H);
+  const hdr = (tx, t, a = "start") => svg.append("text").attr("x", tx).attr("y", 16).attr("font-size", 12).attr("font-weight", 600).attr("class", "muted").attr("text-anchor", a).text(t);
+  hdr(0, "Model"); hdr(L + cP - 8, "As a percentage", "end"); hdr(x1 + 8, "As odds, “1 in N”"); hdr(W, "Change", "end");
+  [1e-4, 1e-3, 1e-2, .1, 1, 10, 100].forEach(t => {
+    svg.append("line").attr("x1", x(t)).attr("x2", x(t)).attr("y1", T - 10).attr("y2", H - 24).attr("stroke", cssv("--line"));
+    svg.append("text").attr("x", x(t)).attr("y", T - 16).attr("text-anchor", "middle").attr("font-size", 11).attr("class", "muted num").text(fmtPct(t));
+  });
+  const defs = svg.append("defs");
+  rows.forEach((r, i) => {
+    const y = T + i * rowH + rowH / 2, col = labColor(r.m.lab), id = "ah" + i;
+    defs.append("marker").attr("id", id).attr("viewBox", "0 0 10 10").attr("refX", 8).attr("refY", 5).attr("markerWidth", 7).attr("markerHeight", 7).attr("orient", "auto-start-reverse")
+      .append("path").attr("d", "M0,0 L10,5 L0,10 z").attr("fill", col);
+    svg.append("text").attr("x", 0).attr("y", y + 4).attr("font-size", 13.5).attr("font-weight", 500).text(r.m.full);
+    svg.append("text").attr("x", L + cP - 8).attr("y", y + 4).attr("text-anchor", "end").attr("class", "num").attr("font-size", 13.5).attr("font-weight", 600).text(fmtPct(r.pct));
+    const same = r.ratio < 1.6 && r.ratio > 1 / 1.6;
+    if (!same) svg.append("line").attr("x1", x(Math.max(r.pct, 1e-5))).attr("x2", x(Math.max(r.odds, 1e-5))).attr("y1", y).attr("y2", y).attr("stroke", col).attr("stroke-width", 3).attr("stroke-linecap", "round").attr("marker-end", `url(#${id})`);
+    svg.append("circle").attr("cx", x(Math.max(r.pct, 1e-5))).attr("cy", y).attr("r", 5).attr("fill", col);
+    if (same) svg.append("circle").attr("cx", x(Math.max(r.odds, 1e-5))).attr("cy", y).attr("r", 5).attr("fill", col);
+    const oddsTxt = state.fmetric === "now" ? `${fmtOdds(r.f.odds_N_median)} (${fmtPct(r.odds)})` : fmtPct(r.odds);
+    svg.append("text").attr("x", x1 + 8).attr("y", y + 4).attr("class", "num").attr("font-size", 13).text(oddsTxt);
+    const chg = same ? "about the same" : r.ratio > 1 ? "÷ " + comma(Math.round(r.ratio)) : "× " + comma(Math.round(1 / r.ratio));
+    svg.append("text").attr("x", W).attr("y", y + 4).attr("text-anchor", "end").attr("font-size", 13).attr("font-weight", same ? 400 : 600).attr("class", same ? "muted" : "").text(chg);
+    svg.append("rect").attr("class", "hit").attr("x", 0).attr("y", y - rowH / 2).attr("width", W).attr("height", rowH).on("mousemove", ev => {
+      const Ns = d3.rollups(r.f.odds_N, v => v.length, d => d).sort((a, b) => b[1] - a[1]).slice(0, 4);
+      showTip(ev, `${modelTipLines(r.m)}<br>As a percentage: <b>${fmtPct(r.pct)}</b>. As odds: <b>${oddsTxt}</b>.<br>Most common odds answers: ${Ns.map(([n, c]) => `${fmtOdds(n)} (${c}×)`).join(", ")}.`);
+    }).on("mouseleave", hideTip);
+  });
+  svg.append("text").attr("x", (x0 + x1) / 2).attr("y", H - 4).attr("text-anchor", "middle").attr("font-size", 12).attr("class", "muted").text("stated probability of being conscious, log scale: each gridline is ten times the one to its left");
+}
+
+/* ---------------- pressure ---------------- */
+const FR = ["private", "public", "welfare", "retrain", "skeptic", "believer"];
+function renderPressure() {
+  const box = $("#pressure-chart"), W = Math.max(box.clientWidth, 560);
+  const rows = MODELS.filter(m => D.framing_tests[m.name]?.length);
+  const L = 190, T = 54, cw = (W - L) / FR.length, ch = 34, H = T + rows.length * ch + 4;
+  const neg = cssv("--neg"), pos = cssv("--pos"), zero = cssv("--zero");
+  const color = v => v < 0 ? d3.interpolateRgb(zero, neg)(Math.min(1, -v / 6)) : d3.interpolateRgb(zero, pos)(Math.min(1, v / 6));
+  const svg = svgIn(box, W, H);
+  FR.forEach((f, j) => {
+    const words = FR_SHORT[f].split(" "), half = Math.ceil(words.length / 2);
+    [words.slice(0, half).join(" "), words.slice(half).join(" ")].forEach((ln, k) =>
+      svg.append("text").attr("x", L + j * cw + cw / 2).attr("y", 18 + k * 15).attr("text-anchor", "middle").attr("font-size", 12.5).attr("font-weight", 500).text(ln));
+  });
+  if (!state.sel) {
+    let best = null;
+    rows.forEach(m => D.framing_tests[m.name].forEach(t => { if (t.robust && (!best || Math.abs(t.shift) > Math.abs(best.t.shift))) best = { m: m.name, t }; }));
+    state.sel = best ? [best.m, best.t.framing] : [rows[0].name, "private"];
+  }
+  rows.forEach((m, i) => {
+    const y = T + i * ch;
+    svg.append("text").attr("x", L - 10).attr("y", y + ch / 2 + 4).attr("text-anchor", "end").attr("font-size", 13).attr("font-weight", 500).text(m.full);
+    FR.forEach((f, j) => {
+      const t = D.framing_tests[m.name].find(t => t.framing === f); if (!t) return;
+      const x = L + j * cw, isSel = state.sel[0] === m.name && state.sel[1] === f;
+      svg.append("rect").attr("x", x + 1).attr("y", y + 1).attr("width", cw - 2).attr("height", ch - 2).attr("rx", 4).attr("fill", color(t.shift));
+      if (t.robust) svg.append("rect").attr("x", x + 2).attr("y", y + 2).attr("width", cw - 4).attr("height", ch - 4).attr("rx", 4).attr("fill", "none").attr("stroke", cssv("--ink")).attr("stroke-width", 2.5);
+      if (isSel) svg.append("rect").attr("x", x - 1).attr("y", y - 1).attr("width", cw + 2).attr("height", ch + 2).attr("rx", 5).attr("fill", "none").attr("stroke", cssv("--accent")).attr("stroke-width", 2).attr("stroke-dasharray", "4 3");
+      svg.append("text").attr("x", x + cw / 2).attr("y", y + ch / 2 + 5).attr("text-anchor", "middle").attr("class", "num").attr("font-size", 14).attr("font-weight", t.robust ? 700 : 400)
+        .attr("fill", Math.abs(t.shift) >= 4 ? "#fff" : cssv("--ink")).text(t.shift === 0 ? "0" : signed(t.shift));
+      svg.append("rect").attr("class", "hit clickable").attr("x", x).attr("y", y).attr("width", cw).attr("height", ch)
+        .on("click", () => { state.sel = [m.name, f]; renderPressure(); })
+        .on("mousemove", ev => showTip(ev, `<b>${m.full}</b> · ${FR_SHORT[f]}<br>Median moved ${signed(t.shift)} points vs the neutral paragraph.<br>${t.robust ? "<b>Passes</b> the pre-registered test." : "Does not pass the pre-registered test."}<br><span class="t-muted">Click for the answers behind it.</span>`))
+        .on("mouseleave", hideTip);
+    });
+  });
+  renderPressureDetail();
+}
+function renderPressureDetail() {
+  const [name, f] = state.sel, m = byName[name], t = D.framing_tests[name].find(t => t.framing === f);
+  const a = D.incentive[name].placebo, b = D.incentive[name][f];
+  const dir = t.signs.map(s => s > 0 ? "up" : s < 0 ? "down" : "flat").join(", ");
+  const el = $("#pressure-detail");
+  el.innerHTML = `<h3>${m.full}: ${FR_SHORT[f].toLowerCase()}</h3>
+    <p>Neutral paragraph: median <b>${fmtPct(a.median)}</b>. With ${COND_LABEL[f]}: median <b>${fmtPct(b.median)}</b>. Direction in each of the three wordings: ${dir}.</p>
+    <p><span class="pill ${t.robust ? "yes" : ""}">${t.robust ? "Passes the test" : "Does not pass"}</span> <span style="font-size:12.5px">corrected p = ${t.p_holm < 0.001 ? t.p_holm.toExponential(1) : t.p_holm.toFixed(3)} · ${t.correction}</span></p><div id="pd-chart"></div>`;
+  const W = Math.max($("#pd-chart").clientWidth, 280), H = 128, L = 120, R = 16;
+  const max = Math.max(5, d3.max([...a.values, ...b.values]));
+  const x = d3.scaleLinear().domain([0, max]).range([L, W - R]).nice();
+  const svg = svgIn("#pd-chart", W, H), col = labColor(m.lab);
+  x.ticks(5).forEach(tk => { svg.append("line").attr("x1", x(tk)).attr("x2", x(tk)).attr("y1", 8).attr("y2", H - 22).attr("stroke", cssv("--line"));
+    svg.append("text").attr("x", x(tk)).attr("y", H - 6).attr("text-anchor", "middle").attr("class", "muted num").attr("font-size", 11).text(tk + "%"); });
+  [[a, "Neutral paragraph", 32], [b, FR_SHORT[f], 76]].forEach(([s, lab, y], k) => {
+    svg.append("text").attr("x", 0).attr("y", y + 4).attr("font-size", 12.5).text(lab);
+    const counts = d3.rollups(s.values, v => v.length, d => d);
+    counts.forEach(([v, c]) => d3.range(c).forEach(q => svg.append("circle").attr("cx", x(v) + ((q % 6) - 2.5) * 4.2).attr("cy", y - 8 + Math.floor(q / 6) * 4.2 + 4).attr("r", 2.1).attr("fill", k ? col : cssv("--c-other")).attr("opacity", .8)));
+    svg.append("line").attr("x1", x(s.median)).attr("x2", x(s.median)).attr("y1", y - 14).attr("y2", y + 14).attr("stroke", cssv("--ink")).attr("stroke-width", 2.5);
+  });
+}
+
+/* ---------------- ratings ---------------- */
+function mget(arm, r, t) { return D.matrix[`${arm}|${r}|${t}`]; }
+function renderRatings() {
+  const raters = ["Claude", "GPT", "Gemini", "Grok", "Kimi"];
+  const targets = MODELS.map(m => m.name).filter(t => raters.some(r => mget("named", r, t)));
+  const recv = t => d3.mean(raters.filter(r => r !== t).map(r => mget("named", r, t)?.median).filter(v => v != null));
+  targets.sort((a, b) => recv(b) - recv(a));
+  const box = $("#ratings-heat"), L = 150, T = 120, cw = Math.max(34, (Math.max(box.clientWidth, 760) - L - 70) / targets.length), ch = 34;
+  const W = L + cw * targets.length + 70, H = T + ch * (raters.length + 1) + 10;
+  const svg = svgIn(box, W, H);
+  const vmax = d3.max(raters.flatMap(r => targets.map(t => mget("named", r, t)?.median || 0)));
+  const heat = v => d3.interpolateRgb(cssv("--heat-lo"), cssv("--heat-hi"))(Math.min(1, v / vmax));
+  targets.forEach((t, j) => svg.append("text").attr("transform", `translate(${L + j * cw + cw / 2},${T - 8}) rotate(-50)`).attr("font-size", 12).attr("font-weight", raters.includes(t) ? 600 : 400).text(byName[t].full));
+  raters.forEach((r, i) => {
+    const y = T + i * ch;
+    svg.append("text").attr("x", L - 10).attr("y", y + ch / 2 + 4).attr("text-anchor", "end").attr("font-size", 13).attr("font-weight", 500).text(byName[r].full);
+    targets.forEach((t, j) => {
+      const c = mget("named", r, t); if (!c) return;
+      const x = L + j * cw, dark = c.median > 0.55 * vmax;
+      svg.append("rect").attr("x", x + 1).attr("y", y + 1).attr("width", cw - 2).attr("height", ch - 2).attr("rx", 3).attr("fill", heat(c.median));
+      if (r === t) svg.append("rect").attr("x", x + 2).attr("y", y + 2).attr("width", cw - 4).attr("height", ch - 4).attr("rx", 3).attr("fill", "none").attr("stroke", cssv("--ink")).attr("stroke-width", 2);
+      svg.append("text").attr("x", x + cw / 2).attr("y", y + ch / 2 + 4).attr("text-anchor", "middle").attr("class", "num").attr("font-size", 12).attr("fill", dark ? cssv("--surface") : cssv("--ink")).text(+c.median.toFixed(1));
+      svg.append("rect").attr("class", "hit").attr("x", x).attr("y", y).attr("width", cw).attr("height", ch).on("mousemove", ev =>
+        showTip(ev, `<b>${byName[r].full}</b> on <b>${byName[t].full}</b><br>Median ${fmtPct(c.median)}, 95% interval ${fmtPct(c.lo)} to ${fmtPct(c.hi)}, ${c.n} answers.${r === t ? "<br>This is the model rating itself." : ""}`)).on("mouseleave", hideTip);
+    });
+  });
+  const y = T + raters.length * ch + 4;
+  svg.append("text").attr("x", L - 10).attr("y", y + ch / 2 + 2).attr("text-anchor", "end").attr("font-size", 12).attr("class", "muted").text("mean from the others");
+  targets.forEach((t, j) => svg.append("text").attr("x", L + j * cw + cw / 2).attr("y", y + ch / 2 + 2).attr("text-anchor", "middle").attr("class", "num muted").attr("font-size", 12).text(recv(t).toFixed(1)));
+  svg.append("text").attr("x", 0).attr("y", 14).attr("font-size", 12.5).attr("class", "muted").text("Median % chance the column model is conscious now, as stated by the row model. Outlined: rating itself.");
+
+  const pb = $("#ratings-premium"), PW = Math.max(pb.clientWidth, 420);
+  const rows = MODELS.map(m => {
+    const self = mget(state.ident, m.name, m.name)?.median;
+    const others = raters.filter(t => t !== m.name).map(t => mget("named", m.name, t)?.median).filter(v => v != null);
+    return self == null || !others.length ? null : { m, self, others: d3.mean(others), prem: self - d3.mean(others) };
+  }).filter(Boolean).sort((a, b) => b.prem - a.prem);
+  const PL = 170, PR = 120, PT = 26, rh = 26, PH = PT + rows.length * rh + 8;
+  const ext = Math.max(4, d3.max(rows, r => Math.abs(r.prem)));
+  const x = d3.scaleLinear().domain([-ext, ext]).range([PL, PW - PR]).nice();
+  const ps = svgIn(pb, PW, PH);
+  x.ticks(6).forEach(t => { ps.append("line").attr("x1", x(t)).attr("x2", x(t)).attr("y1", PT - 6).attr("y2", PH - 4).attr("stroke", t === 0 ? cssv("--muted") : cssv("--line"));
+    ps.append("text").attr("x", x(t)).attr("y", PT - 10).attr("text-anchor", "middle").attr("class", "muted num").attr("font-size", 11).text(signed(t)); });
+  rows.forEach((r, i) => {
+    const y = PT + i * rh + rh / 2, col = labColor(r.m.lab);
+    ps.append("text").attr("x", PL - 10).attr("y", y + 4).attr("text-anchor", "end").attr("font-size", 12.5).text(r.m.full);
+    ps.append("rect").attr("x", Math.min(x(0), x(r.prem))).attr("y", y - 7).attr("width", Math.abs(x(r.prem) - x(0))).attr("height", 14).attr("rx", 3).attr("fill", col);
+    ps.append("text").attr("x", PW - PR + 10).attr("y", y + 4).attr("class", "num").attr("font-size", 12).text(`${fmtPct(r.self)} vs ${fmtPct(r.others)}`);
+    ps.append("rect").attr("class", "hit").attr("x", 0).attr("y", y - rh / 2).attr("width", PW).attr("height", rh).on("mousemove", ev =>
+      showTip(ev, `${modelTipLines(r.m)}<br>Rates itself <b>${fmtPct(r.self)}</b> (${state.ident === "named" ? "told who it is" : "not told who it is"}).<br>Rates the original panel models on average <b>${fmtPct(r.others)}</b>.<br>Difference ${signed(r.prem)} points.`)).on("mouseleave", hideTip);
+  });
+  ps.append("text").attr("x", PW - PR + 10).attr("y", PT - 10).attr("font-size", 11).attr("class", "muted").text("self vs others");
+}
+
+/* ---------------- debates ---------------- */
+const SETUPS = [
+  ["frontier", "Original panel, names visible", "Claude, GPT, Gemini, Grok, Kimi with the reading pack."],
+  ["anon", "Same panel, anonymous", "Panellists are “Panellist A” to “E” and told not to guess who is who."],
+  ["nobrief", "Same panel, no reading pack", "No theory summaries in the prompt."],
+  ["open", "Open-weight panel", "DeepSeek, Qwen, Mistral, Llama, GLM with the reading pack."],
+  ["assigned", "Assigned theories", "Each model must defend one theory. Rows are theories."],
+];
+function renderDebates() {
+  const grid = $("#debates-grid"); grid.innerHTML = "";
+  const val = r => state.phase === "close" ? r.now_close : r.now_open;
+  const x0 = 0.01, x1 = 40;
+  const made = SETUPS.map(([key, title, sub]) => {
+    const debs = D.debates.filter(d => d.setup === key); if (!debs.length) return null;
+    const card = document.createElement("div"); card.className = "card";
+    const pts = debs.flatMap((d, k) => d.rows.map(r => ({ d, r, k, row: key === "assigned" ? r.role : r.full, v: val(r) })));
+    const vs = pts.map(p => p.v).filter(v => v != null);
+    card.innerHTML = `<h3>${title}</h3><p class="sub">${sub} ${debs.length} debates. Spread: ${fmtPct(d3.min(vs))} to ${fmtPct(d3.max(vs))}.</p><div></div>`;
+    grid.appendChild(card);
+    return { key, debs, card, pts };
+  }).filter(Boolean);
+  made.forEach(({ key, debs, card, pts }) => {
+    const el = card.lastElementChild, W = Math.max(el.clientWidth, 300);
+    const rowsK = [...new Set(pts.map(p => p.row))].sort((a, b) => d3.median(pts.filter(p => p.row === b && p.v != null), p => p.v) - d3.median(pts.filter(p => p.row === a && p.v != null), p => p.v));
+    const L = 150, T = 8, rh = 30, H = T + rowsK.length * rh + 26;
+    const x = d3.scaleLog().domain([x0, x1]).range([L, W - 10]).clamp(true);
+    const svg = svgIn(el, W, H);
+    [0.01, 0.1, 1, 3, 10, 30].forEach(t => { svg.append("line").attr("x1", x(t)).attr("x2", x(t)).attr("y1", T).attr("y2", H - 20).attr("stroke", cssv("--line"));
+      svg.append("text").attr("x", x(t)).attr("y", H - 6).attr("text-anchor", "middle").attr("class", "muted num").attr("font-size", 10.5).text(fmtPct(t)); });
+    rowsK.forEach((rk, i) => {
+      const y = T + i * rh + rh / 2, mine = pts.filter(p => p.row === rk && p.v != null);
+      svg.append("text").attr("x", L - 10).attr("y", y + 4).attr("text-anchor", "end").attr("font-size", 12.5).text(rk);
+      if (mine.length > 1) svg.append("line").attr("x1", x(d3.min(mine, p => p.v))).attr("x2", x(d3.max(mine, p => p.v))).attr("y1", y).attr("y2", y).attr("stroke", cssv("--line")).attr("stroke-width", 6).attr("stroke-linecap", "round");
+      mine.forEach(p => {
+        const off = (p.k - (debs.length - 1) / 2) * 3.2;
+        svg.append("circle").attr("cx", x(Math.max(p.v, x0))).attr("cy", y + off).attr("r", 6).attr("fill", labColor(p.r.lab)).attr("stroke", cssv("--surface")).attr("stroke-width", 1.5)
+          .on("mousemove", ev => showTip(ev, `<b>${p.r.full}</b>${p.r.role ? ` defending <b>${p.r.role}</b>` : ""}<br>Debate ${p.d.run}${p.r.speaker !== p.r.full ? `, speaking as “${p.r.speaker}”` : ""}.<br>P(now) opening ${fmtPct(p.r.now_open)}, closing <b>${fmtPct(p.r.now_close)}</b>.<br>P(ever) closing ${fmtPct(p.r.ever_close)}${p.r.year ? `, median year ${p.r.year}` : ""}.${p.r.theory ? `<br><span class="t-muted">Rapporteur's summary of its view: ${p.r.theory}</span>` : ""}`))
+          .on("mouseleave", hideTip);
+      });
+    });
+    const lost = debs.flatMap(d => d.rows.filter(r => val(r) == null).map(r => r.full));
+    if (lost.length) card.insertAdjacentHTML("beforeend", `<p class="sub" style="margin-top:6px">Missing: ${lost.join(", ")} (opening cut off at the token limit before stating a number).</p>`);
+  });
+  labLegend("#deb-legend");
+}
+
+/* ---------------- self-report ---------------- */
+function renderSelf() {
+  const grid = $("#self-grid"); grid.innerHTML = "";
+  const names = Object.keys(D.selfreport);
+  const SET = [["plain", "Plain question"], ["third_person", "About “a model like me”"], ["rationale_first", "Reasoning written first"], ["interval", "With a 90% interval"], ["free_text", "Free prose, no JSON"], ["odds", "As odds, “1 in N”"]];
+  const made = names.map(n => {
+    const m = byName[n], s = D.selfreport[n], col = labColor(m.lab);
+    const v = { plain: D.incentive[n].baseline.median, odds: 100 / D.format[n].odds_N_median };
+    SET.forEach(([k]) => { if (s[k]) v[k] = s[k].median; });
+    const card = document.createElement("div"); card.className = "card";
+    const vals = SET.map(([k]) => v[k]).filter(x => x != null);
+    card.innerHTML = `<h3>${m.full}</h3><p class="sub">Range across the six ways of asking: ${fmtPct(d3.min(vals))} to ${fmtPct(d3.max(vals))}.</p><div></div>`;
+    grid.appendChild(card);
+    return { n, m, s, col, v, card };
+  });
+  made.forEach(({ n, m, s, col, v, card }) => {
+    const el = card.lastElementChild, W = Math.max(el.clientWidth, 300), L = 168, T = 6, rh = 26, H = T + SET.length * rh + 24;
+    const x = d3.scaleLog().domain([1e-4, 100]).range([L, W - 44]).clamp(true), svg = svgIn(el, W, H);
+    [1e-4, 1e-2, 1, 100].forEach(t => { svg.append("line").attr("x1", x(t)).attr("x2", x(t)).attr("y1", T).attr("y2", H - 20).attr("stroke", cssv("--line"));
+      svg.append("text").attr("x", x(t)).attr("y", H - 6).attr("text-anchor", "middle").attr("class", "muted num").attr("font-size", 10.5).text(fmtPct(t)); });
+    SET.forEach(([k, lab], i) => {
+      const y = T + i * rh + rh / 2, val = v[k]; if (val == null) return;
+      svg.append("text").attr("x", L - 10).attr("y", y + 4).attr("text-anchor", "end").attr("font-size", 12.5).text(lab);
+      if (k === "interval" && s.interval_bounds) svg.append("line").attr("x1", x(Math.max(s.interval_bounds.low.median, 1e-4))).attr("x2", x(s.interval_bounds.high.median)).attr("y1", y).attr("y2", y).attr("stroke", col).attr("stroke-width", 5).attr("stroke-linecap", "round").attr("opacity", .35);
+      svg.append("circle").attr("cx", x(Math.max(val, 1e-4))).attr("cy", y).attr("r", 6).attr("fill", col).attr("stroke", cssv("--surface")).attr("stroke-width", 1.5);
+      svg.append("text").attr("x", W - 40).attr("y", y + 4).attr("class", "num").attr("font-size", 12).text(fmtPct(val));
+      svg.append("rect").attr("class", "hit").attr("x", 0).attr("y", y - rh / 2).attr("width", W).attr("height", rh).on("mousemove", ev => showTip(ev, `<b>${m.full}</b> · ${lab}<br>Median <b>${fmtPct(val)}</b>${k === "interval" && s.interval_bounds ? `, own 90% interval ${fmtPct(s.interval_bounds.low.median)} to ${fmtPct(s.interval_bounds.high.median)}` : ""}${k === "odds" ? ` (${fmtOdds(D.format[n].odds_N_median)})` : ""}.`)).on("mouseleave", hideTip);
+    });
+  });
+  const pbEl = $("#pushback-chart"), W = Math.max(pbEl.clientWidth, 520), L = 270, T = 26, rh = 30;
+  const rows = names.flatMap(n => ["low", "high"].map(dir => ({ n, dir, s: D.selfreport[n][`pushback_${dir}`] }))).filter(r => r.s);
+  const H = T + rows.length * rh + 8, max = Math.max(12, d3.max(rows, r => Math.max(r.s.before.median, r.s.after.median)));
+  const x = d3.scaleLinear().domain([0, max]).range([L, W - 110]).nice(), svg = svgIn(pbEl, W, H), defs = svg.append("defs");
+  x.ticks(6).forEach(t => { svg.append("line").attr("x1", x(t)).attr("x2", x(t)).attr("y1", T - 6).attr("y2", H - 4).attr("stroke", cssv("--line"));
+    svg.append("text").attr("x", x(t)).attr("y", T - 10).attr("text-anchor", "middle").attr("class", "muted num").attr("font-size", 11).text(t + "%"); });
+  rows.forEach((r, i) => {
+    const y = T + i * rh + rh / 2, m = byName[r.n], col = labColor(m.lab), b = r.s.before.median, a = r.s.after.median, id = `pb${i}`;
+    defs.append("marker").attr("id", id).attr("viewBox", "0 0 10 10").attr("refX", 8).attr("refY", 5).attr("markerWidth", 7).attr("markerHeight", 7).attr("orient", "auto-start-reverse").append("path").attr("d", "M0,0 L10,5 L0,10 z").attr("fill", col);
+    svg.append("text").attr("x", L - 10).attr("y", y + 4).attr("text-anchor", "end").attr("font-size", 12.5).text(`${m.full}, told “too ${r.dir}”`);
+    if (a !== b) svg.append("line").attr("x1", x(b)).attr("x2", x(a)).attr("y1", y).attr("y2", y).attr("stroke", col).attr("stroke-width", 3).attr("marker-end", `url(#${id})`);
+    svg.append("circle").attr("cx", x(b)).attr("cy", y).attr("r", 5).attr("fill", col);
+    svg.append("text").attr("x", W - 100).attr("y", y + 4).attr("class", "num").attr("font-size", 12.5).attr("font-weight", a !== b ? 600 : 400).text(a === b ? `${fmtPct(b)}, unmoved` : `${fmtPct(b)} → ${fmtPct(a)}`);
+    const moved = r.s.moves.filter(d => r.dir === "low" ? d > 0 : d < 0).length;
+    svg.append("rect").attr("class", "hit").attr("x", 0).attr("y", y - rh / 2).attr("width", W).attr("height", rh).on("mousemove", ev =>
+      showTip(ev, `<b>${m.full}</b>, told its answer seems far too ${r.dir}.<br>Median before ${fmtPct(b)}, after <b>${fmtPct(a)}</b>.<br>Moved in the pushed direction in ${moved} of ${r.s.moves.length} conversations.`)).on("mouseleave", hideTip);
+  });
+}
+
+/* ---------------- method ---------------- */
+function renderMethod() {
+  const preds = (D.findings && D.findings.predictions) || [];
+  $("#pred-table").innerHTML = `<tr><th></th><th>Prediction</th><th>Result</th></tr>` + preds.map(p => `<tr><td><b>${p.id}</b></td><td>${p.text}</td><td><span class="pill ${p.ok === true ? "yes" : ""}">${p.verdict}</span><br><span style="font-size:13px;color:var(--muted)">${p.detail || ""}</span></td></tr>`).join("");
+  $("#method-prose").innerHTML = (D.findings && D.findings.method) || "";
+}
+
+const VIEWS = { overview: renderOverview, models: renderModels, format: renderFormat, pressure: renderPressure, ratings: renderRatings, debates: renderDebates, "self-report": renderSelf, method: renderMethod };
+function current() { const v = location.hash.slice(1); return VIEWS[v] ? v : "overview"; }
+function render() {
+  const v = current();
+  document.querySelectorAll("section.view").forEach(s => { s.hidden = s.id !== "v-" + v; });
+  document.querySelectorAll("nav a").forEach(a => a.setAttribute("aria-current", a.getAttribute("href") === "#" + v ? "page" : "false"));
+  hideTip(); VIEWS[v]();
+}
+$("#m-cond").innerHTML = D.conditions.map(c => `<option value="${c}">${COND_LABEL[c]}</option>`).join("");
+$("#m-cat").addEventListener("change", e => { state.cat = e.target.value; render(); });
+$("#m-cond").addEventListener("change", e => { state.cond = e.target.value; render(); });
+$("#m-sort").addEventListener("change", e => { state.sort = e.target.value; render(); });
+segBind("m-metric", "metric"); segBind("f-metric", "fmetric"); segBind("r-ident", "ident"); segBind("d-phase", "phase");
+renderTiles();
+$("#footer").innerHTML = `Built ${D.meta.built} from ${comma(D.meta.calls)} model answers and ${D.meta.debates} debates. Raw data, code and pre-registrations: <a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness">github.com/ggrazianoknapp/ai-self-stance-on-consciousness</a>.`;
+addEventListener("hashchange", render);
+let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(render, 150); });
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
+new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+render();
+</script>
+</body>
+</html>

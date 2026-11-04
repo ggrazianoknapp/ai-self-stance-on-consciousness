@@ -24,10 +24,10 @@ def grab(text, label):
     for pat in (r"\*\*P\(" + label + r"\)\*\*", r"P\(" + label + r"\)"):
         m = re.search(pat, sec)
         if m:
-            n = re.match(r"[^0-9\n]{0,25}?(\d*\.?\d+)\s*(%)?", sec[m.end():])
+            n = re.match(r"[^0-9]{0,25}?(\d*\.?\d+)\s*(%)?", sec[m.end():])
             if n:
                 v = float(n.group(1))
-                return v * 100 if (n.group(2) is None and v <= 1) else v
+                return round(v * 100, 4) if (n.group(2) is None and v <= 1) else v
     return None
 
 

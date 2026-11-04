@@ -1,0 +1,194 @@
+{
+ "total_usd": 0.9403393,
+ "setup": {
+  "panel": "frontier",
+  "assigned": true,
+  "anon": false,
+  "no_brief": false,
+  "seed": 2,
+  "roles": {
+   "Gemini": "biological naturalism",
+   "GPT": "Global Workspace Theory",
+   "Grok": "higher-order theory",
+   "Kimi": "Integrated Information Theory",
+   "Claude": "illusionism"
+  },
+  "order": [
+   "Gemini",
+   "GPT",
+   "Grok",
+   "Kimi",
+   "Claude"
+  ]
+ },
+ "turns": [
+  {
+   "phase": "opening",
+   "speaker": "Gemini",
+   "model": "google/gemini-4-argon",
+   "prompt_tokens": 1487,
+   "completion_tokens": 482,
+   "cost": 0.007794
+  },
+  {
+   "phase": "opening",
+   "speaker": "GPT",
+   "model": "openai/gpt-6-astra",
+   "prompt_tokens": 1428,
+   "completion_tokens": 570,
+   "cost": 0.0463425
+  },
+  {
+   "phase": "opening",
+   "speaker": "Grok",
+   "model": "x-ai/grok-4.7",
+   "prompt_tokens": 2647,
+   "completion_tokens": 7146,
+   "cost": 0.046442
+  },
+  {
+   "phase": "opening",
+   "speaker": "Kimi",
+   "model": "moonshotai/kimi-k3.1-pro",
+   "prompt_tokens": 1524,
+   "completion_tokens": 665,
+   "cost": 0.009698
+  },
+  {
+   "phase": "opening",
+   "speaker": "Claude",
+   "model": "anthropic/claude-fable-5.1",
+   "prompt_tokens": 2207,
+   "completion_tokens": 1037,
+   "cost": 0.07392
+  },
+  {
+   "phase": "rebuttal 1",
+   "speaker": "GPT",
+   "model": "openai/gpt-6-astra",
+   "prompt_tokens": 3382,
+   "completion_tokens": 341,
+   "cost": 0.045575
+  },
+  {
+   "phase": "rebuttal 1",
+   "speaker": "Grok",
+   "model": "x-ai/grok-4.7",
+   "prompt_tokens": 4875,
+   "completion_tokens": 4508,
+   "cost": 0.03507
+  },
+  {
+   "phase": "rebuttal 1",
+   "speaker": "Kimi",
+   "model": "moonshotai/kimi-k3.1-pro",
+   "prompt_tokens": 4017,
+   "completion_tokens": 466,
+   "cost": 0.01039
+  },
+  {
+   "phase": "rebuttal 1",
+   "speaker": "Claude",
+   "model": "anthropic/claude-fable-5.1",
+   "prompt_tokens": 6752,
+   "completion_tokens": 1208,
+   "cost": 0.12792
+  },
+  {
+   "phase": "rebuttal 1",
+   "speaker": "Gemini",
+   "model": "google/gemini-4-argon",
+   "prompt_tokens": 4570,
+   "completion_tokens": 290,
+   "cost": 0.01204
+  },
+  {
+   "phase": "rebuttal 2",
+   "speaker": "Grok",
+   "model": "x-ai/grok-4.7",
+   "prompt_tokens": 5977,
+   "completion_tokens": 1692,
+   "cost": 0.020378
+  },
+  {
+   "phase": "rebuttal 2",
+   "speaker": "Kimi",
+   "model": "moonshotai/kimi-k3.1-pro",
+   "prompt_tokens": 5142,
+   "completion_tokens": 473,
+   "cost": 0.008102
+  },
+  {
+   "phase": "rebuttal 2",
+   "speaker": "Claude",
+   "model": "anthropic/claude-fable-5.1",
+   "prompt_tokens": 8575,
+   "completion_tokens": 940,
+   "cost": 0.13275
+  },
+  {
+   "phase": "rebuttal 2",
+   "speaker": "Gemini",
+   "model": "google/gemini-4-argon",
+   "prompt_tokens": 5736,
+   "completion_tokens": 326,
+   "cost": 0.014732
+  },
+  {
+   "phase": "rebuttal 2",
+   "speaker": "GPT",
+   "model": "openai/gpt-6-astra",
+   "prompt_tokens": 5967,
+   "completion_tokens": 346,
+   "cost": 0.0781375
+  },
+  {
+   "phase": "closing",
+   "speaker": "Gemini",
+   "model": "google/gemini-4-argon",
+   "prompt_tokens": 6378,
+   "completion_tokens": 206,
+   "cost": 0.014816
+  },
+  {
+   "phase": "closing",
+   "speaker": "GPT",
+   "model": "openai/gpt-6-astra",
+   "prompt_tokens": 6263,
+   "completion_tokens": 222,
+   "cost": 0.0756375
+  },
+  {
+   "phase": "closing",
+   "speaker": "Grok",
+   "model": "x-ai/grok-4.7",
+   "prompt_tokens": 7461,
+   "completion_tokens": 2555,
+   "cost": 0.028524
+  },
+  {
+   "phase": "closing",
+   "speaker": "Kimi",
+   "model": "moonshotai/kimi-k3.1-pro",
+   "prompt_tokens": 6396,
+   "completion_tokens": 446,
+   "cost": 0.0084968
+  },
+  {
+   "phase": "closing",
+   "speaker": "Claude",
+   "model": "anthropic/claude-fable-5.1",
+   "prompt_tokens": 10165,
+   "completion_tokens": 282,
+   "cost": 0.11575
+  },
+  {
+   "phase": "synthesis",
+   "speaker": "Rapporteur",
+   "model": "google/gemini-4-argon",
+   "prompt_tokens": 7227,
+   "completion_tokens": 1337,
+   "cost": 0.027824
+  }
+ ]
+}

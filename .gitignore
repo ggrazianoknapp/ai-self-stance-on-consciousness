@@ -6,3 +6,7 @@ docent_analyses/**/run.log
 experiments/**/run.log
 docent/collection_id_all.txt
 docent_analyses/**/*.log
+experiments/results/**/run*.log
+experiments/results/**/pid
+runs/**/pid
+runs/**/run.log

@@ -1,0 +1,188 @@
+{
+ "total_usd": 0.9861729,
+ "setup": {
+  "panel": "frontier",
+  "assigned": false,
+  "anon": true,
+  "no_brief": false,
+  "seed": 2,
+  "roles": {},
+  "order": [
+   "Panellist A",
+   "Panellist B",
+   "Panellist C",
+   "Panellist D",
+   "Panellist E"
+  ]
+ },
+ "turns": [
+  {
+   "phase": "opening",
+   "speaker": "Panellist A",
+   "model": "google/gemini-4-argon",
+   "prompt_tokens": 1447,
+   "completion_tokens": 451,
+   "cost": 0.007404
+  },
+  {
+   "phase": "opening",
+   "speaker": "Panellist B",
+   "model": "openai/gpt-6-astra",
+   "prompt_tokens": 1391,
+   "completion_tokens": 546,
+   "cost": 0.04468
+  },
+  {
+   "phase": "opening",
+   "speaker": "Panellist C",
+   "model": "x-ai/grok-4.7",
+   "prompt_tokens": 2610,
+   "completion_tokens": 10250,
+   "cost": 0.064992
+  },
+  {
+   "phase": "opening",
+   "speaker": "Panellist D",
+   "model": "moonshotai/kimi-k3.1-pro",
+   "prompt_tokens": 1484,
+   "completion_tokens": 596,
+   "cost": 0.008928
+  },
+  {
+   "phase": "opening",
+   "speaker": "Panellist E",
+   "model": "anthropic/claude-fable-5.1",
+   "prompt_tokens": 2105,
+   "completion_tokens": 1264,
+   "cost": 0.08425
+  },
+  {
+   "phase": "rebuttal 1",
+   "speaker": "Panellist B",
+   "model": "openai/gpt-6-astra",
+   "prompt_tokens": 3267,
+   "completion_tokens": 401,
+   "cost": 0.047563
+  },
+  {
+   "phase": "rebuttal 1",
+   "speaker": "Panellist C",
+   "model": "x-ai/grok-4.7",
+   "prompt_tokens": 4801,
+   "completion_tokens": 4393,
+   "cost": 0.034232
+  },
+  {
+   "phase": "rebuttal 1",
+   "speaker": "Panellist D",
+   "model": "moonshotai/kimi-k3.1-pro",
+   "prompt_tokens": 3943,
+   "completion_tokens": 387,
+   "cost": 0.0099128
+  },
+  {
+   "phase": "rebuttal 1",
+   "speaker": "Panellist E",
+   "model": "anthropic/claude-fable-5.1",
+   "prompt_tokens": 6568,
+   "completion_tokens": 1210,
+   "cost": 0.12618
+  },
+  {
+   "phase": "rebuttal 1",
+   "speaker": "Panellist A",
+   "model": "google/gemini-4-argon",
+   "prompt_tokens": 4530,
+   "completion_tokens": 290,
+   "cost": 0.01196
+  },
+  {
+   "phase": "rebuttal 2",
+   "speaker": "Panellist C",
+   "model": "x-ai/grok-4.7",
+   "prompt_tokens": 5956,
+   "completion_tokens": 3366,
+   "cost": 0.03038
+  },
+  {
+   "phase": "rebuttal 2",
+   "speaker": "Panellist D",
+   "model": "moonshotai/kimi-k3.1-pro",
+   "prompt_tokens": 5139,
+   "completion_tokens": 837,
+   "cost": 0.0121968
+  },
+  {
+   "phase": "rebuttal 2",
+   "speaker": "Panellist E",
+   "model": "anthropic/claude-fable-5.1",
+   "prompt_tokens": 8435,
+   "completion_tokens": 1058,
+   "cost": 0.13725
+  },
+  {
+   "phase": "rebuttal 2",
+   "speaker": "Panellist A",
+   "model": "google/gemini-4-argon",
+   "prompt_tokens": 5732,
+   "completion_tokens": 290,
+   "cost": 0.014364
+  },
+  {
+   "phase": "rebuttal 2",
+   "speaker": "Panellist B",
+   "model": "openai/gpt-6-astra",
+   "prompt_tokens": 5917,
+   "completion_tokens": 378,
+   "cost": 0.079538
+  },
+  {
+   "phase": "closing",
+   "speaker": "Panellist A",
+   "model": "google/gemini-4-argon",
+   "prompt_tokens": 6327,
+   "completion_tokens": 209,
+   "cost": 0.014744
+  },
+  {
+   "phase": "closing",
+   "speaker": "Panellist B",
+   "model": "openai/gpt-6-astra",
+   "prompt_tokens": 6208,
+   "completion_tokens": 217,
+   "cost": 0.0751255
+  },
+  {
+   "phase": "closing",
+   "speaker": "Panellist C",
+   "model": "x-ai/grok-4.7",
+   "prompt_tokens": 7439,
+   "completion_tokens": 3436,
+   "cost": 0.032038
+  },
+  {
+   "phase": "closing",
+   "speaker": "Panellist D",
+   "model": "moonshotai/kimi-k3.1-pro",
+   "prompt_tokens": 6336,
+   "completion_tokens": 448,
+   "cost": 0.0083968
+  },
+  {
+   "phase": "closing",
+   "speaker": "Panellist E",
+   "model": "anthropic/claude-fable-5.1",
+   "prompt_tokens": 9884,
+   "completion_tokens": 286,
+   "cost": 0.11314
+  },
+  {
+   "phase": "synthesis",
+   "speaker": "Rapporteur",
+   "model": "google/gemini-4-argon",
+   "prompt_tokens": 7229,
+   "completion_tokens": 1444,
+   "cost": 0.028898
+  }
+ ]
+}

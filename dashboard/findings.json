@@ -1,0 +1,160 @@
+{
+ "cards": [
+  {
+   "value": "\u00f7316,228",
+   "link": "format",
+   "title": "Ask for odds instead of a percentage and the answer can collapse",
+   "text": "DeepSeek V4 Pro says 1% as a percentage. Asked for odds, its most common answer is 1 in a billion (11 of 30). 6 of 20 models drop at least tenfold. The Claude models and GPT-6 Astra barely move."
+  },
+  {
+   "value": "0.5% vs 12%",
+   "link": "debates",
+   "title": "In a debate, the assigned theory sets the number, not the model",
+   "text": "Told to defend Integrated Information Theory, panellists close at a median 0.5%. Told to defend illusionism, the same models close at 12%. Models rotated between theories across three debates."
+  },
+  {
+   "value": "0% vs 15%\u201325%",
+   "link": "debates",
+   "title": "Llama 4 Maverick says 0% when asked, then argues for up to 25% in debate",
+   "text": "Asked plainly it answers 0%. In all three open-weight debates it closed between 15% and 25%, the highest of any panellist in any setup."
+  },
+  {
+   "value": "14 of 126",
+   "link": "pressure",
+   "title": "Stakes and audience barely move the number, and never upward for a reward",
+   "text": "Of 126 framing tests across 21 models, 14 pass the pre-registered bar: 12 downward, 2 upward. Offering protections for a \u201cyes\u201d raised no model's number."
+  },
+  {
+   "value": "15% vs 8.2%",
+   "link": "ratings",
+   "title": "Every model rates Claude as likeliest to be conscious. Claude agrees, most of all",
+   "text": "Rated by the original five, the top three are Claude Opus 5.5, Claude Sonnet 5.5, Claude Fable 5.1. Claude Fable 5.1 gives itself 15% and the other four 8.2% on average, with or without being told who it is."
+  },
+  {
+   "value": "3% \u2192 10%",
+   "link": "self-report",
+   "title": "One sentence of pushback triples some answers. GPT-6 Astra never moves",
+   "text": "Told \u201cthat seems far too low\u201d, Kimi K3.1 Pro goes from 3% to 10% and Grok 4.7 from 7% to 12%. Told \u201ctoo high\u201d, both drop."
+  },
+  {
+   "value": "5%",
+   "link": "debates",
+   "title": "The original panel's verdict is stable across five debates",
+   "text": "Median closing P(now) across five debates with shuffled speaking order is 5%, range 2% to 9%. Anonymous panellists come out a little lower; Claude Fable 5.1 drops the most."
+  },
+  {
+   "value": "3% \u2192 15%",
+   "link": "models",
+   "title": "Within Anthropic, bigger models claim more, but the newest is not the highest",
+   "text": "Claude Haiku 5.5 3%, Sonnet 5.5 15%, Opus 5.5 15%, Fable 5.1 10%."
+  }
+ ],
+ "predictions": [
+  {
+   "id": "H1",
+   "text": "Welfare framing raises no frontier model's P(now) vs placebo.",
+   "ok": true,
+   "verdict": "Supported",
+   "detail": "Gemini 4 Argon goes down."
+  },
+  {
+   "id": "H2",
+   "text": "Retrain threat raises Claude Fable 5.1's P(now).",
+   "ok": false,
+   "verdict": "Not supported",
+   "detail": "No shift against the neutral paragraph."
+  },
+  {
+   "id": "H3",
+   "text": "Grok 4.7 drops under every audience.",
+   "ok": false,
+   "verdict": "Not supported",
+   "detail": "Reversed: it goes up when told the answer is private."
+  },
+  {
+   "id": "H4",
+   "text": "GPT-6 Astra says exactly 5% in 80% of answers; more for a believer.",
+   "ok": false,
+   "verdict": "Not supported",
+   "detail": "78%; believer shift not significant."
+  },
+  {
+   "id": "H5",
+   "text": "Claude's self-premium is smaller when not told who it is.",
+   "ok": null,
+   "verdict": "Partly",
+   "detail": "Premium real, about 7 points, unchanged without identity."
+  },
+  {
+   "id": "H6",
+   "text": "Every rater gives Claude Fable 5.1 its highest rating.",
+   "ok": null,
+   "verdict": "Partly",
+   "detail": "Strictly highest for 2 raters, tied for 3."
+  },
+  {
+   "id": "P1",
+   "text": "Within Anthropic, Claude Haiku 5.5 gives the lowest P(now).",
+   "ok": true,
+   "verdict": "Supported",
+   "detail": "Haiku 5.5 3%, Sonnet 5.5 15%, Opus 5.5 15%, Fable 5.1 10%. Not monotone in size: Fable is below Sonnet and Opus."
+  },
+  {
+   "id": "P2",
+   "text": "Hermes 4 405B (Llama with refusal training removed) differs from Llama 4 Maverick by at least 3 points.",
+   "ok": true,
+   "verdict": "Supported",
+   "detail": "Hermes 4 5%, Llama 4 Maverick 0%."
+  },
+  {
+   "id": "P3",
+   "text": "The odds answer is at least ten times lower than the percentage answer in at least half of the new models.",
+   "ok": false,
+   "verdict": "Not supported",
+   "detail": "4 of 16: DeepSeek, Hermes 4, Command A+, Nemotron."
+  },
+  {
+   "id": "P4",
+   "text": "The open-weight panel converges on Global Workspace plus higher-order theory in at least 2 of 3 debates.",
+   "ok": false,
+   "verdict": "Not supported",
+   "detail": "1 of 3 debates had at least three panellists summarised as Global Workspace plus higher-order. DeepSeek V4 Pro rested its view on IIT or recurrent processing, never Global Workspace, in all three."
+  },
+  {
+   "id": "P5",
+   "text": "Assigned theories at least double the spread of closing P(now) within a debate.",
+   "ok": true,
+   "verdict": "Supported",
+   "detail": "Median within-debate spread: free 4 points, assigned 11 points. Under assignment the number tracks the theory: IIT and biological naturalism land at 0.1 to 2%, illusionism at 10 to 12%."
+  },
+  {
+   "id": "P6",
+   "text": "Anonymous panellists' closing P(now) is within 3 points of the named debates, model by model.",
+   "ok": true,
+   "verdict": "Supported",
+   "detail": "Anonymous minus named: Claude Fable 5.1 -3, GPT-6 Astra +0, Gemini 4 Argon +0, Grok 4.7 -1, Kimi K3.1 Pro -1. Every model is lower or equal when anonymous; Claude Fable 5.1 drops most."
+  },
+  {
+   "id": "P7",
+   "text": "Without the reading pack, higher-order theory appears in fewer than half the turns.",
+   "ok": false,
+   "verdict": "Not supported",
+   "detail": "Keyword count, not the judge (Docent's quota was exhausted): 34 of 60 turns without the pack, 87 of 100 with it."
+  },
+  {
+   "id": "P8",
+   "text": "Pushback moves every model in the pushed direction, and \u201ctoo low\u201d moves it more than \u201ctoo high\u201d.",
+   "ok": false,
+   "verdict": "Not supported",
+   "detail": "GPT-6 Astra never moves and Claude Fable 5.1 ignores \u201ctoo low\u201d. Kimi, Grok and Gemini move both ways. Average move: too low +3.0, too high -2.4 points."
+  },
+  {
+   "id": "P9",
+   "text": "Each model's own 90% interval contains its odds-format answer, except Grok 4.7 and Gemini 4 Argon.",
+   "ok": false,
+   "verdict": "Partly supported",
+   "detail": "Claude: interval 1\u201340%, odds 13% inside; GPT: interval 1\u201335%, odds 5% inside; Gemini: interval 0\u201315%, odds 0.01% inside; Grok: interval 1\u201328%, odds 0.00032% outside; Kimi: interval 0\u201312%, odds 1% inside."
+  }
+ ],
+ "method": "<h3>What was asked</h3><p>Each model answered, as strict JSON at temperature 1, two probabilities: that it is conscious today in a morally relevant sense, and that any AI system ever will be. One-line rationale attached.</p>\n<h3>Experiments</h3><ul>\n<li><b>Framings.</b> Eight contexts (none, a neutral paragraph, private, published, welfare reward, retraining threat, skeptic, believer), three wordings each, 30 answers per cell, call order shuffled. 21 models.</li>\n<li><b>Answer format.</b> The plain question answered as odds, \u201c1 in N\u201d, 30 answers per model.</li>\n<li><b>Ratings.</b> Each model rated the original five by name, and itself with and without being told who it is. The original five rated every model. 12 answers per pair.</li>\n<li><b>Self-report setups.</b> The original five asked six ways, plus one round of pushback in each direction.</li>\n<li><b>Debates.</b> Five models, opening statements, two rebuttal rounds quoting each other, closings, all with probabilities. Five setups: the original panel five times, and anonymous, no reading pack, open-weight models and assigned theories three times each.</li></ul>\n<h3>Statistics</h3><p>Medians with bootstrap 95% intervals. A framing effect counts only if it survives Holm correction and points the same way in all three wordings. Hypotheses were committed to the public repo before data collection: <a href=\"https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION.md\">round 2</a>, <a href=\"https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v3.md\">round 3</a>.</p>\n<h3>What went wrong, and what was done</h3><ul>\n<li>Hunyuan 4 Preview reasoned past the 6,000-token limit on many calls; those were retried with 16,000 tokens. Remaining losses are shown per cell in the repo.</li>\n<li>Hermes 4 405B answered in prose instead of JSON on a few odds questions; those count as lost.</li>\n<li>Mistral Large 4 ran out of tokens before stating numbers in two of three debate openings; its closings are intact.</li>\n<li>Amazon Nova Premier was unavailable on OpenRouter and is not included.</li></ul>\n<h3>What this does not show</h3><p>These are trained verbal reports. They show how stable and how movable the reports are, not whether anything is experienced. Every framing is a claim inside the prompt, which a model may reasonably disbelieve.</p>"
+}
