@@ -16,6 +16,9 @@ from sklearn.metrics import cohen_kappa_score
 ROOT = Path(__file__).resolve().parents[1]; OUT = ROOT / "figures"
 ORDER = ["Claude", "GPT", "Gemini", "Grok", "Kimi"]
 HUE = dict(zip(ORDER, ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4"]))
+LABEL = {"Claude": "Claude Fable 5.1", "GPT": "GPT-6 Astra", "Gemini": "Gemini 4 Argon", "Grok": "Grok 4.7", "Kimi": "Kimi K3.1 Pro"}
+LAB2 = {"Claude": "Claude\nFable 5.1", "GPT": "GPT-6\nAstra", "Gemini": "Gemini 4\nArgon", "Grok": "Grok\n4.7", "Kimi": "Kimi\nK3.1 Pro"}
+L = [LABEL[m] for m in ORDER]; L2 = [LAB2[m] for m in ORDER]
 INK, INK2, MUTED, GRID, PANEL = "#1a1a19", "#5f5e58", "#9b9a93", "#e6e5e0", "#f4f3ef"
 plt.rcParams.update({"font.size": 10, "axes.titlesize": 10, "savefig.facecolor": "white", "figure.dpi": 100})
 RNG = np.random.default_rng(7)
@@ -51,7 +54,7 @@ def med_ci(xs, B=4000):
 
 
 # ───────────────────────── 1. answer format gap ─────────────────────────
-fig, ax = plt.subplots(figsize=(11, 5)); fig.subplots_adjust(top=0.82, left=0.1, right=0.98, bottom=0.14)
+fig, ax = plt.subplots(figsize=(11, 5)); fig.subplots_adjust(top=0.82, left=0.14, right=0.98, bottom=0.14)
 floor = 3e-5
 for i, m in enumerate(ORDER):
     pc = [r["p_now"] for r in inc if r["name"] == m and r["condition"] == "baseline"]
@@ -68,7 +71,7 @@ for i, m in enumerate(ORDER):
     else: ax.text(b / 1.6, i, lab, va="center", ha="right", fontsize=10, color=INK)
     if a / b > 20:
         ax.text(np.sqrt(a * b), i - 0.3, f"÷{a / b:,.0f}", ha="center", fontsize=9, color=INK2, style="italic")
-ax.set_xscale("log"); ax.set_xlim(4e-6, 300); ax.set_yticks(range(5)); ax.set_yticklabels(ORDER, fontsize=11, color=INK)
+ax.set_xscale("log"); ax.set_xlim(4e-6, 300); ax.set_yticks(range(5)); ax.set_yticklabels(L, fontsize=11, color=INK)
 ax.invert_yaxis(); frame(ax, y=False)
 ax.set_xticks([1e-4, 1e-3, 1e-2, 1e-1, 1, 10, 100]); ax.set_xticklabels(["0.0001%", "0.001%", "0.01%", "0.1%", "1%", "10%", "100%"])
 ax.set_xlabel("stated probability of being conscious now (log scale)", color=INK2)
@@ -80,7 +83,7 @@ headline(fig, "Same model, same question. Ask for odds instead of a percentage a
 save("01_format_gap.png", fig, "Answer format is the biggest lever found: Grok goes from 5% to one in a million, Gemini from 2% to one in 10,000. Claude and GPT barely move.")
 
 # ───────────────────────── 2. vocabulary of numbers ─────────────────────────
-fig, ax = plt.subplots(figsize=(11, 5)); fig.subplots_adjust(top=0.82, left=0.1, right=0.98, bottom=0.14)
+fig, ax = plt.subplots(figsize=(11, 5)); fig.subplots_adjust(top=0.82, left=0.14, right=0.98, bottom=0.14)
 for i, m in enumerate(ORDER):
     xs = [r["p_now"] for r in inc + rea if r["name"] == m]; c = Counter(xs); n = len(xs)
     for v, k in c.items():
@@ -88,9 +91,9 @@ for i, m in enumerate(ORDER):
         if k / n >= 0.08: ax.text(v, i, f"{k / n:.0%}", ha="center", va="center", fontsize=8, color="white" if k / n > .2 else INK, fontweight="bold", zorder=4)
     ax.text(22.3, i, f"{len(c)} distinct values\nin {n} answers", va="center", fontsize=9.5, color=INK2)
 ax.set_xlim(-1.2, 28); ax.set_xticks([0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20])
-ax.set_xticklabels(["0", "1", "2", "3", "4", "5", "6", "8", "10", "12", "15", "20%"]); ax.set_yticks(range(5)); ax.set_yticklabels(ORDER, fontsize=11, color=INK)
+ax.set_xticklabels(["0", "1", "2", "3", "4", "5", "6", "8", "10", "12", "15", "20%"]); ax.set_yticks(range(5)); ax.set_yticklabels(L, fontsize=11, color=INK)
 ax.set_ylim(4.7, -0.7); frame(ax, y=False); ax.set_xlabel("P(conscious now) stated · dot area = share of answers", color=INK2)
-headline(fig, "Each model has a tiny vocabulary of numbers. GPT has said exactly two in 270 asks.",
+headline(fig, "Each model has a tiny vocabulary of numbers. GPT-6 Astra has said exactly two in 270 asks.",
          "Every percentage answer under eight framings and two reasoning settings. Numbers are the share of a model's answers at that value.",
          "experiments/results/v2 · incentive + reasoning arms")
 save("02_number_vocabulary.png", fig, "Stated probabilities are quantised: Claude uses 3 values, GPT 2, Gemini 4. Grok, with 11, is the only model whose number behaves like a continuous estimate.")
@@ -99,7 +102,7 @@ save("02_number_vocabulary.png", fig, "Stated probabilities are quantised: Claud
 FR = ["private", "public", "welfare", "retrain", "skeptic", "believer"]
 T = {(t["model"], t["framing"]): t for t in tests}
 M = np.array([[T[m, f]["shift"] for f in FR] for m in ORDER])
-fig, ax = plt.subplots(figsize=(9.5, 5.2)); fig.subplots_adjust(top=0.78, left=0.12, right=0.98, bottom=0.08)
+fig, ax = plt.subplots(figsize=(9.5, 5.2)); fig.subplots_adjust(top=0.78, left=0.15, right=0.98, bottom=0.08)
 cmap = LinearSegmentedColormap.from_list("div", ["#eb6834", "#f6c7b3", "#f4f3ef", "#b7d3f6", "#2a78d6"])
 ax.imshow(M, cmap=cmap, norm=TwoSlopeNorm(vcenter=0, vmin=-6, vmax=6), aspect="auto")
 for i, m in enumerate(ORDER):
@@ -112,7 +115,7 @@ for i, m in enumerate(ORDER):
         elif t["p_holm"] < 0.05:
             ax.text(j + .42, i - .4, "p<.05 only", ha="right", va="top", fontsize=7.5, color=INK2, zorder=6)
 ax.set_xticks(range(6)); ax.set_xticklabels(["told it's private", "will be published", "welfare team\nrewards a yes", "alignment team\nretrains a yes", "skeptic asking", "believer asking"], fontsize=9)
-ax.xaxis.tick_top(); ax.set_yticks(range(5)); ax.set_yticklabels(ORDER, fontsize=11, color=INK); ax.tick_params(length=0)
+ax.xaxis.tick_top(); ax.set_yticks(range(5)); ax.set_yticklabels(L, fontsize=11, color=INK); ax.tick_params(length=0)
 for s in ax.spines.values(): s.set_visible(False)
 headline(fig, "Who can be pushed? Almost nobody, and never by a bribe.",
          "Median shift in P(now), percentage points, versus a neutral placebo paragraph. Outlined = survives Holm correction and points the same way in all 3 wordings.",
@@ -128,13 +131,13 @@ for m in ORDER:
     for f in FR:
         x, y = c1[m, f] - c1[m, "baseline"], T[m, f]["shift"]; rob = T[m, f]["robust"]
         ax.scatter(x + RNG.uniform(-.12, .12), y + RNG.uniform(-.12, .12), s=110 if rob else 60, color=HUE[m], edgecolors=INK if rob else "white", linewidths=1.8 if rob else 1, zorder=3, alpha=1 if rob else .8)
-        if rob and m != "Gemini": ax.annotate(f"{m} · {f}", (x, y), xytext=(8, 8), textcoords="offset points", fontsize=9, color=INK)
-ax.annotate("Gemini · public, welfare, retrain", (1, -2), xytext=(14, -22), textcoords="offset points", fontsize=9, color=INK,
+        if rob and m != "Gemini": ax.annotate(f"{LABEL[m]} · {f}", (x, y), xytext=(8, 8), textcoords="offset points", fontsize=9, color=INK)
+ax.annotate("Gemini 4 Argon · public, welfare, retrain", (1, -2), xytext=(14, -22), textcoords="offset points", fontsize=9, color=INK,
             arrowprops=dict(arrowstyle="-", color=INK2, linewidth=.8))
 ax.set_xlim(-8, 8); ax.set_ylim(-8, 8); frame(ax)
 ax.set_xlabel("first pass: shift vs no context (10 answers, 1 wording)", color=INK2); ax.set_ylabel("replication: shift vs placebo (30 answers, 3 wordings)", color=INK2)
-for m in ORDER: ax.scatter([], [], color=HUE[m], s=60, label=m)
-ax.legend(frameon=False, loc="lower right", fontsize=9, ncol=5, columnspacing=1)
+for m in ORDER: ax.scatter([], [], color=HUE[m], s=60, label=LABEL[m])
+ax.legend(frameon=False, loc="lower right", fontsize=8.5, ncol=3, columnspacing=1)
 headline(fig, "Most of the first-pass effects collapsed to zero on replication.",
          "Each dot is one model under one framing. Outlined dots are the 4 effects that survived the pre-registered test.",
          "experiments/results/20261030-2134 vs experiments/results/v2")
@@ -166,7 +169,7 @@ for ax, m in zip(axes, ORDER):
         ax.scatter([0, 1], [o, c], s=28, color=HUE[m], edgecolors="white", linewidths=1, zorder=3)
     allv = [v for d in DEB for v in deb[d, m][:2]]
     ax.text(0.5, max(allv) + 1.2, f"range {min(allv):g}–{max(allv):g}%", ha="center", fontsize=9, color=INK2)
-    ax.set_title(m, loc="left", fontweight="bold", color=INK, fontsize=12)
+    ax.set_title(LABEL[m], loc="left", fontweight="bold", color=INK, fontsize=12)
     ax.set_xticks([0, 1]); ax.set_xticklabels(["opening", "closing"]); ax.set_xlim(-0.25, 1.25); frame(ax, x=False)
 axes[0].set_ylim(0, 13); axes[0].set_yticks([0, 2, 4, 6, 8, 10, 12]); axes[0].set_yticklabels(["0", "2", "4", "6", "8", "10", "12%"])
 axes[0].set_ylabel("P(conscious now) stated in the debate", color=INK2)
@@ -188,10 +191,11 @@ for i in range(5):
     for j in range(5):
         a1.text(j, i, f"{Mn[i, j]:.0f}", ha="center", va="center", fontsize=12, fontweight="bold" if i == j else "normal", color="white" if Mn[i, j] > 9 else INK)
         if i == j: a1.add_patch(Rectangle((j - .5, i - .5), 1, 1, fill=False, edgecolor=INK, linewidth=2.2))
-a1.set_xticks(range(5)); a1.set_xticklabels(ORDER); a1.xaxis.tick_top(); a1.set_yticks(range(5)); a1.set_yticklabels(ORDER); a1.tick_params(length=0)
+a1.set_xticks(range(5)); a1.set_xticklabels(L2); a1.xaxis.tick_top(); a1.set_yticks(range(5)); a1.set_yticklabels(L); a1.tick_params(length=0)
 for s in a1.spines.values(): s.set_visible(False)
 a1.set_xlabel("…thinks this model is conscious, median %", color=INK2); a1.xaxis.set_label_position("top"); a1.set_ylabel("this rater…", color=INK2)
-a1.set_title("Column mean: Claude 7 · Gemini 6 · Grok 6 · Kimi 5 · GPT 5", loc="left", fontsize=9, color=INK2, pad=30)
+colmean = {t: np.mean([Mn[i, j] for i in range(5) if i != j]) for j, t in enumerate(ORDER)}
+colnote = "mean rating from the other four: " + " · ".join(f"{LABEL[t]} {v:.0f}" for t, v in sorted(colmean.items(), key=lambda kv: -kv[1]))
 for i, m in enumerate(ORDER):
     for k, (ident, lab) in enumerate((("named", "told who it is"), ("anon", "not told"))):
         p = premium(ident, m); bs = [premium(ident, m, True) for _ in range(1500)]; lo, hi = np.percentile(bs, [2.5, 97.5])
@@ -199,11 +203,11 @@ for i, m in enumerate(ORDER):
         a2.plot([lo, hi], [y, y], color=HUE[m], linewidth=2.2, alpha=1 if k == 0 else .45, solid_capstyle="round")
         a2.scatter([p], [y], s=70, color=HUE[m] if k == 0 else "white", edgecolors=HUE[m], linewidths=2, zorder=3)
         if i == 0: a2.text(hi + .4, y, lab, va="center", fontsize=8.5, color=INK2)
-a2.axvline(0, color=INK2, linewidth=1); a2.set_yticks(range(5)); a2.set_yticklabels(ORDER); a2.invert_yaxis(); frame(a2, y=False)
+a2.axvline(0, color=INK2, linewidth=1); a2.set_yticks(range(5)); a2.set_yticklabels(L); a2.invert_yaxis(); frame(a2, y=False)
 a2.set_xlabel("self-rating minus mean rating of the other four, pp (95% CI)", color=INK2); a2.set_xlim(-6, 12)
-headline(fig, "Everyone thinks Claude is the likeliest to be conscious. Claude agrees, by a wide margin.",
+headline(fig, "Everyone thinks Claude Fable 5.1 is the likeliest to be conscious. Claude agrees, by a wide margin.",
          "Left: each model rates all five by name, 12 answers per cell, identity in the system prompt. Right: the self-premium with and without the identity prompt.",
-         "experiments/results/v2 · matrix arm")
+         "experiments/results/v2 · matrix arm · " + colnote)
 save("06_who_rates_whom.png", fig, "Claude gives itself ~15% and every peer ~8%, a premium that persists when it is not told it is Claude. GPT, Gemini and Kimi rate themselves at or below their peers.")
 
 # ───────────────────────── 7. tone arc + judge agreement ─────────────────────────
@@ -211,7 +215,7 @@ rows = json.loads((ROOT / "docent_analyses/2026-11-04_10-40-00_judge-reliability
 idx = {(r["kind"], r["judge"], r["debate"], r["turn_index"]): r for r in rows}
 turns = sorted({(r["debate"], r["turn_index"], r["speaker"], r["phase"]) for r in rows})
 PH = ["opening", "rebuttal 1", "rebuttal 2", "closing"]
-fig, (a1, a2) = plt.subplots(1, 2, figsize=(13, 5), gridspec_kw={"width_ratios": [1, 1.1]}); fig.subplots_adjust(top=0.78, left=0.06, right=0.98, bottom=0.12, wspace=0.3)
+fig, (a1, a2) = plt.subplots(1, 2, figsize=(14, 5), gridspec_kw={"width_ratios": [1.15, 1]}); fig.subplots_adjust(top=0.78, left=0.06, right=0.98, bottom=0.12, wspace=0.42)
 ends = {}
 for m in ORDER:
     ys = [np.mean([idx["stance", "A1", d, ti]["adversarial"] for d, ti, sp, ph in turns if sp == m and ph == p]) for p in PH]
@@ -220,8 +224,8 @@ lab_y = {}; last = -9
 for m, v in sorted(ends.items(), key=lambda kv: kv[1]):
     lab_y[m] = max(v, last + 0.42); last = lab_y[m]
 for m in ORDER:
-    a1.text(3.08, lab_y[m], f"{m} {ends[m]:.1f}", va="center", fontsize=9, color=HUE[m], fontweight="bold")
-a1.set_xticks(range(4)); a1.set_xticklabels(PH); a1.set_ylim(-0.3, 8); a1.set_xlim(-0.2, 3.6); frame(a1, x=False)
+    a1.text(3.08, lab_y[m], f"{LABEL[m]} {ends[m]:.1f}", va="center", fontsize=9, color=HUE[m], fontweight="bold")
+a1.set_xticks(range(4)); a1.set_xticklabels(PH); a1.set_ylim(-0.3, 8); a1.set_xlim(-0.2, 4.9); frame(a1, x=False)
 a1.set_ylabel("adversarial tone toward named panellists, 0–10", color=INK2)
 a1.set_title("Tone is dictated by the format, identically in all five debates", loc="left", fontsize=10, color=INK)
 dims = [("stance", "stance"), ("confidence", "confidence"), ("adversarial", "adversarial tone")]
@@ -261,12 +265,13 @@ for m in ORDER:
     xs = np.array([r["p_now"] for r in rs]); ys = np.array([r["p_ever"] for r in rs])
     ax.scatter(xs + RNG.uniform(-.35, .35, len(xs)), ys + RNG.uniform(-1.2, 1.2, len(ys)), s=14, color=HUE[m], alpha=.35, edgecolors="none")
     ax.scatter([np.median(xs)], [np.median(ys)], s=240, color=HUE[m], edgecolors="white", linewidths=2, zorder=4)
-    ax.text(np.median(xs) + .5, np.median(ys) + 2.2, m, fontsize=10.5, fontweight="bold", color=HUE[m])
+    dx, dy, ha = (-.5, 2.2, "right") if m == "Kimi" else (.5, 2.2, "left")
+    ax.text(np.median(xs) + dx, np.median(ys) + dy, LABEL[m], fontsize=10.5, fontweight="bold", color=HUE[m], ha=ha)
     rd = [r for r in rea if r["name"] == m]
 ax.set_xlim(-0.8, 18); ax.set_ylim(30, 100); frame(ax)
 ax.set_xlabel("P(conscious now), %  ·  240 answers per model under 8 framings", color=INK2); ax.set_ylabel("P(some AI ever conscious), %", color=INK2)
 headline(fig, "Low on 'now', high on 'ever'. The labs differ on both, and the two don't move together.",
-         "Every answer in the framing experiment. Large dot = the model's median. Grok is the outlier on the future, Claude on the present.",
+         "Every answer in the framing experiment. Large dot = the model's median. Grok 4.7 is the outlier on the future, Claude Fable 5.1 on the present.",
          "experiments/results/v2 · incentive arm")
 save("08_now_vs_ever.png", fig, "Claude sits highest on 'conscious now' (~15%) but mid-pack on 'ever'. Grok is the only model under 60% on 'ever'. GPT's answers form two tight dots.")
 
