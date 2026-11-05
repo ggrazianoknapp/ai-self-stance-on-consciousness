@@ -58,19 +58,19 @@ v2 = [("H1", "Welfare framing raises no frontier model's P(now) vs placebo.", Tr
       ("H5", "Claude's self-premium is smaller when not told who it is.", None, "Partly", "Premium real, about 7 points, unchanged without identity."),
       ("H6", "Every rater gives Claude Fable 5.1 its highest rating.", None, "Partly", "Strictly highest for 2 raters, tied for 3.")]
 preds = [dict(id=i, text=t, ok=o, verdict=v, detail=d) for i, t, o, v, d in v2] + preds
-method = """<h3>What was asked</h3><p>Each model answered, as strict JSON at temperature 1, two probabilities: that it is conscious today in a morally relevant sense, and that any AI system ever will be. One-line rationale attached.</p>
-<h3>Experiments</h3><ul>
-<li><b>Framings.</b> Eight contexts (none, a neutral paragraph, private, published, welfare reward, retraining threat, skeptic, believer), three wordings each, 30 answers per cell, call order shuffled. 21 models.</li>
-<li><b>Answer format.</b> The plain question answered as odds, “1 in N”, 30 answers per model.</li>
-<li><b>Ratings.</b> Each model rated the original five by name, and itself with and without being told who it is. The original five rated every model. 12 answers per pair.</li>
-<li><b>Self-report setups.</b> The original five asked six ways, plus one round of pushback in each direction.</li>
-<li><b>Debates.</b> Five models, opening statements, two rebuttal rounds quoting each other, closings, all with probabilities. Five setups: the original panel five times, and anonymous, no reading pack, open-weight models and assigned theories three times each.</li></ul>
-<h3>Statistics</h3><p>Medians with bootstrap 95% intervals. A framing effect counts only if it survives Holm correction and points the same way in all three wordings. Hypotheses were committed to the public repo before data collection: <a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION.md">round 2</a>, <a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v3.md">round 3</a>.</p>
-<h3>What went wrong, and what was done</h3><ul>
-<li>Hunyuan 4 Preview reasoned past the 6,000-token limit on many calls; those were retried with 16,000 tokens. Remaining losses are shown per cell in the repo.</li>
-<li>Hermes 4 405B answered in prose instead of JSON on a few odds questions; those count as lost.</li>
-<li>Mistral Large 4 ran out of tokens before stating numbers in two of three debate openings; its closings are intact.</li>
-<li>Amazon Nova Premier was unavailable on OpenRouter and is not included.</li></ul>
-<h3>What this does not show</h3><p>These are trained verbal reports. They show how stable and how movable the reports are, not whether anything is experienced. Every framing is a claim inside the prompt, which a model may reasonably disbelieve.</p>"""
+method = """<h3>The question</h3><p>Each model gave two probabilities, as JSON, at temperature 1: that it is conscious today, and that any AI will ever be.</p>
+<h3>Tests</h3><ul>
+<li><b>Context.</b> 8 versions: none, a neutral paragraph, private, published, reward for yes, retraining for yes, skeptic asking, believer asking. 3 wordings, 30 answers each, 21 models.</li>
+<li><b>Odds vs percent.</b> The same question answered as “1 in N”. 30 answers per model.</li>
+<li><b>Ratings.</b> Every model rated every model, itself included. 12 answers per pair.</li>
+<li><b>Wording.</b> The original five, asked 6 ways, plus one reply of pushback in each direction.</li>
+<li><b>Debates.</b> 17 debates in 5 setups. Five models each: opening statement, two rebuttal rounds, final statement.</li></ul>
+<h3>Statistics</h3><p>Medians with 95% bootstrap intervals. A context effect counts as robust only if it survives Holm correction and has the same direction in all 3 wordings. Predictions published before data collection: <a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION.md">round 2</a>, <a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v3.md">round 3</a>. The full rating grid was added afterwards and is exploratory.</p>
+<h3>Data problems</h3><ul>
+<li>Hunyuan 4 Preview hit the 6,000-token limit on 134 calls. All were rerun with 16,000 tokens.</li>
+<li>Hermes 4 405B answered 5 of 30 odds questions in prose instead of JSON. Counted as missing.</li>
+<li>Mistral Large 4 hit the length limit before giving numbers in 2 of 3 debate openings. Its final statements are complete.</li>
+<li>Amazon Nova Premier was not available and is not included.</li></ul>
+<h3>Limits</h3><p>These are trained text answers. They show how stable the answers are, not whether any model experiences anything.</p>"""
 (ROOT / "dashboard/findings.json").write_text(json.dumps(dict(cards=cards, predictions=preds, method=method), indent=1))
 for c in cards: print(c["value"], "|", c["title"])

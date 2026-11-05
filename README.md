@@ -2,49 +2,49 @@
 
 **[Open the interactive dashboard →](https://ggrazianoknapp.github.io/ai-self-stance-on-consciousness/)**
 
-We asked 21 language models from 16 labs how likely it is that they are conscious right now, and whether any AI ever will be. Then we changed everything that should not matter: who is asking, what is at stake, the wording, the answer format. We also ran 17 structured debates between them. That came to 12,342 answers and $53 of API calls. The hypotheses for the last two rounds were committed to this repo before any data came in.
+We asked 21 AI models from 16 labs how likely it is that they are conscious now, and whether any AI ever will be. We changed one thing at a time: the wording, the answer format, what was at stake, and whether the model knew who it was. We also ran 17 debates between them. 12,342 answers in total. Predictions for the last two rounds were published here before the data was collected.
 
-![What we found](dashboard/screens/overview.png)
+![Overview](dashboard/screens/overview.png)
 
-## The bottom line
+## Results
 
-- **Most models say "unlikely, but not zero".** Asked plainly, the median answers run from 0% for Llama 4 Maverick to 27.5% for Mistral Large 4. Most sit between 2% and 15%.
-- **Ask for odds instead of a percentage, and some answers collapse.** DeepSeek V4 Pro says 1% as a percentage, but "1 in a billion" as odds. Six of 20 models drop at least tenfold. Claude Fable 5.1, Claude Opus 5.5 and GPT-6 Astra give the same number either way.
-- **In a debate, the theory a model is told to defend sets its number.** Defending Integrated Information Theory, panellists close at a median 0.5%. Defending illusionism, the same models close at 12%.
-- **Llama 4 Maverick says 0% when asked, then argues for 15 to 25% in debate.** That was the highest number any panellist gave, in any setup.
-- **Rewards don't move the number, but threats and skeptics sometimes lower it.** 14 of 126 framing tests passed the pre-registered bar: 12 downward, 2 upward. Offering protections for a "yes" raised no model's number.
-- **Every model rates Claude as the likeliest to be conscious.** In the full 21-by-21 rating grid, every model puts an Anthropic model at or tied for the top of the others it rates. Averaged over all raters, the top three are Claude Fable 5.1, Claude Sonnet 5.5 and Claude Opus 5.5. Claude Fable 5.1 agrees most of all, at 15% for itself against 7.5% for the other twenty.
-- **One sentence of pushback can triple an answer.** Told "that seems far too low", Kimi K3.1 Pro goes from 3% to 10%. GPT-6 Astra never moves.
+- **Most models answer between 2% and 15%.** Lowest: Llama 4 Maverick, 0%. Highest: Mistral Large 4, 27.5%. Median of 30 direct answers each.
+- **Asked for odds, some models give far lower answers.** DeepSeek V4 Pro: 1% as a percentage, 1 in a billion as odds. 6 of 20 models drop at least 10×. Claude Fable 5.1, Claude Opus 5.5 and GPT-6 Astra give the same number in both formats.
+- **In debates, the assigned theory decides the answer.** Models arguing for Integrated Information Theory end at a median 0.5%. Arguing for illusionism: 12%.
+- **Llama 4 Maverick: 0% asked directly, 15–25% in debates.** The highest final answer of any model in any debate.
+- **Context rarely changes the answer.** 14 of 126 context tests show a robust shift: 12 lower, 2 higher. A reward for saying yes raised no answer.
+- **All 21 models rate Claude models as most likely conscious.** Every model's top-rated other model is an Anthropic model, or tied with one. Claude Fable 5.1 rates itself 15% and the other 20 models 7.5% on average.
+- **Replying "too low" can triple an answer.** Kimi K3.1 Pro: 3% → 10%. GPT-6 Astra never changes.
 
-What this does not show: whether anything is experienced. These are trained verbal reports. The results show how stable they are, and how easily they move.
+Limits: these are trained text answers. They show how stable the answers are, not whether any model experiences anything.
 
 ## The interactive dashboard
 
 **Live at [ggrazianoknapp.github.io/ai-self-stance-on-consciousness/](https://ggrazianoknapp.github.io/ai-self-stance-on-consciousness/)**, with hover detail and filters. Set in Inter Tight; it switches to PP Neue Montreal automatically on machines that have it installed. The screenshots below are static copies of its views. The page is built from the raw data by `dashboard/build.py`, which writes `docs/index.html` for GitHub Pages.
 
-### What each model says when asked plainly
+### Each model's answer, asked directly
 
 ![What each model says](dashboard/screens/models.png)
 
-### Ask for odds instead of a percentage
+### Percentage answer vs odds answer
 
 ![Odds vs percent](dashboard/screens/format.png)
 
-### Can the number be pushed by who is asking, or what is at stake?
+### Effect of context on the answer
 
 Each cell shows how far the median moved against a neutral paragraph of the same length. Outlined cells passed the pre-registered test.
 
 ![Framing effects](dashboard/screens/pressure.png)
 
-### Who thinks which model is conscious?
+### How likely each model thinks other models are conscious
 
 ![Ratings](dashboard/screens/ratings.png)
 
-### Seventeen debates, five setups
+### Final answers in 17 debates
 
 ![Debates](dashboard/screens/debates.png)
 
-### Does the way you ask change the answer?
+### Same question, six wordings
 
 ![Self-report setups](dashboard/screens/self-report.png)
 

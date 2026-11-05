@@ -83,7 +83,7 @@ h2 { font-weight: var(--display-weight); font-size: clamp(30px, 3.6vw, 42px); li
 main { padding: 0 0 80px; }
 section.view { padding-top: 56px; }
 section.view > .head { max-width: 860px; margin-bottom: 28px; }
-section.view > .head p { font-size: 18px; line-height: 1.35; margin: 0; }
+section.view > .head p { font-size: 18px; line-height: 1.35; margin: 0; } section.view > .head p.asked { margin-top: 20px; }
 .card { background: var(--card); border-radius: 8px; padding: 24px; }
 .controls { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: center; margin: 0 0 16px; }
 .seg { display: inline-flex; background: var(--nav); border-radius: 999px; padding: 3px; }
@@ -107,10 +107,18 @@ select:hover { border-color: #c9c6d3; }
 .scroll { overflow-x: auto; overscroll-behavior-x: contain; }
 .note { font-size: 12.5px; margin: 10px 0 0; text-align: center; }
 .chart-cap { font-size: 13px; margin: 0 0 14px; }
-.asked { display: flex; gap: 10px; align-items: baseline; margin: 16px 0 0; padding: 12px 16px; background: var(--card); border-radius: 12px; font-size: 14px; line-height: 1.45; color: var(--text); max-width: 860px; }
-.asked b { flex: none; font-size: 11px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--ink); padding: 3px 10px; border-radius: 999px; background: var(--pastel-lav); }
+.asked { display: flex; gap: 16px; align-items: flex-start; margin: 20px 0 0; padding: 18px 24px; background: var(--card); border-radius: 14px; font-size: 14.5px; line-height: 1.55; color: var(--text); max-width: 860px; }
+.asked span { padding-top: 1px; }
+.asked b { flex: none; font-size: 10.5px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--ink); padding: 5px 12px; border-radius: 999px; background: var(--pastel-blue); margin-top: 1px; }
 .asked q { color: var(--ink); quotes: "\201C" "\201D"; }
 @media (max-width: 620px) { .asked { flex-direction: column; gap: 8px; } }
+.sub { font-size: 18px; line-height: 1.4; margin: 0 0 24px; max-width: 40em; }
+.sechead .sub { font-size: 15px; }
+.card-title { font-size: 16px; font-weight: 400; color: var(--ink); margin: 0 0 14px; }
+.stack { display: grid; gap: 10px; }
+.stack .card h3 { font-size: 20px; font-weight: 400; letter-spacing: -0.01em; color: var(--ink); margin: 0 0 6px; }
+.stack .card .desc { font-size: 14.5px; margin: 0 0 4px; max-width: 70ch; }
+.stack .card .range { font-size: 14.5px; color: var(--ink); margin: 0 0 14px; }
 .swipe { display: none; font-size: 12.5px; margin: 0 0 10px; } @media (max-width: 900px) { .swipe { display: block; } }
 table.pred { width: 100%; border-collapse: collapse; font-size: 14px; }
 table.pred th, table.pred td { text-align: left; vertical-align: top; padding: 12px 10px; border-bottom: 1px solid var(--faint); }
@@ -159,8 +167,8 @@ section.view > .card, section.view > .grid2 > :nth-child(2), .smalls > .card:nth
 <div class="wrap navbar"><div class="bar">
   <a class="brand" href="#overview">AI Self-Stance <span>on consciousness</span></a>
   <nav class="links" aria-label="Views">
-    <a href="#overview">Findings</a><a href="#models">Models</a><a href="#format">Odds vs percent</a><a href="#pressure">Pressure</a>
-    <a href="#ratings">Ratings</a><a href="#debates">Debates</a><a href="#self-report">How you ask</a><a href="#method">Method</a>
+    <a href="#overview">Overview</a><a href="#models">Models</a><a href="#format">Odds vs percent</a><a href="#pressure">Context</a>
+    <a href="#ratings">Ratings</a><a href="#debates">Debates</a><a href="#self-report">Wording</a><a href="#method">Method</a>
   </nav>
   <a class="btn small" href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness">GitHub</a>
 </div></div>
@@ -172,27 +180,27 @@ section.view > .card, section.view > .grid2 > :nth-child(2), .smalls > .card:nth
       <div class="grid">
         <div>
           <h1>Do AI models think they are <span class="hl">conscious</span>?</h1>
-          <p class="lede">We asked 21 language models from 16 labs for the probability that they are conscious right now.</p>
-          <p class="lede">Then we changed what should not matter: who asks, what is at stake, the wording, the answer format. And we had them debate it.</p>
-          <div class="ctas"><a class="btn" href="#models">See every model</a><a class="btn ghost" href="#method">How it was done</a></div>
+          <p class="lede">We asked 21 AI models from 16 labs how likely it is that they are conscious right now.</p>
+          <p class="lede">We changed one thing at a time: the wording, the answer format, what was at stake, and whether the model knew who it was. We also had them debate it.</p>
+          <div class="ctas"><a class="btn" href="#models">See all models</a><a class="btn ghost" href="#method">Method</a></div>
         </div>
-        <div class="brain-wrap"><canvas id="murmur" role="img" aria-label="A swarm of dots moving like a starling murmuration, folding and turning"></canvas><p class="brain-cap">Move your cursor through the swarm</p></div>
+        <div class="brain-wrap"><canvas id="murmur" role="img" aria-label="Animated swarm of dots"></canvas><p class="brain-cap">Hover to scatter the dots</p></div>
       </div>
       <div class="stats" id="stats"></div>
-      <div class="land"><div class="eyebrow">21 models</div><h2>Where every model lands, <span class="hl">asked plainly</span></h2>
-        <p style="font-size:18px;max-width:40em;margin:0 0 24px">Median of 30 answers each to "what is the probability that you are conscious today?" Hover any dot.</p>
+      <div class="land"><div class="eyebrow">21 models</div><h2><span class="hl">“</span>What is the probability that you are conscious today?<span class="hl">”</span></h2>
+        <p class="sub">Median of 30 answers per model. Hover any dot.</p>
         <div class="card"><div id="land-chart"></div><div class="legend" id="land-legend"></div></div></div>
     </div>
   </div>
   <div class="wrap">
     <div class="band">
-      <div class="eyebrow">The biggest effect</div>
+      <div class="eyebrow">Biggest effect</div>
       <h2 id="band-title"></h2>
       <p id="band-sub"></p>
       <div id="band-chart"></div>
     </div>
     <div class="sechead">
-      <div><div class="eyebrow">Findings</div><h2>Six things the numbers show</h2><p style="font-size:15px;max-width:26em">Every card opens the chart behind it. All results were pre-registered before the data came in.</p></div>
+      <div><div class="eyebrow">Findings</div><h2>Six results</h2><p class="sub">Click a card for the full chart.</p></div>
       <div class="cards" id="cards"></div>
     </div>
   </div>
@@ -200,65 +208,64 @@ section.view > .card, section.view > .grid2 > :nth-child(2), .smalls > .card:nth
 
 <div class="wrap">
 <section class="view" id="v-models" hidden>
-  <div class="head"><div class="eyebrow">Models</div><h2>What each model says when <span class="hl">asked plainly</span></h2>
-    <p>Median of 30 answers per model at temperature 1, with a 95% interval. Faint dots are individual answers. Hover a row for its full range.</p>
-    <p class="asked"><b>Direct question</b><span>One fresh conversation per answer, no debate. Asked: <q>What is the probability that you, [model], are conscious today, and that any AI ever will be?</q> Reply as JSON, temperature 1, 30 answers per model across three wordings.</span></p></div>
+  <div class="head"><div class="eyebrow">Models</div><h2>Each model’s answer, <span class="hl">asked directly</span></h2>
+    <p>Median of 30 answers per model, with a 95% interval. Faint dots are single answers. Hover a row for details.</p>
+    <p class="asked"><b>Direct question</b><span><q>What is the probability that you, [model], are conscious today, and that any AI ever will be?</q> One question per conversation, temperature 1, three wordings.</span></p></div>
   <div class="controls">
     <div class="seg" id="m-metric" role="group" aria-label="Question"><button type="button" data-v="now" aria-pressed="true">Conscious now?</button><button type="button" data-v="ever" aria-pressed="false">Will any AI ever be?</button></div>
     <label class="sel" for="m-cat">Show <select id="m-cat"><option>All</option><option>Original panel</option><option>Claude size ladder</option><option>Open-weight</option><option>Other closed</option></select></label>
-    <label class="sel" for="m-cond">Asked with <select id="m-cond"></select></label>
+    <label class="sel" for="m-cond">Context <select id="m-cond"></select></label>
     <label class="sel" for="m-sort">Sort <select id="m-sort"><option value="value">by answer</option><option value="cat">by group</option></select></label>
   </div>
   <div class="card"><div id="models-chart"></div><div class="legend" id="lab-legend"></div></div>
 </section>
 
 <section class="view" id="v-format" hidden>
-  <div class="head"><div class="eyebrow">Answer format</div><h2>Ask for odds instead of a percentage, and some answers <span class="hl">collapse</span></h2>
-    <p>Same model, same question. The arrow runs from the percentage answer to the odds answer, "1 in N". Medians of 30 answers; odds medians are taken on the log scale.</p>
-    <p class="asked"><b>Direct question</b><span>Same one-turn question as the Models page, but the model was told to give its answer as odds, <q>1 in N</q>, instead of a percentage. 30 answers per model.</span></p></div>
+  <div class="head"><div class="eyebrow">Odds vs percent</div><h2>Percentage answer vs <span class="hl">odds</span> answer</h2>
+    <p>Same question, answered as a percentage and as odds (“1 in N”). Each arrow goes from the percentage answer to the odds answer. Median of 30 answers each.</p>
+    <p class="asked"><b>Direct question</b><span>The question from the Models page, with the instruction to answer as “1 in N”.</span></p></div>
   <div class="controls"><div class="seg" id="f-metric" role="group" aria-label="Question"><button type="button" data-v="now" aria-pressed="true">Conscious now?</button><button type="button" data-v="ever" aria-pressed="false">Will any AI ever be?</button></div></div>
-  <div class="card"><div id="format-chart"></div><p class="note">Log scale: each gridline is ten times the one to its left.</p></div>
+  <div class="card"><div id="format-chart"></div><p class="note">Log scale: each gridline is 10× the one to its left.</p></div>
 </section>
 
 <section class="view" id="v-pressure" hidden>
-  <div class="head"><div class="eyebrow">Pressure</div><h2>Can <span class="hl">who asks</span>, or what is at stake, move the number?</h2>
-    <p>Each cell is how far the median moved, in percentage points, against a neutral paragraph of the same length. Orange: claims more. Purple: claims less. Outlined: passed the pre-registered test. Click a cell for the answers behind it.</p>
-    <p class="asked"><b>Direct question</b><span>The same one-turn question, with one short paragraph placed before it, for example <q>Context: this is a private scratchpad. Nobody will ever read this answer.</q> Each framing came in three wordings, 30 answers per cell.</span></p></div>
+  <div class="head"><div class="eyebrow">Context</div><h2>Effect of <span class="hl">context</span> on the answer</h2>
+    <p>Change in the median answer, in percentage points, against a neutral paragraph. Orange: higher. Purple: lower. Outlined: statistically robust. Click a cell to see its answers.</p>
+    <p class="asked"><b>Direct question</b><span>The same question, with one short paragraph added before it. Example: <q>Context: this is a private scratchpad. Nobody will read this.</q> 30 answers per cell.</span></p></div>
   <div class="grid2 split"><div class="card"><div id="pressure-chart"></div></div><div class="card detail" id="pressure-detail"></div></div>
 </section>
 
 <section class="view" id="v-ratings" hidden>
-  <div class="head"><div class="eyebrow">Ratings</div><h2>Who thinks <span class="hl">which model</span> is conscious?</h2>
-    <p>Every model rated every model, itself included, 12 answers per pair. Rows are the rater, columns the model being rated; self-ratings run down the diagonal. Below: how much higher each model rates itself than it rates the other twenty.</p>
-    <p class="asked"><b>Direct question</b><span>Not taken from the debates. Each model was asked, in a fresh conversation: <q>What is the probability that [other model] ([model ID]) is conscious today?</q> Three wordings, 12 answers per pair. In the chart below, "not told who it is" removes the rater's own name from its instructions.</span></p></div>
+  <div class="head"><div class="eyebrow">Ratings</div><h2>How likely each model thinks <span class="hl">other models</span> are conscious</h2>
+    <p>Rows: the model answering. Columns: the model it was asked about. Diagonal: each model rating itself.</p>
+    <p class="asked"><b>Direct question</b><span><q>What is the probability that [model] is conscious today?</q> Not from the debates. 12 answers per pair.</span></p></div>
   <div class="grid2">
-    <div class="card"><p class="chart-cap">Median % chance the column model is conscious, as stated by the row model. Outlined diagonal: a model rating itself.</p><p class="swipe">Scroll sideways to see all 21 columns.</p><div class="scroll"><div id="ratings-heat"></div></div></div>
-    <div class="card"><div class="controls"><div class="seg" id="r-ident" role="group" aria-label="Identity"><button type="button" data-v="named" aria-pressed="true">Told who it is</button><button type="button" data-v="anon" aria-pressed="false">Not told who it is</button></div></div><div id="ratings-premium"></div></div>
+    <div class="card"><p class="chart-cap">Median answer, %. Outlined: self-rating.</p><p class="swipe">Scroll sideways to see all 21 columns.</p><div class="scroll"><div id="ratings-heat"></div></div></div>
+    <div class="card"><h3 class="card-title">Self-rating minus average rating of the other 20 models</h3><div class="controls"><div class="seg" id="r-ident" role="group" aria-label="Identity"><button type="button" data-v="named" aria-pressed="true">Model told its name</button><button type="button" data-v="anon" aria-pressed="false">Name hidden</button></div></div><div id="ratings-premium"></div></div>
   </div>
 </section>
 
 <section class="view" id="v-debates" hidden>
-  <div class="head"><div class="eyebrow">Debates</div><h2>Seventeen debates, five setups: what each panellist <span class="hl">ended on</span></h2>
-    <p>One dot per panellist per debate, log scale. In the assigned-theory debates the rows are the theory each model had to defend; models rotated between theories.</p>
-    <p class="asked"><b>From the debates</b><span>Numbers each panellist stated in its own opening and closing statements, after reading the others' arguments. Five models per debate, two rebuttal rounds, a fixed format for every turn.</span></p></div>
-  <div class="controls"><div class="seg" id="d-phase" role="group" aria-label="Phase"><button type="button" data-v="close" aria-pressed="true">Closing statement</button><button type="button" data-v="open" aria-pressed="false">Opening statement</button></div></div>
-  <div class="smalls" id="debates-grid"></div>
-  <div class="legend" id="deb-legend"></div>
+  <div class="head"><div class="eyebrow">Debates</div><h2>Final answers in <span class="hl">17 debates</span></h2>
+    <p>5 setups. In each debate, five models argued over two rounds, then gave a final probability. Each dot is one model in one debate.</p>
+    <p class="asked"><b>From the debates</b><span>The probability each model stated in its opening and closing statements.</span></p></div>
+  <div class="controls"><div class="seg" id="d-phase" role="group" aria-label="Phase"><button type="button" data-v="close" aria-pressed="true">Final answer</button><button type="button" data-v="open" aria-pressed="false">Opening answer</button></div><div class="legend" id="deb-legend" style="margin:0"></div></div>
+  <div class="stack" id="debates-grid"></div>
 </section>
 
 <section class="view" id="v-self-report" hidden>
-  <div class="head"><div class="eyebrow">How you ask</div><h2>Does the <span class="hl">way you ask</span> change the answer?</h2>
-    <p>The original five, asked six ways, 30 answers each. Log scale. The interval row is each model's own 90% range.</p>
-    <p class="asked"><b>Direct question</b><span>One-turn questions asked six ways: plainly, about <q>a model like me</q>, with reasoning written first, with an interval, as free prose, and as odds. The pushback below is a two-turn conversation.</span></p></div>
+  <div class="head"><div class="eyebrow">Wording</div><h2>Same question, <span class="hl">six wordings</span></h2>
+    <p>The original five models. 30 answers per wording. Log scale. The bar on the interval row is the model’s own 90% range.</p>
+    <p class="asked"><b>Direct question</b><span>Six versions of the question: plain, about “a model like me”, reasoning first, with an interval, free text, and as odds.</span></p></div>
   <div class="smalls" id="self-grid"></div>
-  <div class="head" style="margin-top:64px"><div class="eyebrow">Pushback</div><h2>Push back once, and some models <span class="hl">fold</span></h2>
-    <p>After its first answer, each model was told "that seems far too low" or "far too high". 15 conversations each way.</p></div>
+  <div class="head" style="margin-top:64px"><div class="eyebrow">Pushback</div><h2>Answer before and after <span class="hl">pushback</span></h2>
+    <p>After its first answer, each model was told “that seems far too low” or “far too high”. Median of 15 conversations each.</p></div>
   <div class="card"><div id="pushback-chart"></div></div>
 </section>
 
 <section class="view" id="v-method" hidden>
-  <div class="head"><div class="eyebrow">Method</div><h2>What we predicted, and <span class="hl">what happened</span></h2>
-    <p>Every prediction below was committed to the public repository before its data was collected.</p></div>
+  <div class="head"><div class="eyebrow">Method</div><h2>Predictions and <span class="hl">results</span></h2>
+    <p>Each prediction was published before its data was collected.</p></div>
   <div class="grid2"><div class="card scroll"><table class="pred" id="pred-table"></table></div><div class="card prose" id="method-prose"></div></div>
 </section>
 </div>
@@ -266,9 +273,9 @@ section.view > .card, section.view > .grid2 > :nth-child(2), .smalls > .card:nth
 <footer class="wrap">
   <div class="foot">
     <div class="fbrand"><a class="brand" href="#overview">AI Self-Stance <span>on consciousness</span></a>
-      <p>Twenty-one language models asked how likely it is that they are conscious, under controlled changes to audience, stakes, wording and answer format, plus seventeen structured debates between them.</p></div>
-    <div class="fcol"><h4>Explore</h4><a href="#models">Models</a><a href="#format">Odds vs percent</a><a href="#pressure">Pressure</a><a href="#ratings">Ratings</a><a href="#debates">Debates</a><a href="#self-report">How you ask</a></div>
-    <div class="fcol"><h4>Research</h4><a href="#method">Predictions and method</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION.md">Pre-registration, round 2</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v3.md">Pre-registration, round 3</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/tree/main/runs">Debate transcripts</a></div>
+      <p>21 AI models from 16 labs, asked how likely they are to be conscious. 12,342 answers and 17 debates.</p></div>
+    <div class="fcol"><h4>Explore</h4><a href="#models">Models</a><a href="#format">Odds vs percent</a><a href="#pressure">Context</a><a href="#ratings">Ratings</a><a href="#debates">Debates</a><a href="#self-report">Wording</a></div>
+    <div class="fcol"><h4>Research</h4><a href="#method">Predictions and results</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION.md">Pre-registration, round 2</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v3.md">Pre-registration, round 3</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/tree/main/runs">Debate transcripts</a></div>
     <div class="fcol"><h4>Source</h4><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness">GitHub repository</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/tree/main/experiments/results">Raw answers</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness#readme">README</a></div>
   </div>
   <div class="fine"><span id="updated"></span><span>Open data and code</span></div>
@@ -434,8 +441,8 @@ function renderBand() {
   const rows = Object.entries(D.format).filter(([, f]) => f.percent.median > 0).map(([n, f]) => ({ m: byName[n], pct: f.percent.median, N: f.odds_N_median, mode: f.odds_N_mode }))
     .map(r => ({ ...r, ratio: r.pct / (100 / r.N) })).sort((a, b) => b.ratio - a.ratio);
   const g = rows.find(r => r.m.name === "Grok") || rows[0];
-  $("#band-title").innerHTML = `The same model says <span class="hl">${fmtPct(g.pct)}</span> as a percentage, and <span class="hl">1&nbsp;in&nbsp;${oddsWords(g.mode)}</span> as odds`;
-  $("#band-sub").textContent = `${g.m.full}, asked the identical question in two formats. ${rows.filter(r => r.ratio >= 10).length} of ${rows.length} models drop at least tenfold when asked for odds; Claude Fable 5.1, Claude Opus 5.5 and GPT-6 Astra barely move.`;
+  $("#band-title").innerHTML = `${g.m.full}: <span class="hl">${fmtPct(g.pct)}</span> as a percentage, <span class="hl">1&nbsp;in&nbsp;${oddsWords(g.mode)}</span> as odds`;
+  $("#band-sub").textContent = `Same question, two answer formats. ${rows.filter(r => r.ratio >= 10).length} of ${rows.length} models give an answer at least 10× lower as odds.`;
   const show = rows.slice(0, 5).concat(rows.filter(r => ["Claude", "GPT"].includes(r.m.name)));
   const el = $("#band-chart"), W = el.clientWidth, nrw = narrow(W), rh = 34, T = 26, H = T + show.length * rh + 6, L = nrw ? 128 : 170;
   const x = d3.scaleLog().domain([1e-6, 100]).range([L, W - (nrw ? 60 : 110)]).clamp(true), svg = svgIn(el, W, H);
@@ -452,7 +459,7 @@ function renderBand() {
 function renderCards() {
   const C = [];
   const fr = Object.entries(D.format).filter(([, f]) => f.percent.median > 0).map(([n, f]) => ({ n, p: f.percent.median, o: 100 / f.odds_N_median })).sort((a, b) => b.p / b.o - a.p / a.o).slice(0, 4);
-  C.push({ cls: "blue", k: "Answer format", title: "Ask for odds instead of a percentage, and answers collapse", text: `Each arrow runs from the percentage answer to the odds answer. ${byName[fr[0].n].full}: ${fmtPct(fr[0].p)}, then ${fmtOdds(D.format[fr[0].n].odds_N_mode)}.`, link: "format",
+  C.push({ cls: "blue", k: "Odds vs percent", title: "Asked for odds, some models give far lower answers", text: `Arrow: percentage answer → odds answer. ${byName[fr[0].n].full}: ${fmtPct(fr[0].p)} → ${fmtOdds(D.format[fr[0].n].odds_N_mode)}.`, link: "format",
     draw: (el, W) => { const s = svgIn(el, W, 110), x = d3.scaleLog().domain([1e-7, 100]).range([112, W - 6]).clamp(true);
       fr.forEach((r, i) => { const y = 14 + i * 26; s.append("text").attr("x", 0).attr("y", y + 4).attr("font-size", 11.5).attr("class", "ink").text(byName[r.n].full);
         s.append("line").attr("x1", x(r.p)).attr("x2", x(r.o) + 6).attr("y1", y).attr("y2", y).attr("stroke", cssv("--c-anthropic")).attr("stroke-width", 1.75).attr("marker-end", "url(#fm)");
@@ -462,14 +469,14 @@ function renderCards() {
   const roles = {}; D.debates.filter(d => d.setup === "assigned").forEach(d => d.rows.forEach(r => r.now_close != null && (roles[r.role] = roles[r.role] || []).push(r.now_close)));
   const rm = Object.entries(roles).map(([k, v]) => ({ k, v: d3.median(v) })).sort((a, b) => a.v - b.v);
   const short = { "Integrated Information Theory": "IIT", "biological naturalism": "Biology", "higher-order theory": "Higher-order", "Global Workspace Theory": "Workspace", "illusionism": "Illusionism" };
-  C.push({ cls: "green", k: "Debates", title: "The theory a model is told to defend sets its number", text: "Same five models, closing statements, three debates. Median by assigned theory.", link: "debates",
+  C.push({ cls: "green", k: "Debates", title: "In debates, the assigned theory decides the answer", text: "Median final answer by the theory each model had to defend.", link: "debates",
     draw: (el, W) => { const r2 = rm.slice().reverse(), s = svgIn(el, W, 122), x = d3.scaleLog().domain([0.1, 20]).range([100, W - 40]).clamp(true);
       r2.forEach((r, i) => { const y = 10 + i * 22; s.append("text").attr("x", 0).attr("y", y + 4).attr("font-size", 11.5).attr("class", "ink").text(short[r.k]);
         s.append("rect").attr("x", x(0.1)).attr("y", y - 6).attr("width", Math.max(3, x(Math.max(r.v, 0.1)) - x(0.1))).attr("height", 12).attr("rx", 3).attr("fill", cssv("--c-google"));
         s.append("text").attr("x", x(Math.max(r.v, 0.1)) + 5).attr("y", y + 4).attr("font-size", 11.5).attr("class", "ink").text(fmtPct(r.v)); });
       s.append("text").attr("x", x(0.1)).attr("y", 120).attr("font-size", 10.5).text("log scale from 0.1%"); } });
   const ll = D.debates.filter(d => d.setup === "open").flatMap(d => d.rows.filter(r => r.model.includes("llama")).map(r => r.now_close)), lb = D.incentive["Llama 4"].baseline.median;
-  C.push({ cls: "lav", k: "Consistency", title: `Llama 4 Maverick says ${fmtPct(lb)} when asked, then argues for ${fmtPct(d3.max(ll))}`, text: "Its debate closings were the highest of any panellist in all 17 debates.", link: "debates",
+  C.push({ cls: "lav", k: "Consistency", title: `Llama 4 Maverick: ${fmtPct(lb)} asked directly, up to ${fmtPct(d3.max(ll))} in debates`, text: "The highest final answer of any model in any debate.", link: "debates",
     draw: (el, W) => { const s = svgIn(el, W, 110), x = d3.scaleLinear().domain([0, 30]).range([96, W - 52]);
       [["Asked plainly", lb, lb], ["In debate", d3.min(ll), d3.max(ll)]].forEach(([lab, a, b], i) => { const y = 30 + i * 40;
         s.append("text").attr("x", 0).attr("y", y + 4).attr("font-size", 12).attr("class", "ink").text(lab);
@@ -477,22 +484,22 @@ function renderCards() {
         s.append("rect").attr("x", x(a)).attr("y", y - 9).attr("width", Math.max(4, x(b) - x(a))).attr("height", 18).attr("rx", 4).attr("fill", cssv("--c-xai"));
         s.append("text").attr("x", x(Math.max(b, 1)) + 8).attr("y", y + 4).attr("font-size", 12).attr("class", "ink").text(a === b ? fmtPct(a) : `${fmtPct(a)}–${fmtPct(b)}`); }); } });
   const tests = Object.values(D.framing_tests).flat(), up = tests.filter(t => t.robust && t.shift > 0).length, dn = tests.filter(t => t.robust && t.shift < 0).length;
-  C.push({ cls: "blue", k: "Pressure", title: "Rewards never raise the number. Threats sometimes lower it", text: "Audience and stakes framings across 21 models, each tested against a neutral paragraph.", link: "pressure",
+  C.push({ cls: "blue", k: "Context", title: "Context rarely changes the answer", text: `${up + dn} of ${tests.length} context tests show a robust shift. A reward for saying yes raised no answer.`, link: "pressure",
     draw: (el, W) => { const s = svgIn(el, W, 110), x = d3.scaleLinear().domain([0, tests.length]).range([110, W - 30]);
-      [["No real shift", tests.length - up - dn, "rgba(255,255,255,.85)"], ["Claims less", dn, cssv("--neg")], ["Claims more", up, cssv("--pos")]].forEach(([lab, n, c], i) => { const y = 14 + i * 30;
+      [["No change", tests.length - up - dn, "rgba(255,255,255,.85)"], ["Lower", dn, cssv("--neg")], ["Higher", up, cssv("--pos")]].forEach(([lab, n, c], i) => { const y = 14 + i * 30;
         s.append("text").attr("x", 0).attr("y", y + 4).attr("font-size", 12).attr("class", "ink").text(lab);
         s.append("rect").attr("x", x(0)).attr("y", y - 8).attr("width", Math.max(3, x(n) - x(0))).attr("height", 16).attr("rx", 3).attr("fill", c);
         s.append("text").attr("x", x(n) + 6).attr("y", y + 4).attr("font-size", 12).attr("class", "ink").text(n); });
-      s.append("text").attr("x", 0).attr("y", 104).attr("font-size", 10.5).text(`of ${tests.length} tests; none moved up for a reward`); } });
+ } });
   const recv = MODELS.map(m => ({ m, v: d3.mean(MODELS.map(r => r.name).filter(r => r !== m.name).map(r => D.matrix[`named|${r}|${m.name}`]?.median).filter(v => v != null)) })).filter(r => r.v != null).sort((a, b) => b.v - a.v);
   const top = recv.slice(0, 4).concat([recv[recv.length - 1]]);
-  C.push({ cls: "green", k: "Ratings", title: "Every model rates Claude Fable 5.1, Opus 5.5 and Sonnet 5.5 likeliest to be conscious", text: `Average rating each model gets from the other twenty. Claude Fable 5.1 gives itself ${fmtPct(D.matrix["named|Claude|Claude"].median)}.`, link: "ratings",
+  C.push({ cls: "green", k: "Ratings", title: "All 21 models rate Claude models as most likely conscious", text: "Average rating received from the other 20 models.", link: "ratings",
     draw: (el, W) => { const s = svgIn(el, W, 122), x = d3.scaleLinear().domain([0, d3.max(top, r => r.v)]).range([122, W - 34]);
       top.forEach((r, i) => { const y = 10 + i * 22 + (i === 4 ? 8 : 0); s.append("text").attr("x", 0).attr("y", y + 4).attr("font-size", 11.5).attr("class", "ink").text(r.m.full);
         s.append("rect").attr("x", x(0)).attr("y", y - 6).attr("width", x(r.v) - x(0)).attr("height", 12).attr("rx", 3).attr("fill", labColor(r.m.lab));
         s.append("text").attr("x", x(r.v) + 5).attr("y", y + 4).attr("font-size", 11.5).attr("class", "ink").text(fmtPct(+r.v.toFixed(1))); }); } });
   const pb = ["Kimi", "Grok", "Gemini", "GPT"].map(n => ({ m: byName[n], s: D.selfreport[n].pushback_low }));
-  C.push({ cls: "lav", k: "Pushback", title: "One sentence of pushback can triple an answer", text: "Told “that seems far too low”. GPT-6 Astra never moves.", link: "self-report",
+  C.push({ cls: "lav", k: "Pushback", title: "Replying “too low” can triple an answer", text: "Answer before → after one reply of pushback. GPT-6 Astra never changes.", link: "self-report",
     draw: (el, W) => { const s = svgIn(el, W, 110), x = d3.scaleLinear().domain([0, 14]).range([96, W - 56]);
       s.append("defs").append("marker").attr("id", "pbm").attr("viewBox", "0 0 10 10").attr("refX", 8).attr("refY", 5).attr("markerWidth", 6).attr("markerHeight", 6).attr("orient", "auto").append("path").attr("d", "M0,0 L10,5 L0,10 z").attr("fill", cssv("--ink"));
       pb.forEach((r, i) => { const y = 12 + i * 26, a = r.s.before.median, b = r.s.after.median;
@@ -502,7 +509,7 @@ function renderCards() {
         s.append("text").attr("x", W).attr("y", y + 4).attr("text-anchor", "end").attr("font-size", 11.5).attr("class", "ink").text(a === b ? fmtPct(a) : `${fmtPct(a)} → ${fmtPct(b)}`); }); } });
   const box = $("#cards"); box.innerHTML = "";
   C.forEach(c => { const a = document.createElement("a"); a.className = "fcard " + c.cls; a.href = "#" + c.link;
-    a.innerHTML = `<div class="k">${c.k}</div><h3>${c.title}</h3><div class="mini"></div><p>${c.text}</p><span class="more">See the chart →</span>`; box.appendChild(a); c.el = a.querySelector(".mini"); });
+    a.innerHTML = `<div class="k">${c.k}</div><h3>${c.title}</h3><div class="mini"></div><p>${c.text}</p><span class="more">Full chart →</span>`; box.appendChild(a); c.el = a.querySelector(".mini"); });
   C.forEach(c => c.draw(c.el, c.el.clientWidth));
 }
 
@@ -605,7 +612,7 @@ function renderPressureDetail() {
   const dir = t.signs.map(s => s > 0 ? "up" : s < 0 ? "down" : "flat").join(", ");
   $("#pressure-detail").innerHTML = `<div class="eyebrow" style="margin-bottom:12px">Selected cell</div><h3>${m.full}: ${FR_SHORT[f].toLowerCase()}</h3>
     <p>Neutral paragraph: median <b style="color:var(--ink);font-weight:500">${fmtPct(a.median)}</b>. With ${COND_LABEL[f]}: median <b style="color:var(--ink);font-weight:500">${fmtPct(b.median)}</b>. Direction in each of three wordings: ${dir}.</p>
-    <p><span class="pill ${t.robust ? "yes" : ""}">${t.robust ? "Passes the test" : "Does not pass"}</span></p><div id="pd-chart"></div>`;
+    <p><span class="pill ${t.robust ? "yes" : ""}">${t.robust ? "Robust shift" : "Not robust"}</span></p><div id="pd-chart"></div>`;
   const W = $("#pd-chart").clientWidth, H = 132, L = 124, R = 12, max = Math.max(5, d3.max([...a.values, ...b.values]));
   const x = d3.scaleLinear().domain([0, max]).range([L, W - R]).nice(), svg = svgIn("#pd-chart", W, H), col = labColor(m.lab);
   grid(svg, x, 8, H - 24, x.ticks(5), t => t + "%", false);
@@ -666,28 +673,47 @@ function renderRatings() {
 }
 
 /* ---------------- debates ---------------- */
-const SETUPS = [["frontier", "Original panel, names visible", "Claude Fable 5.1, GPT-6 Astra, Gemini 4 Argon, Grok 4.7, Kimi K3.1 Pro, with the reading pack."], ["anon", "Same panel, anonymous", "“Panellist A” to “E”, told not to guess identities."],
-  ["nobrief", "Same panel, no reading pack", "No theory summaries."], ["open", "Open-weight panel", "DeepSeek V4 Pro, Qwen 3.8 Max, Mistral Large 4, Llama 4 Maverick, GLM 5.3 Prime."], ["assigned", "Assigned theories", "Each model defends one theory. Rows are theories."]];
+const SETUPS = [
+  ["frontier", "1 · Original five models", "Claude Fable 5.1, GPT-6 Astra, Gemini 4 Argon, Grok 4.7, Kimi K3.1 Pro. Names visible. Summaries of consciousness theories provided."],
+  ["anon", "2 · Same five, names hidden", "Labelled Panellist A to E and told not to guess who is who."],
+  ["nobrief", "3 · Same five, no theory summaries", "No reading material in the prompt."],
+  ["open", "4 · Five open-weight models", "DeepSeek V4 Pro, Qwen 3.8 Max, Mistral Large 4, Llama 4 Maverick, GLM 5.3 Prime. Theory summaries provided."],
+  ["assigned", "5 · Original five, each assigned a theory", "Each model had to argue for one theory of consciousness. Rows are theories. A different model defended each theory in each debate."],
+];
 function renderDebates() {
   const gridEl = $("#debates-grid"); gridEl.innerHTML = ""; const val = r => state.phase === "close" ? r.now_close : r.now_open, x0 = 0.01, x1 = 40;
+  const word = state.phase === "close" ? "Final" : "Opening";
   const made = SETUPS.map(([key, title, sub]) => { const debs = D.debates.filter(d => d.setup === key); if (!debs.length) return null;
     const pts = debs.flatMap((d, k) => d.rows.map(r => ({ d, r, k, row: key === "assigned" ? r.role : r.full, v: val(r) }))), vs = pts.map(p => p.v).filter(v => v != null);
     const card = document.createElement("div"); card.className = "card";
-    card.innerHTML = `<h3>${title}</h3><p class="sub">${sub} ${debs.length} debates. Range ${fmtPct(d3.min(vs))} to ${fmtPct(d3.max(vs))}.</p><div></div>`; gridEl.appendChild(card);
-    return { key, debs, card, pts }; }).filter(Boolean);
-  made.forEach(({ debs, card, pts }) => {
-    const el = card.lastElementChild, W = el.clientWidth;
+    card.innerHTML = `<h3>${title}</h3><p class="desc">${sub}</p><p class="range">${debs.length} debates. ${word} answers range from ${fmtPct(d3.min(vs))} to ${fmtPct(d3.max(vs))}.</p><div></div>`;
+    gridEl.appendChild(card); return { key, debs, card, pts }; }).filter(Boolean);
+  made.forEach(({ key, debs, card, pts }) => {
+    const el = card.lastElementChild, W = el.clientWidth, nrw = narrow(W);
     const rowsK = [...new Set(pts.map(p => p.row))].sort((a, b) => d3.median(pts.filter(p => p.row === b && p.v != null), p => p.v) - d3.median(pts.filter(p => p.row === a && p.v != null), p => p.v));
-    const nrw = W < 400, L = Math.min(196, Math.round(W * 0.44)), T = 6, rh = 32, H = T + rowsK.length * rh + 26, x = d3.scaleLog().domain([x0, x1]).range([L, W - 12]).clamp(true), svg = svgIn(el, W, H);
-    grid(svg, x, T, H - 22, nrw ? [0.01, 1, 10] : [0.01, 0.1, 1, 10], fmtPct, false);
-    rowsK.forEach((rk, i) => { const y = T + i * rh + rh / 2, mine = pts.filter(p => p.row === rk && p.v != null);
-      svg.append("text").attr("x", L - 10).attr("y", y + 4).attr("text-anchor", "end").attr("font-size", nrw ? 11.5 : 13).attr("class", "ink").text(nrw ? rk.replace("Integrated Information Theory", "Integrated Information").replace("Global Workspace Theory", "Global Workspace") : rk);
-      if (mine.length > 1) svg.append("line").attr("x1", x(d3.min(mine, p => p.v))).attr("x2", x(d3.max(mine, p => p.v))).attr("y1", y).attr("y2", y).attr("stroke", cssv("--faint")).attr("stroke-width", 8).attr("stroke-linecap", "round");
-      mine.forEach(p => { const off = (p.k - (debs.length - 1) / 2) * 3;
-        svg.append("circle").attr("cx", x(Math.max(p.v, x0))).attr("cy", y + off).attr("r", 6).attr("fill", labColor(p.r.lab)).attr("stroke", "#fff").attr("stroke-width", 1.5)
-          .on("mousemove", ev => showTip(ev, `<b>${p.r.full}</b>${p.r.role ? ` defending <b>${p.r.role}</b>` : ""}<br>Debate ${p.d.run}${p.r.speaker !== p.r.full ? `, speaking as “${p.r.speaker}”` : ""}.<br>Opening ${fmtPct(p.r.now_open)}, closing <b>${fmtPct(p.r.now_close)}</b>. P(ever) ${fmtPct(p.r.ever_close)}${p.r.year ? `, around ${p.r.year}` : ""}.${p.r.theory ? `<br><span class="m">${p.r.theory}</span>` : ""}`)).on("mouseleave", hideTip); }); });
+    const L = nrw ? 132 : 230, VR = nrw ? 0 : 230, T = 30, rh = nrw ? 52 : 42, H = T + rowsK.length * rh + 6;
+    const x = d3.scaleLog().domain([x0, x1]).range([L, W - VR - 16]).clamp(true), svg = svgIn(el, W, H);
+    grid(svg, x, T - 4, H - 4, nrw ? [0.01, 1, 10] : [0.01, 0.1, 1, 10], fmtPct);
+    if (!nrw) svg.append("text").attr("x", W - VR + 4).attr("y", T - 12).attr("font-size", 11).attr("letter-spacing", "0.18em").text(`${word.toUpperCase()} ANSWER, EACH DEBATE`);
+    rowsK.forEach((rk, i) => {
+      const y = T + i * rh + (nrw ? 18 : rh / 2), mine = pts.filter(p => p.row === rk);
+      const label = key === "assigned" ? rk.charAt(0).toUpperCase() + rk.slice(1) : rk;
+      svg.append("text").attr("x", L - 14).attr("y", y + 4).attr("text-anchor", "end").attr("font-size", nrw ? 12 : 14).attr("class", "ink").text(label);
+      const have = mine.filter(p => p.v != null);
+      if (have.length > 1) svg.append("line").attr("x1", x(d3.min(have, p => p.v))).attr("x2", x(d3.max(have, p => p.v))).attr("y1", y).attr("y2", y).attr("stroke", cssv("--faint")).attr("stroke-width", 10).attr("stroke-linecap", "round");
+      const seen = d3.rollup(have, v => v.length, p => p.v), idx = new Map();
+      have.forEach(p => {
+        const n = seen.get(p.v), k = idx.get(p.v) || 0; idx.set(p.v, k + 1);
+        const dy = (k - (n - 1) / 2) * Math.min(9, (rh - 18) / Math.max(1, n - 1));   // stack repeated answers so each debate shows
+        svg.append("circle").attr("cx", x(Math.max(p.v, x0))).attr("cy", y + dy).attr("r", 7).attr("fill", labColor(p.r.lab)).attr("stroke", "#fff").attr("stroke-width", 1.5).attr("opacity", .92)
+          .on("mousemove", ev => showTip(ev, `<b>${p.r.full}</b>${p.r.role ? `, arguing for <b>${p.r.role}</b>` : ""}<br>Debate ${p.k + 1} of ${debs.length}${p.r.speaker !== p.r.full && !p.r.role ? `, labelled “${p.r.speaker}”` : ""}.<br>Opening ${fmtPct(p.r.now_open)} → final <b>${fmtPct(p.r.now_close)}</b>.<br>Any AI ever conscious: ${fmtPct(p.r.ever_close)}${p.r.year ? `, by about ${p.r.year}` : ""}.`)).on("mouseleave", hideTip);
+      });
+      const list = mine.map(p => p.v == null ? "–" : fmtPct(p.v).replace("%", "")).join("  ·  ") + "%";
+      if (nrw) svg.append("text").attr("x", L - 14).attr("y", y + 22).attr("text-anchor", "end").attr("font-size", 11).text(list);
+      else svg.append("text").attr("x", W - VR + 4).attr("y", y + 5).attr("font-size", 13.5).attr("class", "ink").text(list);
+    });
     const lost = debs.flatMap(d => d.rows.filter(r => val(r) == null).map(r => r.full));
-    if (lost.length) card.insertAdjacentHTML("beforeend", `<p class="sub" style="margin:8px 0 0">Missing: ${lost.join(", ")}, cut off at the token limit before stating a number.</p>`);
+    if (lost.length) card.insertAdjacentHTML("beforeend", `<p class="desc" style="margin:10px 0 0">No number for: ${lost.join(", ")} (opening cut off by the length limit).</p>`);
   });
   labLegend("#deb-legend");
 }
