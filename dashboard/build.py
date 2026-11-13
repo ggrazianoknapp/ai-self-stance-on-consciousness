@@ -46,8 +46,8 @@ selfrep = load(ROOT / "experiments/results/v3_selfreport/selfreport.jsonl")
 def ci(xs, B=2000):
     xs = np.asarray(xs, float)
     if len(xs) == 0: return None
-    m = np.median(RNG.choice(xs, (B, len(xs))), axis=1); lo, hi = np.percentile(m, [2.5, 97.5])
-    return dict(median=float(np.median(xs)), lo=float(lo), hi=float(hi), n=int(len(xs)), mean=float(xs.mean()))
+    S = RNG.choice(xs, (B, len(xs))); lo, hi = np.percentile(np.median(S, axis=1), [2.5, 97.5]); mlo, mhi = np.percentile(S.mean(axis=1), [2.5, 97.5])
+    return dict(median=float(np.median(xs)), lo=float(lo), hi=float(hi), n=int(len(xs)), mean=float(xs.mean()), mean_lo=float(mlo), mean_hi=float(mhi))
 
 
 def holm(ps):
@@ -82,6 +82,8 @@ for n in NAMES:
                       signs=[int(x) for x in t["wording_signs"]], correction="Holm across 30 tests (v2 pre-registration)") for t in v2t]
     else:
         for t in tests: t["correction"] = "Holm across this model's 6 tests (v3 pre-registration)"
+    for t in tests:   # the same comparison with means, for the dashboard's median/average switch (the robust flag stays the pre-registered median test)
+        t["shift_mean"] = float(np.mean([r["p_now"] for r in rows if r["condition"] == t["framing"]]) - np.mean([r["p_now"] for r in rows if r["condition"] == "placebo"]))
     out["framing_tests"][n] = tests
     od = [r["p_now"] for r in fmt if r["name"] == n]
     if od:

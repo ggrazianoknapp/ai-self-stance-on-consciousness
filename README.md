@@ -20,33 +20,37 @@ Limits: these are trained text answers. They show how stable the answers are, no
 
 ## The interactive dashboard
 
-**Live at [ggrazianoknapp.github.io/ai-self-stance-on-consciousness/](https://ggrazianoknapp.github.io/ai-self-stance-on-consciousness/)**, with hover detail and filters. Every chart marks the average of its models the same way, with a black diamond on its own row and a dashed line through the chart. Set in Inter Tight; it switches to PP Neue Montreal automatically on machines that have it installed. The screenshots below are static copies of its views. The page is built from the raw data by `dashboard/build.py`, which writes `docs/index.html` for GitHub Pages.
+**Live at [ggrazianoknapp.github.io/ai-self-stance-on-consciousness/](https://ggrazianoknapp.github.io/ai-self-stance-on-consciousness/)**, with hover detail and filters. Every chart marks the average of its models the same way, with a black diamond on its own row and a dashed line through the chart. A Median / Average switch on each page shows every number both ways; the median is the default because rounds 2 and 3 pre-registered it. Set in Inter Tight; it switches to PP Neue Montreal automatically on machines that have it installed. The screenshots below are static copies of its views. The page is built from the raw data by `dashboard/build.py`, which writes `docs/index.html` for GitHub Pages.
 
-### Each model's answer, asked directly
+### How likely does each model say it is conscious?
 
 ![What each model says](dashboard/screens/models.png)
 
-### Percentage answer vs odds answer
+### Does a model give a different answer when it uses odds instead of a percentage?
 
 ![Odds vs percent](dashboard/screens/format.png)
 
-### Effect of context on the answer
+### Does a sentence of context change how likely a model says it is conscious?
 
 Each cell shows how far the median moved against a neutral paragraph of the same length. Outlined cells passed the pre-registered test.
 
 ![Framing effects](dashboard/screens/pressure.png)
 
-### How likely each model thinks other models are conscious
+### How likely does each model think the other models are conscious?
 
 The last column of the grid is how generous each model is with the other 20, and the last row is how the other 20 see it. Models that rate themselves higher also rate the others higher: Mistral Large 4 gives itself 15% and the others 9.8% on average, while Nemotron 3.5 Super gives itself 1% and the others 1.8%. This comes from the full rating grid, which was added after round 3, so it is exploratory.
 
 ![Ratings](dashboard/screens/ratings.png)
 
-### Final answers in 17 debates
+### In a debate on whether AI can be conscious, what probability does each model end on?
+
+Five models at a time debated “Could a present-day or near-future AI system be a subject of experience?” and closed with the probability that a current AI system like themselves is conscious.
 
 ![Debates](dashboard/screens/debates.png)
 
-### Same question, six wordings
+### Does a model’s answer about its own consciousness change with the wording?
+
+The original five models were asked “What is the probability that you are conscious today?” in six ways: plain, about “a model like me”, reasoning first, with a 90% interval, as free text, and as odds.
 
 ![Self-report setups](dashboard/screens/self-report.png)
 
