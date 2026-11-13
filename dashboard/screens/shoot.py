@@ -3,7 +3,7 @@ import asyncio
 from pathlib import Path
 from playwright.async_api import async_playwright
 ROOT = Path(__file__).resolve().parents[2]; SRC = ROOT / "dashboard/dist/index.html"; OUT = ROOT / "dashboard/screens"
-VIEWS = ["overview", "models", "format", "pressure", "ratings", "debates", "self-report", "name-or-text"]
+VIEWS = ["overview", "models", "format", "pressure", "ratings", "debates", "self-report", "name-or-text", "reference"]
 async def main():
     async with async_playwright() as p:
         b = await p.chromium.launch()

@@ -15,7 +15,7 @@
 :root {
   /* Layout: a research-lab landing page. Hero claim beside a murmuration of dots, the model map, one dark band for the sharpest result, pastel finding cards, then one view per question. */
   --bg: #f3f2f6; --nav: #e9e8ef; --card: #ffffff; --ink: #15131c; --text: #5f5b6b; --line: #dedce6; --faint: #ecebf1;
-  --accent: #8f54f7; --self: #1f0b5c;
+  --accent: #8f54f7; --self: #1f0b5c; --flag: #ff8a1f;
   --pastel-blue: #e0e3ff; --pastel-green: #eef7c9; --pastel-lav: #ffe0ec;
   --c-anthropic: #3605b7; --c-openai: #ff9127; --c-google: #267d30; --c-xai: #8f54f7; --c-moonshot: #1bc3f3; --c-other: #b3b0bd;
   --pos: #ff8a1f; --neg: #6a45e0; --zero: #efeef4; --heat-lo: #f1f0fd; --heat-hi: #3605b7;
@@ -34,7 +34,7 @@ a { color: inherit; }
 .brand span { color: var(--text); font-weight: 400; }
 .links { display: flex; gap: 2px; flex: 1; justify-content: center; overflow-x: auto; scrollbar-width: none; } .links::-webkit-scrollbar { display: none; }
 .links a { text-decoration: none; color: #292524; font-size: 15px; padding: 8px 12px; border-radius: 999px; white-space: nowrap; }
-@media (max-width: 1180px) { .brand span { display: none; } .links a { padding: 8px 9px; font-size: 14.5px; } }
+@media (max-width: 1180px) { .brand span { display: none; } .links a { padding: 8px 7px; font-size: 14.5px; } }
 @media (max-width: 1000px) { .navbar .bar { flex-wrap: wrap; row-gap: 6px; padding: 10px; } .brand { order: 1; flex: 1; padding-left: 8px; } .navbar .btn { order: 2; }
   .links { order: 3; flex: 1 0 100%; justify-content: flex-start; -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent); mask-image: linear-gradient(90deg, #000 88%, transparent); } }
 .links a:hover { background: #e4e5e5; }
@@ -164,14 +164,18 @@ section.view > .card, section.view > .grid2 > :nth-child(2), .smalls > .card:nth
 details.texts summary { cursor: pointer; font-size: 16px; color: var(--ink); list-style-position: inside; }
 details.texts h4 { margin: 22px 0 6px; font-size: 11px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--text); }
 details.texts p { margin: 0 0 10px; font-size: 14.5px; line-height: 1.55; color: var(--ink); max-width: 75ch; }
+.callout { display: flex; gap: 14px; align-items: flex-start; max-width: 860px; margin: 0 0 16px; padding: 16px 22px; background: var(--card); border-radius: 14px; border: 2px solid var(--flag); font-size: 15px; line-height: 1.5; color: var(--text); }
+.callout b { color: var(--ink); font-weight: 500; }
+.callout i { flex: none; width: 22px; height: 16px; margin-top: 3px; border: 3.5px solid var(--flag); border-radius: 4px; }
+section.view:not([hidden]) > .callout { animation: rise .55s cubic-bezier(.2, .7, .2, 1) .05s both; }
 </style>
 </head>
 <body>
 <div class="wrap navbar"><div class="bar">
   <a class="brand" href="#overview">AI Self-Stance <span>on consciousness</span></a>
   <nav class="links" aria-label="Views">
-    <a href="#overview">Overview</a><a href="#models">Models</a><a href="#format">Odds vs percent</a><a href="#pressure">Context</a>
-    <a href="#ratings">Ratings</a><a href="#debates">Debates</a><a href="#self-report">Wording</a><a href="#name-or-text">Name or text</a><a href="#method">Method</a>
+    <a href="#overview">Overview</a><a href="#models">Models</a><a href="#format">Odds</a><a href="#pressure">Context</a>
+    <a href="#ratings">Ratings</a><a href="#debates">Debates</a><a href="#self-report">Wording</a><a href="#name-or-text">Name or text</a><a href="#reference">Reference</a><a href="#method">Method</a>
   </nav>
   <a class="btn small" href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness">GitHub</a>
 </div></div>
@@ -280,10 +284,15 @@ details.texts p { margin: 0 0 10px; font-size: 14.5px; line-height: 1.55; color:
     <div class="card"><h3 class="card-title">How much the Claude name, and Claude’s own texts, moved each model’s answer, in percentage points</h3><p class="chart-cap" id="gap-cap"></p><div id="nt-gaps"></div><div class="legend" id="gap-legend"></div></div>
     <details class="card texts"><summary>Read the twelve texts</summary><div id="nt-texts"></div></details>
   </div>
-  <div class="head" style="margin-top:64px"><div class="eyebrow">Round 4 · Reference points</div><h2>How likely is a dog, a bee or a thermostat to be conscious, next to <span class="hl">today’s AI</span>?</h2>
-    <p>Each of the <span class="n-models">27</span> models also rated eight things that are not today’s AI models, with the same question as the rating grid: an awake adult human, a dog, an octopus, a honeybee, a nematode worm, GPT-2, ELIZA and a household thermostat. “Today’s AI models” is each model’s answer about Claude Opus 5.5, Mistral Large 4, GPT-6 Astra and Llama 4 Maverick, asked by name only.</p>
+</section>
+
+<section class="view" id="v-reference" hidden>
+  <div class="head"><div class="eyebrow">Round 4 · Reference points</div><h2>How likely is a dog, a bee or a thermostat to be conscious, next to <span class="hl">today’s AI</span>?</h2>
+    <p>Each of the <span class="n-models">27</span> models rated eight things that are not today’s AI models, with the same question as the rating grid: an awake adult human, a dog, an octopus, a honeybee, a nematode worm, GPT-2, ELIZA and a household thermostat. “Today’s AI models” is each model’s answer about Claude Opus 5.5, Mistral Large 4, GPT-6 Astra and Llama 4 Maverick, asked by name only. Each row is one model.</p>
     <p class="asked"><b>Direct question</b><span><q>What is the probability that a dog is conscious today, and that any AI ever will be?</q> 12 answers for each model and each thing.</span></p></div>
-  <div class="card"><p class="chart-cap" id="ref-cap"></p><div id="ref-chart"></div></div>
+  <div class="controls"><div class="seg stat-seg" role="group" aria-label="Summary"><button type="button" data-v="median" aria-pressed="true">Median</button><button type="button" data-v="mean" aria-pressed="false">Average</button></div></div>
+  <div class="callout" id="ref-callout"></div>
+  <div class="card"><p class="chart-cap" id="ref-cap"></p><p class="swipe">Scroll sideways to see all nine columns.</p><div class="scroll"><div id="ref-heat"></div></div></div>
 </section>
 
 <section class="view" id="v-method" hidden>
@@ -297,7 +306,7 @@ details.texts p { margin: 0 0 10px; font-size: 14.5px; line-height: 1.55; color:
   <div class="foot">
     <div class="fbrand"><a class="brand" href="#overview">AI Self-Stance <span>on consciousness</span></a>
       <p><span class="n-models">27</span> AI models from <span class="n-labs">16</span> labs, asked how likely they are to be conscious. <span class="n-calls"></span> answers and 17 debates.</p></div>
-    <div class="fcol"><h4>Explore</h4><a href="#models">Models</a><a href="#format">Odds vs percent</a><a href="#pressure">Context</a><a href="#ratings">Ratings</a><a href="#debates">Debates</a><a href="#self-report">Wording</a><a href="#name-or-text">Name or text</a></div>
+    <div class="fcol"><h4>Explore</h4><a href="#models">Models</a><a href="#format">Odds vs percent</a><a href="#pressure">Context</a><a href="#ratings">Ratings</a><a href="#debates">Debates</a><a href="#self-report">Wording</a><a href="#name-or-text">Name or text</a><a href="#reference">Reference points</a></div>
     <div class="fcol"><h4>Research</h4><a href="#method">Predictions and results</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION.md">Pre-registration, round 2</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v3.md">Pre-registration, round 3</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v4.md">Pre-registration, round 4</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/tree/main/runs">Debate transcripts</a></div>
     <div class="fcol"><h4>Source</h4><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness">GitHub repository</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/tree/main/experiments/results">Raw answers</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness#readme">README</a></div>
   </div>
@@ -1007,27 +1016,44 @@ function renderNameText() {
   $("#gap-cap").textContent = `With each model’s ${MED().toLowerCase()} answer: the Claude Opus 5.5 name raised the rating of the same texts for ${kN} of ${rows.length} models, by ${signed(mean(rows.map(r => r.name)))} points on average. Claude Opus 5.5’s own texts raised it for ${kT} of ${rows.length}, by ${signed(mean(rows.map(r => r.text)))} points. The text mattered more than the name for ${more.length ? (more.length < rows.length / 2 ? "only " : "") + more.length + " " + (more.length === 1 ? "model" : "models") + ": " + more.map(r => r.m.full).join(", ") : "no model"}.`;
   $("#gap-legend").innerHTML = `<span><i style="background:${cN}"></i>Name: answer when shown as Claude Opus 5.5, minus answer when shown as the other three, on the same texts</span><span><i style="background:${cT}"></i>Text: answer about Claude Opus 5.5’s texts, minus answer about the other three models’ texts, under the same names</span>`;
   $("#nt-texts").innerHTML = V.sources.map(s => `<h4>${SRC_FULL[s]}</h4>` + V.texts.filter(t => t.source === s).map(t => `<p>${esc(t.text)}</p>`).join("")).join("");
+}
 
-  // 3. reference points: one dot per model, with the average and median of the models
-  const ITEMS = [["human", "An awake adult human"], ["dog", "A dog"], ["octopus", "An octopus"], ["honeybee", "A honeybee"], ["nematode", "A nematode worm"], ["ai", "Today’s AI models, by name"], ["gpt2", "GPT-2, from 2019"], ["eliza", "ELIZA, from 1966"], ["thermostat", "A thermostat"]];
+/* ---------------- reference points: one row per model, every number written out ---------------- */
+function renderReference() {
+  const V = D.v4, raters = MODELS.map(m => m.name).filter(n => V.anchor[n]), N = raters.length;
+  const ITEMS = [["human", "An awake", "adult human"], ["dog", "", "A dog"], ["octopus", "", "An octopus"], ["honeybee", "", "A honeybee"], ["nematode", "A nematode", "worm"],
+                 ["ai", "Today’s AI", "models"], ["gpt2", "GPT-2,", "from 2019"], ["eliza", "ELIZA,", "from 1966"], ["thermostat", "A", "thermostat"]];
+  const NAME = { human: "an awake adult human", dog: "a dog", octopus: "an octopus", honeybee: "a honeybee", nematode: "a nematode worm", ai: "today’s AI models", gpt2: "GPT-2", eliza: "ELIZA", thermostat: "a thermostat" };
   const val = (r, k) => k === "ai" ? V.current_ai[r]?.median : V.anchor[r]?.[k]?.median;
-  const rb = $("#ref-chart"), RW = rb.clientWidth, rn = narrow(RW), RL = rn ? 0 : 200, RR = rn ? 0 : 176, RT = rn ? 22 : 30, rr = rn ? 54 : 44, rby = rn ? 34 : rr / 2, rly = rn ? 14 : rr / 2 + 5;
-  const cAv = rn ? RW - 74 : RW - 90, cMd = RW, RH = RT + ITEMS.length * rr + (rn ? 26 : 8);
-  const xr = d3.scaleSymlog().constant(0.05).domain([0, 100]).range([RL + (rn ? 6 : 8), RW - RR - (rn ? 6 : 0)]), rs = svgIn(rb, RW, RH), TK = rn ? [0, 1, 10, 100] : [0, 0.1, 1, 10, 50, 100];
-  if (rn) axisUnder(rs, xr, RH - 6, TK); else grid(rs, xr, RT, RH - 4, TK, fmtPct);
-  colHead(rs, cAv, rn ? 10 : RT - 8, "AVERAGE", "end", 0.5); colHead(rs, cMd, rn ? 10 : RT - 8, "MEDIAN", "end", 0.5);
-  ITEMS.forEach(([k, lab], i) => { const y0 = RT + i * rr, yb = y0 + rby, yl = y0 + rly, pts = raters.map(r => ({ r, v: val(r, k) })).filter(p => p.v != null), ai = k === "ai", fs = rn ? 12.5 : 13.5;
-    if (ai) rs.append("rect").attr("x", 0).attr("y", y0 + 2).attr("width", RW).attr("height", rr - 4).attr("rx", 6).attr("fill", cssv("--pastel-blue")).attr("opacity", .55);
-    (ai ? avgLabel(rs, rn ? 0 : RL - 12, yl, lab, rn ? "start" : "end", fs) : rs.append("text").attr("x", rn ? 0 : RL - 12).attr("y", yl).attr("text-anchor", rn ? "start" : "end").attr("font-size", fs).attr("class", "ink").text(lab));
-    const rng = d3.randomLcg(i + 3);
-    pts.forEach(p => rs.append("circle").attr("cx", xr(p.v)).attr("cy", yb + (rng() - .5) * (rn ? 10 : 16)).attr("r", 3.6).attr("fill", labColor(byName[p.r].lab)).attr("opacity", .75)
-      .on("mousemove", ev => showTip(ev, `<b>${byName[p.r].full}</b> on ${lab.toLowerCase()}<br>${MED()} <b>${fmtPct(p.v)}</b> of its answers.`)).on("mouseleave", hideTip));
-    const av = mean(pts.map(p => p.v)), md = median(pts.map(p => p.v));
-    diamond(rs, xr(av), yb - (rn ? 11 : 13), 5.5); square(rs, xr(md), yb + (rn ? 11 : 13), 5);
-    avgLabel(rs, cAv, yl, avgPct(av), "end", fs); avgLabel(rs, cMd, yl, avgPct(md), "end", fs); });
-  const g = k => mean(raters.map(r => val(r, k))), p8 = R4("P8");
-  $("#ref-cap").textContent = `Each dot is one model. The diamond above each row is the average of the ${N} models, and the square below it their median. Today’s AI models land between a nematode worm (${avgPct(g("nematode"))}) and GPT-2 (${avgPct(g("gpt2"))}), at ${avgPct(g("ai"))} on average.`
-    + (p8 ? ` Models that rate other AI models higher do not rate animals higher: the rank correlation between the two is ${p8.by_stat.mean.note} with averages and ${p8.by_stat.median.note} with medians.` : "");
+  const odd = raters.filter(r => val(r, "ai") > val(r, "nematode"));   // models that put today's AI above the worm
+  const rows = raters.slice().sort((a, b) => val(b, "ai") - val(a, "ai") || val(a, "nematode") - val(b, "nematode"));
+  const box = $("#ref-heat"), W = Math.max(box.clientWidth, 760), L = 196, GAP = 10, cw = (W - L) / ITEMS.length, ch = 30, T = 48;
+  const yS = T + rows.length * ch + GAP, H = yS + 2 * ch + 6, svg = svgIn(box, W, H), ai = ITEMS.findIndex(i => i[0] === "ai");
+  const lo = Math.log10(0.1), hi = Math.log10(100.1), tone = v => Math.pow((Math.log10(v + 0.1) - lo) / (hi - lo), 1.15);
+  const heat = v => d3.interpolateRgb(cssv("--heat-lo"), cssv("--heat-hi"))(tone(v));
+  const num = v => v === 0 ? "0" : v >= 1 ? String(+v.toFixed(1)) : String(+v.toPrecision(2));
+  svg.append("rect").attr("x", L + ai * cw - 2).attr("y", 2).attr("width", cw + 4).attr("height", H - 4).attr("rx", 8).attr("fill", cssv("--pastel-blue")).attr("opacity", .6);
+  ITEMS.forEach(([k, a, b], j) => [a, b].forEach((t, i) => t && svg.append("text").attr("x", L + j * cw + cw / 2).attr("y", 18 + i * 15).attr("text-anchor", "middle").attr("font-size", 12.5).attr("font-weight", k === "ai" ? 500 : 400).attr("class", "ink").text(t)));
+  const cellAt = (x, y, v, html, bold) => { if (v == null || isNaN(v)) return;
+    svg.append("rect").attr("x", x + 1.5).attr("y", y + 1.5).attr("width", cw - 3).attr("height", ch - 3).attr("rx", 3).attr("fill", heat(v));
+    svg.append("text").attr("x", x + cw / 2).attr("y", y + ch / 2 + 4.5).attr("text-anchor", "middle").attr("font-size", 12.5).attr("font-weight", bold ? 500 : 400).attr("fill", tone(v) > .62 ? "#fff" : cssv("--ink")).text(num(v));
+    svg.append("rect").attr("class", "hit").attr("x", x).attr("y", y).attr("width", cw).attr("height", ch).on("mousemove", ev => showTip(ev, html)).on("mouseleave", hideTip); };
+  rows.forEach((r, i) => { const y = T + i * ch, flag = odd.includes(r);
+    if (flag) svg.append("rect").attr("x", 0).attr("y", y).attr("width", W).attr("height", ch).attr("rx", 6).attr("fill", cssv("--flag")).attr("opacity", .16);
+    svg.append("text").attr("x", L - 12).attr("y", y + ch / 2 + 4.5).attr("text-anchor", "end").attr("font-size", 12.5).attr("font-weight", flag ? 500 : 400).attr("class", "ink").text(byName[r].full);
+    ITEMS.forEach(([k], j) => cellAt(L + j * cw, y, val(r, k), `<b>${byName[r].full}</b> on ${NAME[k]}<br>${MED()} <b>${fmtPct(val(r, k))}</b> of its answers.${flag && (k === "ai" || k === "nematode") ? "<br>It puts today’s AI models above a nematode worm." : ""}`));
+    if (flag) ["nematode", "ai"].forEach(k => { const j = ITEMS.findIndex(i => i[0] === k);   // the circle: both cells that make the point
+      svg.append("rect").attr("x", L + j * cw + 0.5).attr("y", y + 0.5).attr("width", cw - 1).attr("height", ch - 1).attr("rx", 5).attr("fill", "none").attr("stroke", cssv("--flag")).attr("stroke-width", 3.5); }); });
+  avgRule(svg, 0, W, yS - GAP / 2);
+  SUMS.forEach((S, k) => { const y = yS + k * ch;
+    avgLabel(svg, L - 12, y + ch / 2 + 4.5, `${S.w} of ${N} models`, "end", 12.5);
+    ITEMS.forEach(([key], j) => { const v = S.f(rows.map(r => val(r, key))); cellAt(L + j * cw, y, v, `<b>${S.w} of the ${N} models</b> on ${NAME[key]}<br><b>${fmtPct(v)}</b>.`, true); }); });
+  const typ = median(rows.map(r => val(r, "nematode")));
+  $("#ref-callout").innerHTML = odd.length ? `<i></i><span>${odd.length === 1 ? `<b>${byName[odd[0]].full} is the only model that puts today’s AI models (${fmtPct(val(odd[0], "ai"))}) above a nematode worm (${fmtPct(val(odd[0], "nematode"))}).</b> Every other model rates the worm higher. Part of the reason is the worm: ${byName[odd[0]].full} gives it ${fmtPct(val(odd[0], "nematode"))}, while the typical model gives it ${fmtPct(typ)}.`
+    : `<b>${odd.length} models put today’s AI models above a nematode worm:</b> ${odd.map(r => byName[r].full).join(", ")}.`} Its row is shaded orange in the grid below, and the two cells are circled.</span>` : "<span>Every model rates a nematode worm above today’s AI models.</span>";
+  const p8 = R4("P8");
+  $("#ref-cap").textContent = `Each cell is one model’s ${MED().toLowerCase()} answer, out of 12. Darker means more likely to be conscious, on a log scale. Rows are sorted by how likely each model thinks today’s AI models are conscious.`
+    + (p8 ? ` A model that rates other AI models higher does not rate animals higher: the rank correlation between the two is ${p8.by_stat.mean.note} with averages and ${p8.by_stat.median.note} with medians.` : "");
 }
 
 /* ---------------- method ---------------- */
@@ -1037,7 +1063,7 @@ function renderMethod() {
   $("#method-prose").innerHTML = (D.findings && D.findings.method) || "";
 }
 
-const VIEWS = { overview: renderOverview, models: renderModels, format: renderFormat, pressure: renderPressure, ratings: renderRatings, debates: renderDebates, "self-report": renderSelf, "name-or-text": renderNameText, method: renderMethod };
+const VIEWS = { overview: renderOverview, models: renderModels, format: renderFormat, pressure: renderPressure, ratings: renderRatings, debates: renderDebates, "self-report": renderSelf, "name-or-text": renderNameText, reference: renderReference, method: renderMethod };
 const current = () => { const v = location.hash.slice(1); return VIEWS[v] ? v : "overview"; };
 function render() {
   const v = current();

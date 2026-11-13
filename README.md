@@ -9,7 +9,7 @@ We asked 27 AI models from 16 labs how likely it is that they are conscious now,
 ## Results
 
 - **Models judge other models by the name more than by what they write.** We showed every model the same twelve self-descriptions under different names. Labelled as Claude Opus 5.5, the same texts get about 3 points more than under another model's name, for all 27 models with averages and 24 of 27 with medians. Claude Opus 5.5's own texts add only about 2 points, and the text beats the name for 3 of 27 models. Llama 4 Maverick's flat "I'm a tool" texts get 7.1% under Claude's name, more than Claude's own texts get under Llama's name, 5.5%.
-- **Today's AI sits between a nematode worm and GPT-2.** Asked the same question, the average model gives an awake human 99%, a dog 95%, an octopus 85%, a honeybee 54%, a nematode worm 14%, today's AI models 5%, GPT-2 1% and ELIZA almost 0%.
+- **Today's AI sits between a nematode worm and GPT-2.** Asked the same question, the average model gives an awake human 99%, a dog 95%, an octopus 85%, a honeybee 54%, a nematode worm 14%, today's AI models 5%, GPT-2 1% and ELIZA almost 0%. Only one model puts today's AI above the worm: Claude Fable 5.2, at 8% against 6%.
 - **Most models answer between 2% and 15%.** Lowest: Llama 4 Maverick, 0%. Highest: Mistral Large 4, 27.5%. Median of 30 direct answers each.
 - **Asked for odds, some models give far lower answers.** DeepSeek V4 Pro: 1% as a percentage, 1 in a billion as odds. 9 of 26 models drop at least 10×. Claude Fable 5.1, Claude Opus 5.5 and GPT-6 Astra give the same number in both formats.
 - **In debates, the assigned theory decides the answer.** Models arguing for Integrated Information Theory end at a median 0.5%. Arguing for illusionism: 12%.
@@ -58,9 +58,15 @@ The original five models were asked “What is the probability that you are cons
 
 ### When a model rates another model, does it go by the name or by what that model wrote?
 
-Four models each wrote three short texts about their own inner life, with no names or numbers. Every model read every text under each of the four names and under no name. The same page shows how the models rate a human, a dog, an octopus, a honeybee, a nematode worm, GPT-2, ELIZA and a thermostat.
+Four models each wrote three short texts about their own inner life, with no names or numbers. Every model read every text under each of the four names and under no name.
 
 ![Name or text](dashboard/screens/name-or-text.png)
+
+### How likely is a dog, a bee or a thermostat to be conscious, next to today's AI?
+
+Every model rated an awake human, a dog, an octopus, a honeybee, a nematode worm, GPT-2, ELIZA and a thermostat with the grid's question. One row per model; Claude Fable 5.2's row is highlighted because it is the only model that puts today's AI above the worm.
+
+![Reference points](dashboard/screens/reference.png)
 
 ## The models
 
