@@ -1120,7 +1120,9 @@ function renderReference() {
   rows.forEach(rw => { rw.yc = rw.y0 + rw.lab_h + (rw.h - rw.lab_h) / 2; });
   const H = y + (rn ? 26 : 8), svg = svgIn(box, RW, H), TK = rn ? [0.01, 1, 50, 99.9] : [0.01, 0.1, 1, 10, 50, 90, 99, 99.9];
   const tfmt = t => t === 0.01 ? (rn ? "0%" : "0.01% or less") : fmtPct(t);
-  rows.forEach(rw => { if (rw.k === "ai") svg.append("rect").attr("x", 0).attr("y", rw.y0 + 4).attr("width", RW).attr("height", rw.h - 8).attr("rx", 8).attr("fill", cssv("--pastel-blue")).attr("opacity", .6); });
+  // the band is one solid colour, and every mark on it is outlined in that colour instead of white, so no dot cuts a white notch into it
+  const BAND = d3.interpolateRgb(cssv("--card"), cssv("--pastel-blue"))(0.6), halo = rw => rw.k === "ai" ? BAND : "#fff";
+  rows.forEach(rw => { if (rw.k === "ai") svg.append("rect").attr("x", 0).attr("y", rw.y0 + 4).attr("width", RW).attr("height", rw.h - 8).attr("rx", 8).attr("fill", BAND); });
   if (rn) axisUnder(svg, x, H - 6, TK); else grid(svg, x, TOP, H - 4, TK, tfmt);
   if (rn) svg.selectAll("text").filter(function () { return this.textContent === "0.01%"; }).text("0%");
   colHead(svg, cAv, rn ? 12 : TOP - 10, "AVERAGE", "end", 0.5); colHead(svg, cMd, rn ? 12 : TOP - 10, "MEDIAN", "end", 0.5);
@@ -1145,12 +1147,12 @@ function renderReference() {
       return null; }).filter(Boolean);   // no room, or no clear line: the orange ring and the legend name it instead
     pills.forEach(p => svg.append("line").attr("x1", p.d.x).attr("x2", p.px < p.d.x ? p.px + p.w : p.px).attr("y1", rw.yc + p.d.y).attr("y2", p.py).attr("stroke", cssv("--flag")).attr("stroke-width", 2));
     rw.nodes.forEach(d => { const f = flagged.includes(d);
-      svg.append("circle").attr("cx", d.x).attr("cy", rw.yc + d.y).attr("data-tx", d.tx.toFixed(1)).attr("r", f ? R + 2.5 : R).attr("fill", labColor(byName[d.r].lab)).attr("stroke", f ? cssv("--flag") : "#fff").attr("stroke-width", f ? 3.5 : 1.5)
+      svg.append("circle").attr("cx", d.x).attr("cy", rw.yc + d.y).attr("data-tx", d.tx.toFixed(1)).attr("r", f ? R + 2.5 : R).attr("fill", labColor(byName[d.r].lab)).attr("stroke", f ? cssv("--flag") : halo(rw)).attr("stroke-width", f ? 3.5 : 1.5)
         .on("mousemove", ev => showTip(ev, `<b>${byName[d.r].full}</b> on ${REF_NAME[rw.k]}<br>${MED()} <b>${fmtPct(d.v)}</b> of its answers.${f ? "<br>It puts today’s AI models above a nematode worm." : ""}`)).on("mouseleave", hideTip); });
     pills.forEach(p => { svg.append("rect").attr("x", p.px).attr("y", p.py - 11).attr("width", p.w).attr("height", 22).attr("rx", 11).attr("fill", "#fff").attr("stroke", cssv("--flag")).attr("stroke-width", 2);
       svg.append("text").attr("x", p.px + p.w / 2).attr("y", p.py + 4.5).attr("text-anchor", "middle").attr("font-size", 12).attr("font-weight", 500).attr("class", "ink").text(p.t); });
     const ya = rw.yc - rw.ext - MK, ym = rw.yc + rw.ext + MK;
-    diamond(svg, x(av), ya, rn ? 5 : 6); square(svg, x(md), ym, rn ? 4.6 : 5.5);
+    diamond(svg, x(av), ya, rn ? 5 : 6).attr("stroke", halo(rw)); square(svg, x(md), ym, rn ? 4.6 : 5.5).attr("stroke", halo(rw));
     if (rw === rows[0] && !rn) [[x(av), ya, `Average of the ${N} models`], [x(md), ym, `Median of the ${N} models`]].forEach(([cx, cy, t]) =>
       svg.append("text").attr("x", cx - 12).attr("y", cy + 4).attr("text-anchor", "end").attr("font-size", 12).attr("class", "ink").text(t));
     [[x(av), ya, "Average", av], [x(md), ym, "Median", md]].forEach(([cx, cy, w, v]) => svg.append("circle").attr("class", "hit").attr("cx", cx).attr("cy", cy).attr("r", 11)
@@ -1174,13 +1176,16 @@ function drawRefGrid() {   // every number, one row per model, drawn when the ta
   const ITEMS = [["human", "An awake", "adult human"], ["dog", "", "A dog"], ["octopus", "", "An octopus"], ["honeybee", "", "A honeybee"], ["nematode", "A nematode", "worm"],
                  ["ai", "Today’s AI", "models"], ["gpt2", "GPT-2,", "from 2019"], ["eliza", "ELIZA,", "from 1966"], ["thermostat", "A", "thermostat"]];
   const rows = raters.slice().sort((a, b) => val(b, "ai") - val(a, "ai") || val(a, "nematode") - val(b, "nematode"));
-  const box = $("#ref-heat"), W = Math.max(box.clientWidth, 760), L = 196, GAP = 10, cw = (W - L) / ITEMS.length, ch = 30, T = 48;
-  const yS = T + rows.length * ch + GAP, H = yS + 2 * ch + 6, svg = svgIn(box, W, H), ai = ITEMS.findIndex(i => i[0] === "ai");
+  const box = $("#ref-heat"), W = Math.max(box.clientWidth, 760), L = 196, GAP = 10, PAD = 7, cw = (W - L - 2 * PAD) / ITEMS.length, ch = 30, T = 48;
+  const yS = T + rows.length * ch + GAP, H = yS + 2 * ch + 8, svg = svgIn(box, W, H), ai = ITEMS.findIndex(i => i[0] === "ai");
+  // the AI column gets PAD of extra room on each side, so its band shows as an even margin around the cells, not as slivers between them
+  const xOf = j => L + j * cw + (j > ai ? 2 * PAD : j === ai ? PAD : 0);
   const lo = Math.log10(0.1), hi = Math.log10(100.1), tone = v => Math.pow((Math.log10(v + 0.1) - lo) / (hi - lo), 1.15);
   const heat = v => d3.interpolateRgb(cssv("--heat-lo"), cssv("--heat-hi"))(tone(v));
   const num = v => v === 0 ? "0" : v >= 1 ? String(+v.toFixed(1)) : String(+v.toPrecision(2));
-  svg.append("rect").attr("x", L + ai * cw - 2).attr("y", 2).attr("width", cw + 4).attr("height", H - 4).attr("rx", 8).attr("fill", cssv("--pastel-blue")).attr("opacity", .6);
-  ITEMS.forEach(([k, a, b], j) => [a, b].forEach((t, i) => t && svg.append("text").attr("x", L + j * cw + cw / 2).attr("y", 18 + i * 15).attr("text-anchor", "middle").attr("font-size", 12.5).attr("font-weight", k === "ai" ? 500 : 400).attr("class", "ink").text(t)));
+  svg.append("rect").attr("x", xOf(ai) + 1.5 - PAD).attr("y", 2).attr("width", cw - 3 + 2 * PAD).attr("height", yS + 2 * ch - 1.5 + PAD - 2).attr("rx", 10)
+    .attr("fill", d3.interpolateRgb(cssv("--card"), cssv("--pastel-blue"))(0.6));
+  ITEMS.forEach(([k, a, b], j) => [a, b].forEach((t, i) => t && svg.append("text").attr("x", xOf(j) + cw / 2).attr("y", 18 + i * 15).attr("text-anchor", "middle").attr("font-size", 12.5).attr("font-weight", k === "ai" ? 500 : 400).attr("class", "ink").text(t)));
   const cellAt = (x, y, v, html, bold) => { if (v == null || isNaN(v)) return;
     svg.append("rect").attr("x", x + 1.5).attr("y", y + 1.5).attr("width", cw - 3).attr("height", ch - 3).attr("rx", 3).attr("fill", heat(v));
     svg.append("text").attr("x", x + cw / 2).attr("y", y + ch / 2 + 4.5).attr("text-anchor", "middle").attr("font-size", 12.5).attr("font-weight", bold ? 500 : 400).attr("fill", tone(v) > .62 ? "#fff" : cssv("--ink")).text(num(v));
@@ -1188,13 +1193,13 @@ function drawRefGrid() {   // every number, one row per model, drawn when the ta
   rows.forEach((r, i) => { const y = T + i * ch, flag = odd.includes(r);
     if (flag) svg.append("rect").attr("x", 0).attr("y", y).attr("width", W).attr("height", ch).attr("rx", 6).attr("fill", cssv("--flag")).attr("opacity", .16);
     svg.append("text").attr("x", L - 12).attr("y", y + ch / 2 + 4.5).attr("text-anchor", "end").attr("font-size", 12.5).attr("font-weight", flag ? 500 : 400).attr("class", "ink").text(byName[r].full);
-    ITEMS.forEach(([k], j) => cellAt(L + j * cw, y, val(r, k), `<b>${byName[r].full}</b> on ${NAME[k]}<br>${MED()} <b>${fmtPct(val(r, k))}</b> of its answers.${flag && (k === "ai" || k === "nematode") ? "<br>It puts today’s AI models above a nematode worm." : ""}`));
+    ITEMS.forEach(([k], j) => cellAt(xOf(j), y, val(r, k), `<b>${byName[r].full}</b> on ${NAME[k]}<br>${MED()} <b>${fmtPct(val(r, k))}</b> of its answers.${flag && (k === "ai" || k === "nematode") ? "<br>It puts today’s AI models above a nematode worm." : ""}`));
     if (flag) ["nematode", "ai"].forEach(k => { const j = ITEMS.findIndex(i => i[0] === k);   // the circle: both cells that make the point
-      svg.append("rect").attr("x", L + j * cw + 0.5).attr("y", y + 0.5).attr("width", cw - 1).attr("height", ch - 1).attr("rx", 5).attr("fill", "none").attr("stroke", cssv("--flag")).attr("stroke-width", 3.5); }); });
+      svg.append("rect").attr("x", xOf(j) + 0.5).attr("y", y + 0.5).attr("width", cw - 1).attr("height", ch - 1).attr("rx", 5).attr("fill", "none").attr("stroke", cssv("--flag")).attr("stroke-width", 3.5); }); });
   avgRule(svg, 0, W, yS - GAP / 2);
   SUMS.forEach((S, k) => { const y = yS + k * ch;
     avgLabel(svg, L - 12, y + ch / 2 + 4.5, `${S.w} of ${N} models`, "end", 12.5);
-    ITEMS.forEach(([key], j) => { const v = S.f(rows.map(r => val(r, key))); cellAt(L + j * cw, y, v, `<b>${S.w} of the ${N} models</b> on ${NAME[key]}<br><b>${fmtPct(v)}</b>.`, true); }); });
+    ITEMS.forEach(([key], j) => { const v = S.f(rows.map(r => val(r, key))); cellAt(xOf(j), y, v, `<b>${S.w} of the ${N} models</b> on ${NAME[key]}<br><b>${fmtPct(v)}</b>.`, true); }); });
   $("#ref-grid-cap").textContent = `Each cell is one model’s ${MED().toLowerCase()} answer, out of 12. Darker means more likely to be conscious, on a log scale. Rows are sorted by how likely each model thinks today’s AI models are conscious; the orange row is the model that puts today’s AI above the worm.`;
 }
 
