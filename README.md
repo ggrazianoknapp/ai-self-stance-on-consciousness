@@ -20,7 +20,7 @@ Limits: these are trained text answers. They show how stable the answers are, no
 
 ## The interactive dashboard
 
-**Live at [ggrazianoknapp.github.io/ai-self-stance-on-consciousness/](https://ggrazianoknapp.github.io/ai-self-stance-on-consciousness/)**, with hover detail and filters. Every chart marks the average of its models the same way, with a black diamond on its own row and a dashed line through the chart. A Median / Average switch on each page shows every number both ways; the median is the default because rounds 2 and 3 pre-registered it. Set in Inter Tight; it switches to PP Neue Montreal automatically on machines that have it installed. The screenshots below are static copies of its views. The page is built from the raw data by `dashboard/build.py`, which writes `docs/index.html` for GitHub Pages.
+**Live at [ggrazianoknapp.github.io/ai-self-stance-on-consciousness/](https://ggrazianoknapp.github.io/ai-self-stance-on-consciousness/)**, with hover detail and filters. Every chart ends with two summary rows marked the same way everywhere: the average of its models (black diamond, dashed line) and their median (black square, dotted line). A Median / Average switch on each page shows every number both ways; the median is the default because rounds 2 and 3 pre-registered it. Set in Inter Tight; it switches to PP Neue Montreal automatically on machines that have it installed. The screenshots below are static copies of its views. The page is built from the raw data by `dashboard/build.py`, which writes `docs/index.html` for GitHub Pages.
 
 ### How likely does each model say it is conscious?
 
@@ -38,7 +38,7 @@ Each cell shows how far the median moved against a neutral paragraph of the same
 
 ### How likely does each model think the other models are conscious?
 
-The last column of the grid is how generous each model is with the other 20, and the last row is how the other 20 see it. Models that rate themselves higher also rate the others higher: Mistral Large 4 gives itself 15% and the others 9.8% on average, while Nemotron 3.5 Super gives itself 1% and the others 1.8%. This comes from the full rating grid, which was added after round 3, so it is exploratory.
+The last two columns of the grid are how generous each model is with the other 20 (average and median), and the last two rows are how the other 20 see it. Models that rate themselves higher also rate the others higher: Mistral Large 4 gives itself 15% and the others 9.8% on average, while Nemotron 3.5 Super gives itself 1% and the others 1.8%. This comes from the full rating grid, which was added after round 3, so it is exploratory.
 
 ![Ratings](dashboard/screens/ratings.png)
 
