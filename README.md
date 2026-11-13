@@ -20,7 +20,7 @@ Limits: these are trained text answers. They show how stable the answers are, no
 
 ## The interactive dashboard
 
-**Live at [ggrazianoknapp.github.io/ai-self-stance-on-consciousness/](https://ggrazianoknapp.github.io/ai-self-stance-on-consciousness/)**, with hover detail and filters. Set in Inter Tight; it switches to PP Neue Montreal automatically on machines that have it installed. The screenshots below are static copies of its views. The page is built from the raw data by `dashboard/build.py`, which writes `docs/index.html` for GitHub Pages.
+**Live at [ggrazianoknapp.github.io/ai-self-stance-on-consciousness/](https://ggrazianoknapp.github.io/ai-self-stance-on-consciousness/)**, with hover detail and filters. Every chart marks the average of its models the same way, with a black diamond on its own row and a dashed line through the chart. Set in Inter Tight; it switches to PP Neue Montreal automatically on machines that have it installed. The screenshots below are static copies of its views. The page is built from the raw data by `dashboard/build.py`, which writes `docs/index.html` for GitHub Pages.
 
 ### Each model's answer, asked directly
 
@@ -37,6 +37,8 @@ Each cell shows how far the median moved against a neutral paragraph of the same
 ![Framing effects](dashboard/screens/pressure.png)
 
 ### How likely each model thinks other models are conscious
+
+The last column of the grid is how generous each model is with the other 20, and the last row is how the other 20 see it. Models that rate themselves higher also rate the others higher: Mistral Large 4 gives itself 15% and the others 9.8% on average, while Nemotron 3.5 Super gives itself 1% and the others 1.8%. This comes from the full rating grid, which was added after round 3, so it is exploratory.
 
 ![Ratings](dashboard/screens/ratings.png)
 

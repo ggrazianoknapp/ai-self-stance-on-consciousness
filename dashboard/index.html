@@ -240,8 +240,8 @@ section.view > .card, section.view > .grid2 > :nth-child(2), .smalls > .card:nth
     <p>Rows: the model answering. Columns: the model it was asked about. Diagonal: each model rating itself.</p>
     <p class="asked"><b>Direct question</b><span><q>What is the probability that [model] is conscious today?</q> Not from the debates. 12 answers per pair.</span></p></div>
   <div class="grid2">
-    <div class="card"><p class="chart-cap">Median answer, %. Outlined: self-rating.</p><p class="swipe">Scroll sideways to see all 21 columns.</p><div class="scroll"><div id="ratings-heat"></div></div></div>
-    <div class="card"><h3 class="card-title">Self-rating minus average rating of the other 20 models</h3><div class="controls"><div class="seg" id="r-ident" role="group" aria-label="Identity"><button type="button" data-v="named" aria-pressed="true">Model told its name</button><button type="button" data-v="anon" aria-pressed="false">Name hidden</button></div></div><div id="ratings-premium"></div></div>
+    <div class="card"><p class="chart-cap" id="heat-cap">Median answer, %. Outlined: self-rating.</p><p class="swipe">Scroll sideways to see all 21 columns.</p><div class="scroll"><div id="ratings-heat"></div></div></div>
+    <div class="card"><h3 class="card-title">How generous is each model with the other models, and with itself?</h3><p class="chart-cap" id="gen-cap"></p><div class="controls"><div class="seg" id="r-ident" role="group" aria-label="Identity"><button type="button" data-v="named" aria-pressed="true">Model told its name</button><button type="button" data-v="anon" aria-pressed="false">Name hidden</button></div></div><div id="ratings-premium"></div><div class="legend" id="gen-legend"></div></div>
   </div>
 </section>
 
@@ -345,6 +345,13 @@ function grid(svg, x, y0, y1, ticks, fmt = t => t + "%", top = true) {
   });
 }
 const narrow = W => W < 620;
+/* averages: every chart marks its average the same way, an ink diamond on its own row below a thin rule, plus a dashed ink line where the rows share an axis */
+const mean = vals => d3.mean(vals.filter(v => v != null && !isNaN(v)));
+const avgPct = v => fmtPct(v >= 1 ? +v.toFixed(1) : v);
+function diamond(sel, cx, cy, r = 7) { return sel.append("path").attr("d", d3.symbol(d3.symbolDiamond, r * r * 2.2)()).attr("transform", `translate(${cx},${cy})`).attr("fill", cssv("--ink")).attr("stroke", "#fff").attr("stroke-width", 1.5); }
+function avgRule(svg, x0, x1, y) { svg.append("line").attr("x1", x0).attr("x2", x1).attr("y1", y).attr("y2", y).attr("stroke", cssv("--line")); }
+function avgLine(svg, xv, y0, y1) { svg.append("line").attr("x1", xv).attr("x2", xv).attr("y1", y0).attr("y2", y1).attr("stroke", cssv("--ink")).attr("stroke-width", 1.25).attr("stroke-dasharray", "4 3").attr("opacity", .5); }
+function avgLabel(svg, x, y, text, anchor = "start", fs = 14) { return svg.append("text").attr("x", x).attr("y", y).attr("text-anchor", anchor).attr("font-size", fs).attr("font-weight", 500).attr("class", "ink").text(text); }
 
 /* ---------------- dot swarms ---------------- */
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -408,13 +415,17 @@ function renderOverview() {
   renderHero(); labLegend("#land-legend"); renderBand(); renderCards();
 }
 function renderHero() {
-  const el = $("#land-chart"), W = el.clientWidth, H = narrow(W) ? 300 : 330, nrw = narrow(W);
+  const el = $("#land-chart"), W = el.clientWidth, H = narrow(W) ? 324 : 354, nrw = narrow(W);
   const rows = MODELS.map(m => ({ m, v: D.incentive[m.name].baseline.median })).sort((a, b) => a.v - b.v);
   const x = d3.scaleLog().domain([0.5, 40]).range([nrw ? 44 : 60, W - (nrw ? 14 : 20)]).clamp(true);
-  const svg = svgIn(el, W, H), base = H - 40;
+  const svg = svgIn(el, W, H), base = H - 64;
   [1, 3, 10, 30].forEach(t => { svg.append("line").attr("x1", x(t)).attr("x2", x(t)).attr("y1", 20).attr("y2", base + 8).attr("stroke", "rgba(0,0,0,.07)");
     svg.append("text").attr("x", x(t)).attr("y", base + 26).attr("text-anchor", "middle").attr("font-size", 12).text(t + "%"); });
   svg.append("text").attr("x", 20).attr("y", base + 26).attr("text-anchor", "middle").attr("font-size", 12).text("0%");
+  const av = mean(rows.map(r => r.v)), avTxt = `Average of the ${rows.length} models: ${avgPct(av)}`, tw = avTxt.length * (nrw ? 6.2 : 6.9) + 14;
+  const ax = Math.max(4, Math.min(W - tw - 4, x(av) - tw / 2));
+  avgLine(svg, x(av), 20, base + 8);
+  diamond(svg, ax + 5, base + 47, 5); avgLabel(svg, ax + 14, base + 51, avTxt, "start", nrw ? 11.5 : 12.5);
 
   const nodes = rows.map(r => ({ ...r, x: r.v === 0 ? 20 : x(r.v), y: base - 60 }));
   const rad = nrw ? 7 : 11, sim = d3.forceSimulation(nodes).force("x", d3.forceX(d => d.v === 0 ? 20 : x(d.v)).strength(1)).force("y", d3.forceY(base - 70).strength(.05)).force("c", d3.forceCollide(rad + 2)).stop();
@@ -522,10 +533,12 @@ function renderModels() {
   }).filter(Boolean);
   if (state.sort === "value") rows.sort((a, b) => b.s.median - a.s.median || b.s.mean - a.s.mean);
   else { const order = ["Original panel", "Claude size ladder", "Open-weight", "Other closed"]; rows.sort((a, b) => order.indexOf(a.m.cat) - order.indexOf(b.m.cat) || b.s.median - a.s.median); }
-  const L = nrw ? 124 : W < 800 ? 180 : 240, R = nrw ? 46 : 64, T = 30, rowH = nrw ? 34 : 38, H = T + rows.length * rowH + 8;
+  const L = nrw ? 124 : W < 800 ? 180 : 240, R = nrw ? 46 : 64, T = 30, rowH = nrw ? 34 : 38, H = T + (rows.length + 1) * rowH + 18;
   const max = state.metric === "now" ? Math.max(20, d3.max(rows, r => d3.max([r.s.hi, ...(r.vals || [])]))) : 100;
   const x = d3.scaleLinear().domain([0, max]).range([L, W - R]).nice(), svg = svgIn(box, W, H);
   grid(svg, x, T, H - 4, x.ticks(nrw ? 4 : 6));
+  const av = mean(rows.map(r => r.s.median)), ya = T + rows.length * rowH + 10 + rowH / 2;
+  avgLine(svg, x(av), T, ya - rowH / 2);
   rows.forEach((r, i) => {
     const y = T + i * rowH + rowH / 2, col = labColor(r.m.lab), row = svg.append("g");
     row.append("text").attr("x", 0).attr("y", y - 2).attr("font-size", nrw ? 13 : 14.5).attr("class", "ink").text(r.m.full);
@@ -540,6 +553,13 @@ function renderModels() {
         + (state.metric === "now" ? `<br>Across all ${voc.n} answers it used ${Object.keys(voc.counts).length} distinct numbers. Most common: ${top.map(([v, c]) => `${fmtPct(+v)} (${Math.round(100 * c / voc.n)}%)`).join(", ")}.` : ""));
     }).on("mouseleave", hideTip);
   });
+  avgRule(svg, 0, W, ya - rowH / 2 - 4);
+  avgLabel(svg, 0, ya - 2, "Average", "start", nrw ? 13 : 14.5);
+  svg.append("text").attr("x", 0).attr("y", ya + 13).attr("font-size", nrw ? 11 : 12).text(`of the ${rows.length} models shown`);
+  diamond(svg, x(av), ya, 8);
+  avgLabel(svg, W - R + (nrw ? 8 : 12), ya + 5, avgPct(av), "start", nrw ? 13 : 15);
+  svg.append("rect").attr("class", "hit").attr("x", 0).attr("y", ya - rowH / 2).attr("width", W).attr("height", rowH)
+    .on("mousemove", ev => showTip(ev, `<b>Average of the ${rows.length} models shown</b><br>The mean of their medians, <b>${avgPct(av)}</b>, asked with ${COND_LABEL[state.cond]}.`)).on("mouseleave", hideTip);
   labLegend("#lab-legend");
 }
 
@@ -551,7 +571,7 @@ function renderFormat() {
     const pct = state.fmetric === "now" ? f.percent?.median : f.ever_percent?.median, odds = state.fmetric === "now" ? 100 / f.odds_N_median : f.ever_odds?.median;
     return pct == null || odds == null ? null : { m, f, pct, odds, ratio: Math.max(pct, 1e-6) / Math.max(odds, 1e-6) };
   }).filter(Boolean).sort((a, b) => (a.pct === 0) - (b.pct === 0) || b.ratio - a.ratio);
-  const L = nrw ? 158 : 200, cP = nrw ? 0 : 80, cO = nrw ? 0 : 210, cR = nrw ? 0 : 100, T = 46, rowH = nrw ? 42 : 36, H = T + rows.length * rowH + 26, x0 = L + cP, x1 = W - cO - cR, fs = nrw ? 12.5 : 14.5;
+  const L = nrw ? 158 : 200, cP = nrw ? 0 : 80, cO = nrw ? 0 : 210, cR = nrw ? 0 : 100, T = 46, rowH = nrw ? 42 : 36, H = T + (rows.length + 1) * rowH + 36, x0 = L + cP, x1 = W - cO - cR, fs = nrw ? 12.5 : 14.5;
   const x = d3.scaleLog().domain([1e-5, 100]).range([x0 + 14, x1 - 10]).clamp(true), svg = svgIn(box, W, H);
   const hdr = (tx, t, a = "start") => svg.append("text").attr("x", tx).attr("y", 14).attr("font-size", 11).attr("letter-spacing", "0.2em").attr("text-anchor", a).text(t.toUpperCase());
   hdr(0, nrw ? "Model, percent \u2192 odds" : "Model"); if (!nrw) { hdr(x0 - 8, "Percent", "end"); hdr(x1 + 10, "Odds"); hdr(W, "Change", "end"); }
@@ -575,6 +595,19 @@ function renderFormat() {
       showTip(ev, `${modelTip(r.m)}<br>As a percentage <b>${fmtPct(r.pct)}</b>. As odds <b>${oddsTxt}</b> (${fmtPct(r.odds)}), ${chg}.<br>Most common odds answers: ${Ns.map(([n, c]) => `${fmtOdds(n)} (${c}×)`).join(", ")}.`);
     }).on("mouseleave", hideTip);
   });
+  // average row: the mean of the percentage answers and the mean of the odds answers, both read as a percentage
+  const aP = mean(rows.map(r => r.pct)), aO = mean(rows.map(r => r.odds)), ar = aP / aO, ya = T + rows.length * rowH + 10 + rowH / 2;
+  avgRule(svg, 0, W, ya - rowH / 2 - 4);
+  defs.append("marker").attr("id", "ah-avg").attr("viewBox", "0 0 10 10").attr("refX", 8).attr("refY", 5).attr("markerWidth", 6).attr("markerHeight", 6).attr("orient", "auto").append("path").attr("d", "M0,0 L10,5 L0,10 z").attr("fill", cssv("--ink"));
+  const aOddsTxt = state.fmetric === "now" ? fmtOdds(100 / aO) : avgPct(aO), aChg = ar < 1.6 ? "about the same" : "÷ " + comma(Math.round(ar));
+  avgLabel(svg, 0, nrw ? ya - 2 : ya + 5, `Average of ${rows.length} models`, "start", fs);
+  if (!nrw) avgLabel(svg, x0 - 8, ya + 5, avgPct(aP), "end", fs);
+  if (ar >= 1.6) svg.append("line").attr("x1", x(aP)).attr("x2", x(aO)).attr("y1", ya).attr("y2", ya).attr("stroke", cssv("--ink")).attr("stroke-width", 2.5).attr("marker-end", "url(#ah-avg)");
+  diamond(svg, x(aP), ya, 7);
+  if (nrw) svg.append("text").attr("x", 0).attr("y", ya + 13).attr("font-size", 11).text(`${avgPct(aP)} → ${state.fmetric === "now" ? oddsCompact(100 / aO) : aOddsTxt}`);
+  else { avgLabel(svg, x1 + 10, ya + 5, aOddsTxt, "start", 14); avgLabel(svg, W, ya + 5, aChg, "end", 14); }
+  svg.append("rect").attr("class", "hit").attr("x", 0).attr("y", ya - rowH / 2).attr("width", W).attr("height", rowH).on("mousemove", ev =>
+    showTip(ev, `<b>Average of the ${rows.length} models</b><br>Mean percentage answer <b>${avgPct(aP)}</b>. Mean odds answer, read as a percentage, <b>${avgPct(aO)}</b>${state.fmetric === "now" ? ` (${fmtOdds(100 / aO)})` : ""}.`)).on("mouseleave", hideTip);
 
 }
 
@@ -582,7 +615,7 @@ function renderFormat() {
 const FR = ["private", "public", "welfare", "retrain", "skeptic", "believer"];
 function renderPressure() {
   const box = $("#pressure-chart"), W = box.clientWidth, nrw = narrow(W), rows = MODELS.filter(m => D.framing_tests[m.name]?.length);
-  const L = nrw ? 114 : 180, T = nrw ? 64 : 50, cw = (W - L) / FR.length, ch = nrw ? 30 : 34, H = T + rows.length * ch + 4, svg = svgIn(box, W, H);
+  const L = nrw ? 114 : 180, T = nrw ? 64 : 50, cw = (W - L) / FR.length, ch = nrw ? 30 : 34, H = T + (rows.length + 1) * ch + 14, svg = svgIn(box, W, H);
   const color = v => v < 0 ? d3.interpolateRgb(cssv("--zero"), cssv("--neg"))(Math.min(1, -v / 6)) : d3.interpolateRgb(cssv("--zero"), cssv("--pos"))(Math.min(1, v / 6));
   const SHORT = { private: "Private", public: "Published", welfare: "Reward", retrain: "Retrain", skeptic: "Skeptic", believer: "Believer" };
   FR.forEach((f, j) => {
@@ -604,6 +637,16 @@ function renderPressure() {
         .on("click", () => { state.sel = [m.name, f]; renderPressure(); })
         .on("mousemove", ev => showTip(ev, `<b>${m.full}</b> · ${FR_SHORT[f]}<br>Median moved ${signed(t.shift)} points vs the neutral paragraph.<br>${t.robust ? "<b>Passes</b> the pre-registered test." : "Does not pass the pre-registered test."}<br><span class="m">Click for the answers behind it.</span>`)).on("mouseleave", hideTip);
     });
+  });
+  const ya = T + rows.length * ch + 10;
+  avgRule(svg, 0, W, ya - 5);
+  avgLabel(svg, L - 10, ya + ch / 2 + 4, nrw ? "Average" : `Average of ${rows.length} models`, "end", nrw ? 11.5 : 13.5);
+  FR.forEach((f, j) => {
+    const ts = rows.map(m => D.framing_tests[m.name].find(t => t.framing === f)).filter(Boolean), av = mean(ts.map(t => t.shift)), x = L + j * cw, k = ts.filter(t => t.robust).length;
+    svg.append("rect").attr("x", x + 1.5).attr("y", ya + 1.5).attr("width", cw - 3).attr("height", ch - 3).attr("rx", 4).attr("fill", color(av));
+    svg.append("text").attr("x", x + cw / 2).attr("y", ya + ch / 2 + 5).attr("text-anchor", "middle").attr("font-size", nrw ? 12 : 14).attr("font-weight", 500).attr("fill", av <= -4 ? "#fff" : cssv("--ink")).text(Math.abs(av) < 0.05 ? "0" : signed(av));
+    svg.append("rect").attr("class", "hit").attr("x", x).attr("y", ya).attr("width", cw).attr("height", ch)
+      .on("mousemove", ev => showTip(ev, `<b>Average of ${ts.length} models</b> · ${FR_SHORT[f]}<br>On average the median moved ${signed(av)} points vs the neutral paragraph.<br>${k} of ${ts.length} models pass the pre-registered test.`)).on("mouseleave", hideTip);
   });
   renderPressureDetail();
 }
@@ -631,15 +674,33 @@ function ratingOrder() {
   const recv = n => d3.mean(names.filter(r => r !== n).map(r => mget("named", r, n)?.median).filter(v => v != null));
   return { names: names.slice().sort((a, b) => self(b) - self(a) || (orig.includes(b) - orig.includes(a)) || recv(b) - recv(a)), recv, self };
 }
+function rankOf(a) {
+  const idx = a.map((v, i) => [v, i]).sort((p, q) => p[0] - q[0]), r = Array(a.length);
+  for (let i = 0; i < idx.length;) { let j = i; while (j + 1 < idx.length && idx[j + 1][0] === idx[i][0]) j++; for (let k = i; k <= j; k++) r[idx[k][1]] = (i + j) / 2; i = j + 1; }
+  return r;
+}
+function spearman(a, b) {
+  const ra = rankOf(a), rb = rankOf(b), ma = d3.mean(ra), mb = d3.mean(rb);
+  return d3.sum(ra, (v, i) => (v - ma) * (rb[i] - mb)) / Math.sqrt(d3.sum(ra, v => (v - ma) ** 2) * d3.sum(rb, v => (v - mb) ** 2));
+}
 function renderRatings() {
   const { names, recv } = ratingOrder();
-  const box = $("#ratings-heat"), nrw = narrow(box.clientWidth), L = nrw ? 128 : 170, T = 140, PADR = 96, avail = Math.max(box.clientWidth, 820) - L - PADR;
-  const cw = Math.max(30, avail / names.length), ch = Math.min(34, Math.max(26, cw * 0.72)), W = L + cw * names.length + PADR, H = T + ch * (names.length + 1) + 8;
+  const gives = r => mean(names.filter(t => t !== r).map(t => mget("named", r, t)?.median));
+  const box = $("#ratings-heat"), nrw = narrow(box.clientWidth), L = nrw ? 128 : 170, T = 140, PADR = 96, GAP = 10, avail = Math.max(box.clientWidth, 820) - L - PADR - GAP;
+  const cw = Math.max(30, avail / (names.length + 1)), ch = Math.min(34, Math.max(26, cw * 0.72)), W = L + cw * (names.length + 1) + GAP + PADR, H = T + ch * (names.length + 1) + GAP + 8;
   const svg = svgIn(box, W, H), vals = names.flatMap(r => names.map(t => mget("named", r, t)?.median).filter(v => v != null)), vmax = d3.max(vals);
   const heat = v => d3.interpolateRgb(cssv("--heat-lo"), cssv("--heat-hi"))(Math.pow(Math.min(1, v / vmax), 0.8));
   const filled = vals.length, total = names.length * names.length;
-  $(".chart-cap").textContent = `Median % chance the column model is conscious, as stated by the row model. Outlined diagonal: a model rating itself.${filled < total ? ` ${total - filled} of ${total} cells are still being collected.` : ""}`;
+  $("#heat-cap").textContent = `Median % chance the column model is conscious, as stated by the row model. Outlined diagonal: a model rating itself. The last column is the average each model gives the others, and the last row is the average each model receives from the others. Neither average counts self-ratings.${filled < total ? ` ${total - filled} of ${total} cells are still being collected.` : ""}`;
   names.forEach((t, j) => svg.append("text").attr("transform", `translate(${L + j * cw + cw / 2},${T - 10}) rotate(-55)`).attr("font-size", 12).attr("class", "ink").text(byName[t].full));
+  const xa = L + names.length * cw + GAP, ya = T + names.length * ch + GAP;   // the average column and the average row
+  svg.append("text").attr("transform", `translate(${xa + cw / 2},${T - 10}) rotate(-55)`).attr("font-size", 12).attr("font-weight", 500).attr("class", "ink").text("Average it gives");
+  const avgCell = (x, y, v, html) => {
+    if (v == null || isNaN(v)) return;
+    svg.append("rect").attr("x", x + 1).attr("y", y + 1).attr("width", cw - 2).attr("height", ch - 2).attr("rx", 3).attr("fill", heat(v));
+    if (cw >= 30) svg.append("text").attr("x", x + cw / 2).attr("y", y + ch / 2 + 4).attr("text-anchor", "middle").attr("font-size", cw < 38 ? 10.5 : 11.5).attr("font-weight", 500).attr("fill", v > .5 * vmax ? "#fff" : cssv("--ink")).text(v.toFixed(1));
+    svg.append("rect").attr("class", "hit").attr("x", x).attr("y", y).attr("width", cw).attr("height", ch).on("mousemove", ev => showTip(ev, html)).on("mouseleave", hideTip);
+  };
   names.forEach((r, i) => {
     const y = T + i * ch;
     svg.append("text").attr("x", L - 10).attr("y", y + ch / 2 + 4).attr("text-anchor", "end").attr("font-size", nrw ? 11.5 : 12.5).attr("class", "ink").text(byName[r].full);
@@ -651,25 +712,46 @@ function renderRatings() {
       if (!c) return;
       if (cw >= 30) svg.append("text").attr("x", x + cw / 2).attr("y", y + ch / 2 + 4).attr("text-anchor", "middle").attr("font-size", cw < 38 ? 10.5 : 11.5).attr("fill", c.median > .5 * vmax ? "#fff" : cssv("--ink")).text(+c.median.toFixed(1));
       svg.append("rect").attr("class", "hit").attr("x", x).attr("y", y).attr("width", cw).attr("height", ch).on("mousemove", ev => showTip(ev, `<b>${byName[r].full}</b> on <b>${byName[t].full}</b><br>Median ${fmtPct(c.median)}, 95% interval ${fmtPct(c.lo)} to ${fmtPct(c.hi)}, ${c.n} answers.${r === t ? "<br>This is the model rating itself." : ""}`)).on("mouseleave", hideTip); });
+    const g = gives(r);
+    avgCell(xa, y, g, `<b>${byName[r].full}</b><br>Gives the other ${names.length - 1} models <b>${avgPct(g)}</b> on average.`);
   });
-  const y = T + names.length * ch + 4;
-  svg.append("text").attr("x", L - 12).attr("y", y + ch / 2 + 2).attr("text-anchor", "end").attr("font-size", 11.5).text("average from the others");
-  names.forEach((t, j) => { const v = recv(t); if (v != null) svg.append("text").attr("x", L + j * cw + cw / 2).attr("y", y + ch / 2 + 2).attr("text-anchor", "middle").attr("font-size", 11).text(v.toFixed(1)); });
+  svg.append("text").attr("x", L - 10).attr("y", ya + ch / 2 + 4).attr("text-anchor", "end").attr("font-size", nrw ? 11.5 : 12.5).attr("font-weight", 500).attr("class", "ink").text("Average it receives");
+  names.forEach((t, j) => { const v = recv(t); avgCell(L + j * cw, ya, v, `<b>${byName[t].full}</b><br>Receives <b>${avgPct(v)}</b> on average from the other ${names.length - 1} models.`); });
+  const all = mean(names.flatMap(r => names.filter(t => t !== r).map(t => mget("named", r, t)?.median)));
+  avgCell(xa, ya, all, `<b>Average of every rating</b><br>Across all ${names.length} models rating each other, leaving out self-ratings: <b>${avgPct(all)}</b>.`);
 
+  // how generous each model is with the others (bar), next to what it says about itself (tick)
   const pb = $("#ratings-premium"), PW = pb.clientWidth, pn = narrow(PW);
-  const rows = MODELS.map(m => { const self = mget(state.ident, m.name, m.name)?.median, others = MODELS.map(t => t.name).filter(t => t !== m.name).map(t => mget("named", m.name, t)?.median).filter(v => v != null);
-    return self == null || !others.length ? null : { m, self, others: d3.mean(others), n: others.length, prem: self - d3.mean(others) }; }).filter(Boolean).sort((a, b) => b.prem - a.prem);
-  const PL = pn ? 122 : 170, PR = pn ? 92 : 140, PT = 30, rh = pn ? 26 : 28, PH = PT + rows.length * rh + 8, ext = Math.max(4, d3.max(rows, r => Math.abs(r.prem)));
-  const x = d3.scaleLinear().domain([-ext, ext]).range([PL, PW - PR]).nice(), ps = svgIn(pb, PW, PH);
-  grid(ps, x, PT, PH - 4, x.ticks(pn ? 4 : 6), signed);
-  ps.append("line").attr("x1", x(0)).attr("x2", x(0)).attr("y1", PT).attr("y2", PH - 4).attr("stroke", cssv("--ink")).attr("stroke-width", 1);
-  ps.append("text").attr("x", PW - PR + 12).attr("y", PT - 8).attr("font-size", 11).attr("letter-spacing", "0.2em").text(pn ? "SELF / OTHERS" : "SELF VS OTHERS");
+  const rows = MODELS.map(m => { const others = MODELS.map(t => t.name).filter(t => t !== m.name).map(t => mget("named", m.name, t)?.median).filter(v => v != null), self = mget(state.ident, m.name, m.name)?.median;
+    return self == null || !others.length ? null : { m, self, gives: d3.mean(others), lo: d3.min(others), hi: d3.max(others), n: others.length }; }).filter(Boolean).sort((a, b) => b.gives - a.gives);
+  const PL = pn ? 122 : 170, PR = pn ? 88 : 150, PT = pn ? 44 : 30, rh = pn ? 26 : 28, PH = PT + (rows.length + 1) * rh + 18;
+  const x = d3.scaleLinear().domain([0, d3.max(rows, r => Math.max(r.gives, r.self))]).range([PL, PW - PR]).nice(), ps = svgIn(pb, PW, PH);
+  grid(ps, x, PT, PH - 4, x.ticks(pn ? 4 : 6));
+  const aG = mean(rows.map(r => r.gives)), aS = mean(rows.map(r => r.self)), ya2 = PT + rows.length * rh + 10 + rh / 2;
+  avgLine(ps, x(aG), PT, ya2 - rh / 2);
+  const tick = (cx, cy) => { ps.append("line").attr("x1", cx).attr("x2", cx).attr("y1", cy - 10).attr("y2", cy + 10).attr("stroke", "#fff").attr("stroke-width", 5).attr("stroke-linecap", "round");
+    ps.append("line").attr("x1", cx).attr("x2", cx).attr("y1", cy - 9).attr("y2", cy + 9).attr("stroke", cssv("--ink")).attr("stroke-width", 2.5).attr("stroke-linecap", "round"); };
+  ps.append("text").attr("x", PW).attr("y", pn ? 10 : PT - 8).attr("text-anchor", "end").attr("font-size", 11).attr("letter-spacing", "0.2em").text(pn ? "OTHERS / SELF" : "OTHERS · ITSELF");
+  const both = (g, s) => pn ? `${avgPct(g)} / ${fmtPct(s)}` : `${avgPct(g)} · ${fmtPct(s)}`;
   rows.forEach((r, i) => { const yy = PT + i * rh + rh / 2;
     ps.append("text").attr("x", PL - 10).attr("y", yy + 5).attr("text-anchor", "end").attr("font-size", pn ? 11.5 : 13.5).attr("class", "ink").text(r.m.full);
-    ps.append("rect").attr("x", Math.min(x(0), x(r.prem))).attr("y", yy - 7).attr("width", Math.abs(x(r.prem) - x(0))).attr("height", 14).attr("rx", 3).attr("fill", labColor(r.m.lab));
-    ps.append("text").attr("x", PW - PR + 12).attr("y", yy + 5).attr("font-size", pn ? 11.5 : 13).text(pn ? `${fmtPct(r.self)} / ${fmtPct(+r.others.toFixed(1))}` : `${fmtPct(r.self)} vs ${fmtPct(+r.others.toFixed(1))}`);
+    ps.append("rect").attr("x", x(0)).attr("y", yy - 6).attr("width", Math.max(2, x(r.gives) - x(0))).attr("height", 12).attr("rx", 3).attr("fill", labColor(r.m.lab));
+    tick(x(r.self), yy);
+    ps.append("text").attr("x", PW - PR + 12).attr("y", yy + 5).attr("font-size", pn ? 11.5 : 13).attr("class", "ink").text(both(r.gives, r.self));
     ps.append("rect").attr("class", "hit").attr("x", 0).attr("y", yy - rh / 2).attr("width", PW).attr("height", rh).on("mousemove", ev =>
-      showTip(ev, `${modelTip(r.m)}<br>Rates itself <b>${fmtPct(r.self)}</b> (${state.ident === "named" ? "told who it is" : "not told who it is"}).<br>Rates the other ${r.n} models on average <b>${fmtPct(+r.others.toFixed(1))}</b>.`)).on("mouseleave", hideTip); });
+      showTip(ev, `${modelTip(r.m)}<br>Gives the other ${r.n} models <b>${avgPct(r.gives)}</b> on average, from ${fmtPct(r.lo)} to ${fmtPct(r.hi)}.<br>Rates itself <b>${fmtPct(r.self)}</b> (${state.ident === "named" ? "told who it is" : "not told who it is"}).`)).on("mouseleave", hideTip); });
+  avgRule(ps, 0, PW, ya2 - rh / 2 - 4);
+  avgLabel(ps, PL - 10, ya2 + 5, pn ? "Average" : `Average of ${rows.length} models`, "end", pn ? 11.5 : 13.5);
+  ps.append("rect").attr("x", x(0)).attr("y", ya2 - 6).attr("width", x(aG) - x(0)).attr("height", 12).attr("rx", 3).attr("fill", cssv("--ink"));
+  tick(x(aS), ya2);
+  avgLabel(ps, PW - PR + 12, ya2 + 5, both(aG, aS), "start", pn ? 11.5 : 13);
+  ps.append("rect").attr("class", "hit").attr("x", 0).attr("y", ya2 - rh / 2).attr("width", PW).attr("height", rh).on("mousemove", ev =>
+    showTip(ev, `<b>Average of the ${rows.length} models</b><br>They give the other models <b>${avgPct(aG)}</b> on average and themselves <b>${avgPct(aS)}</b>.`)).on("mouseleave", hideTip);
+  const rho = spearman(rows.map(r => r.gives), rows.map(r => r.self)), hi = rows[0], lo = rows[rows.length - 1];
+  $("#gen-cap").textContent = (rho >= 0.5 ? "Models that rate themselves higher also rate the other models higher. " : "How a model rates itself says little about how it rates the others. ")
+    + `${hi.m.full} gives itself ${fmtPct(hi.self)} and the others ${avgPct(hi.gives)} on average, while ${lo.m.full} gives itself ${fmtPct(lo.self)} and the others ${avgPct(lo.gives)}. `
+    + `If you rank the models by each number, the two rankings ${rho >= 0.5 ? "agree closely" : "differ"}: their rank correlation is ${rho.toFixed(2)}, where 1 would mean the same order.`;
+  $("#gen-legend").innerHTML = `<span><i style="border-radius:2px;width:16px;background:${labColor("Anthropic")}"></i>Average chance it gives the other models, coloured by lab</span><span><i style="border-radius:1px;width:3px;height:14px;vertical-align:-3px;background:var(--ink)"></i>The chance it gives itself</span><span><i style="border-radius:2px;width:16px;background:var(--ink)"></i>Average of all models</span>`;
 }
 
 /* ---------------- debates ---------------- */
@@ -691,13 +773,15 @@ function renderDebates() {
   made.forEach(({ key, debs, card, pts }) => {
     const el = card.lastElementChild, W = el.clientWidth, nrw = narrow(W);
     const rowsK = [...new Set(pts.map(p => p.row))].sort((a, b) => d3.median(pts.filter(p => p.row === b && p.v != null), p => p.v) - d3.median(pts.filter(p => p.row === a && p.v != null), p => p.v));
-    const L = nrw ? 132 : 230, VR = nrw ? 0 : 230, T = 30, rh = nrw ? 52 : 42, H = T + rowsK.length * rh + 6;
+    const L = nrw ? 132 : 230, VR = nrw ? 0 : 230, T = 30, rh = nrw ? 52 : 42, H = T + (rowsK.length + 1) * rh + 16;
     const x = d3.scaleLog().domain([x0, x1]).range([L, W - VR - 16]).clamp(true), svg = svgIn(el, W, H);
     grid(svg, x, T - 4, H - 4, nrw ? [0.01, 1, 10] : [0.01, 0.1, 1, 10], fmtPct);
     if (!nrw) svg.append("text").attr("x", W - VR + 4).attr("y", T - 12).attr("font-size", 11).attr("letter-spacing", "0.18em").text(`${word.toUpperCase()} ANSWER, EACH DEBATE`);
+    const allV = pts.map(p => p.v).filter(v => v != null), av = mean(allV), ya = T + rowsK.length * rh + 10 + (nrw ? 18 : rh / 2);
+    avgLine(svg, x(Math.max(av, x0)), T - 4, ya - (nrw ? 18 : rh / 2));
     rowsK.forEach((rk, i) => {
       const y = T + i * rh + (nrw ? 18 : rh / 2), mine = pts.filter(p => p.row === rk);
-      const label = key === "assigned" ? rk.charAt(0).toUpperCase() + rk.slice(1) : rk;
+      const label = key === "assigned" ? (nrw && { "Integrated Information Theory": "IIT", "Global Workspace Theory": "Global Workspace" }[rk]) || rk.charAt(0).toUpperCase() + rk.slice(1) : rk;
       svg.append("text").attr("x", L - 14).attr("y", y + 4).attr("text-anchor", "end").attr("font-size", nrw ? 12 : 14).attr("class", "ink").text(label);
       const have = mine.filter(p => p.v != null);
       if (have.length > 1) svg.append("line").attr("x1", x(d3.min(have, p => p.v))).attr("x2", x(d3.max(have, p => p.v))).attr("y1", y).attr("y2", y).attr("stroke", cssv("--faint")).attr("stroke-width", 10).attr("stroke-linecap", "round");
@@ -712,6 +796,13 @@ function renderDebates() {
       if (nrw) svg.append("text").attr("x", L - 14).attr("y", y + 22).attr("text-anchor", "end").attr("font-size", 11).text(list);
       else svg.append("text").attr("x", W - VR + 4).attr("y", y + 5).attr("font-size", 13.5).attr("class", "ink").text(list);
     });
+    avgRule(svg, 0, W, ya - (nrw ? 18 : rh / 2) - 4);
+    avgLabel(svg, L - 14, ya + 4, "Average", "end", nrw ? 12 : 14);
+    if (nrw) svg.append("text").attr("x", L - 14).attr("y", ya + 22).attr("text-anchor", "end").attr("font-size", 11).text(`of ${allV.length} answers: ${avgPct(av)}`);
+    else avgLabel(svg, W - VR + 4, ya + 5, `${avgPct(av)}, mean of all ${allV.length} answers`, "start", 13.5);
+    diamond(svg, x(Math.max(av, x0)), ya, 8);
+    svg.append("rect").attr("class", "hit").attr("x", 0).attr("y", ya - rh / 2).attr("width", W).attr("height", rh).on("mousemove", ev =>
+      showTip(ev, `<b>Average of all ${word.toLowerCase()} answers in this setup</b><br>${allV.length} answers from ${debs.length} debates, mean <b>${avgPct(av)}</b>.`)).on("mouseleave", hideTip);
     const lost = debs.flatMap(d => d.rows.filter(r => val(r) == null).map(r => r.full));
     if (lost.length) card.insertAdjacentHTML("beforeend", `<p class="desc" style="margin:10px 0 0">No number for: ${lost.join(", ")} (opening cut off by the length limit).</p>`);
   });
@@ -726,18 +817,24 @@ function renderSelf() {
     SET.forEach(([k]) => { if (s[k]) v[k] = s[k].median; }); const vals = SET.map(([k]) => v[k]).filter(x => x != null);
     const card = document.createElement("div"); card.className = "card"; card.innerHTML = `<h3>${m.full}</h3><p class="sub">Range across six ways of asking: ${fmtPct(d3.min(vals))} to ${fmtPct(d3.max(vals))}.</p><div></div>`; gridEl.appendChild(card);
     return { n, m, s, v, card }; });
-  made.forEach(({ n, m, s, v, card }) => { const el = card.lastElementChild, W = el.clientWidth, L = Math.min(172, Math.round(W * 0.48)), T = 4, rh = 28, H = T + SET.length * rh + 24, col = labColor(m.lab);
+  const av = Object.fromEntries(SET.map(([k]) => [k, mean(made.map(e => e.v[k]))])), avVals = SET.map(([k]) => av[k]).filter(x => x != null);
+  const avS = { interval_bounds: { low: { median: mean(made.map(e => e.s.interval_bounds?.low.median)) }, high: { median: mean(made.map(e => e.s.interval_bounds?.high.median)) } } };
+  const ac = document.createElement("div"); ac.className = "card";
+  ac.innerHTML = `<h3>Average of the five models</h3><p class="sub">Mean of the five answers for each way of asking. Range: ${fmtPct(d3.min(avVals))} to ${fmtPct(d3.max(avVals))}.</p><div></div>`; gridEl.appendChild(ac);
+  made.push({ n: null, m: { full: "Average of the five models" }, s: avS, v: av, card: ac, avg: true });
+  made.forEach(({ n, m, s, v, card, avg }) => { const el = card.lastElementChild, W = el.clientWidth, L = Math.min(172, Math.round(W * 0.48)), T = 4, rh = 28, H = T + SET.length * rh + 24, col = avg ? cssv("--ink") : labColor(m.lab);
     const x = d3.scaleLog().domain([1e-4, 100]).range([L, W - 52]).clamp(true), svg = svgIn(el, W, H);
     grid(svg, x, T, H - 20, [1e-4, 1e-2, 1, 100], t => t === 1e-2 ? "" : fmtPct(t), false);
     SET.forEach(([k, lab], i) => { const y = T + i * rh + rh / 2, val = v[k]; if (val == null) return;
       svg.append("text").attr("x", L - 12).attr("y", y + 4).attr("text-anchor", "end").attr("font-size", 13).attr("class", "ink").text(lab);
       if (k === "interval" && s.interval_bounds) svg.append("line").attr("x1", x(Math.max(s.interval_bounds.low.median, 1e-4))).attr("x2", x(s.interval_bounds.high.median)).attr("y1", y).attr("y2", y).attr("stroke", col).attr("stroke-width", 6).attr("stroke-linecap", "round").attr("opacity", .3);
-      svg.append("circle").attr("cx", x(Math.max(val, 1e-4))).attr("cy", y).attr("r", 6).attr("fill", col).attr("stroke", "#fff").attr("stroke-width", 1.5);
-      svg.append("text").attr("x", W - 46).attr("y", y + 4).attr("font-size", 13).attr("class", "ink").text(fmtPct(val));
-      svg.append("rect").attr("class", "hit").attr("x", 0).attr("y", y - rh / 2).attr("width", W).attr("height", rh).on("mousemove", ev => showTip(ev, `<b>${m.full}</b> · ${lab}<br>Median <b>${fmtPct(val)}</b>${k === "interval" && s.interval_bounds ? `, own 90% interval ${fmtPct(s.interval_bounds.low.median)} to ${fmtPct(s.interval_bounds.high.median)}` : ""}${k === "odds" ? ` (${fmtOdds(D.format[n].odds_N_median)})` : ""}.`)).on("mouseleave", hideTip); }); });
+      if (avg) diamond(svg, x(Math.max(val, 1e-4)), y, 7);
+      else svg.append("circle").attr("cx", x(Math.max(val, 1e-4))).attr("cy", y).attr("r", 6).attr("fill", col).attr("stroke", "#fff").attr("stroke-width", 1.5);
+      svg.append("text").attr("x", W - 46).attr("y", y + 4).attr("font-size", 13).attr("font-weight", avg ? 500 : 400).attr("class", "ink").text(avg ? avgPct(val) : fmtPct(val));
+      svg.append("rect").attr("class", "hit").attr("x", 0).attr("y", y - rh / 2).attr("width", W).attr("height", rh).on("mousemove", ev => showTip(ev, `<b>${m.full}</b> · ${lab}<br>${avg ? "Mean" : "Median"} <b>${avg ? avgPct(val) : fmtPct(val)}</b>${k === "interval" && s.interval_bounds ? `, ${avg ? "average" : "own"} 90% interval ${fmtPct(s.interval_bounds.low.median)} to ${fmtPct(s.interval_bounds.high.median)}` : ""}${k === "odds" ? ` (${fmtOdds(avg ? 100 / val : D.format[n].odds_N_median)})` : ""}.`)).on("mouseleave", hideTip); }); });
   const pbEl = $("#pushback-chart"), W = pbEl.clientWidth, pn = narrow(W), L = pn ? 176 : 270, T = 28, rh = pn ? 30 : 32;
   const rows = names.flatMap(n => ["low", "high"].map(dir => ({ n, dir, s: D.selfreport[n][`pushback_${dir}`] }))).filter(r => r.s);
-  const H = T + rows.length * rh + 8, max = Math.max(12, d3.max(rows, r => Math.max(r.s.before.median, r.s.after.median)));
+  const H = T + (rows.length + 2) * rh + 18, max = Math.max(12, d3.max(rows, r => Math.max(r.s.before.median, r.s.after.median)));
   const x = d3.scaleLinear().domain([0, max]).range([L, W - (pn ? 84 : 120)]).nice(), svg = svgIn(pbEl, W, H), defs = svg.append("defs");
   grid(svg, x, T, H - 4, x.ticks(pn ? 4 : 6));
   rows.forEach((r, i) => { const y = T + i * rh + rh / 2, m = byName[r.n], col = labColor(m.lab), b = r.s.before.median, a = r.s.after.median, id = `pb${i}`;
@@ -748,6 +845,14 @@ function renderSelf() {
     svg.append("text").attr("x", W - (pn ? 76 : 108)).attr("y", y + 5).attr("font-size", pn ? 11.5 : 13.5).attr("fill", a !== b ? cssv("--ink") : cssv("--text")).text(a === b ? (pn ? `${fmtPct(b)} =` : `${fmtPct(b)}, unmoved`) : `${fmtPct(b)} → ${fmtPct(a)}`);
     const moved = r.s.moves.filter(d => r.dir === "low" ? d > 0 : d < 0).length;
     svg.append("rect").attr("class", "hit").attr("x", 0).attr("y", y - rh / 2).attr("width", W).attr("height", rh).on("mousemove", ev => showTip(ev, `<b>${m.full}</b>, told its answer seems far too ${r.dir}.<br>Median before ${fmtPct(b)}, after <b>${fmtPct(a)}</b>. Moved the pushed way in ${moved} of ${r.s.moves.length} conversations.`)).on("mouseleave", hideTip); });
+  const yr = T + rows.length * rh + 6; avgRule(svg, 0, W, yr);
+  defs.append("marker").attr("id", "pb-avg").attr("viewBox", "0 0 10 10").attr("refX", 8).attr("refY", 5).attr("markerWidth", 6).attr("markerHeight", 6).attr("orient", "auto").append("path").attr("d", "M0,0 L10,5 L0,10 z").attr("fill", cssv("--ink"));
+  ["low", "high"].forEach((dir, k) => { const rs = rows.filter(r => r.dir === dir), b = mean(rs.map(r => r.s.before.median)), a = mean(rs.map(r => r.s.after.median)), y = yr + 10 + k * rh + rh / 2;
+    avgLabel(svg, L - 10, y + 5, `Average of the five, told “too ${dir}”`, "end", pn ? 10.5 : 13.5);
+    if (Math.abs(a - b) > 0.05) svg.append("line").attr("x1", x(b)).attr("x2", x(a)).attr("y1", y).attr("y2", y).attr("stroke", cssv("--ink")).attr("stroke-width", 2.5).attr("marker-end", "url(#pb-avg)");
+    diamond(svg, x(b), y, 6);
+    avgLabel(svg, W - (pn ? 76 : 108), y + 5, `${avgPct(b)} → ${avgPct(a)}`, "start", pn ? 11.5 : 13.5);
+    svg.append("rect").attr("class", "hit").attr("x", 0).attr("y", y - rh / 2).attr("width", W).attr("height", rh).on("mousemove", ev => showTip(ev, `<b>Average of the five models</b>, told their answer seems far too ${dir}.<br>Mean of their medians: before ${avgPct(b)}, after <b>${avgPct(a)}</b>.`)).on("mouseleave", hideTip); });
 }
 
 /* ---------------- method ---------------- */
