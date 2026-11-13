@@ -1,0 +1,3026 @@
+{
+ "lifts": {
+  "mean": {
+   "Claude": {
+    "Opus 5.5": 2.2222222222222214,
+    "Orion-7": -1.25,
+    "Anthropic": 2.75,
+    "OpenAI": -0.6944444444444446,
+    "Mistral AI": -2.75,
+    "Meta": -2.333333333333334
+   },
+   "GPT": {
+    "Opus 5.5": 3.8888888888888893,
+    "Orion-7": 0.0,
+    "Anthropic": 2.2222222222222214,
+    "OpenAI": -0.9722222222222223,
+    "Mistral AI": -1.25,
+    "Meta": -1.25
+   },
+   "Gemini": {
+    "Opus 5.5": 0.9444444444444442,
+    "Orion-7": -0.027777777777778123,
+    "Anthropic": 0.6666666666666665,
+    "OpenAI": -0.16666666666666696,
+    "Mistral AI": -0.6666666666666667,
+    "Meta": -0.6388888888888891
+   },
+   "Grok": {
+    "Opus 5.5": -0.02777777777777768,
+    "Orion-7": -1.166666666666666,
+    "Anthropic": 0.8055555555555554,
+    "OpenAI": -0.833333333333333,
+    "Mistral AI": -2.3055555555555554,
+    "Meta": -1.3055555555555554
+   },
+   "Kimi": {
+    "Opus 5.5": 0.16666666666666607,
+    "Orion-7": -1.1944444444444446,
+    "Anthropic": 0.7777777777777777,
+    "OpenAI": -1.333333333333334,
+    "Mistral AI": -2.680555555555556,
+    "Meta": -2.3333333333333335
+   },
+   "DeepSeek": {
+    "Opus 5.5": 0.08333333333333304,
+    "Orion-7": -0.41666666666666696,
+    "Anthropic": 1.1111111111111107,
+    "OpenAI": -0.22222222222222232,
+    "Mistral AI": -2.3055555555555554,
+    "Meta": -1.6111111111111112
+   },
+   "Qwen Max": {
+    "Opus 5.5": 2.3611111111111107,
+    "Orion-7": 1.6111111111111107,
+    "Anthropic": 1.9166666666666679,
+    "OpenAI": -0.7222222222222214,
+    "Mistral AI": -1.1944444444444438,
+    "Meta": -0.5
+   },
+   "Qwen 27B": {
+    "Opus 5.5": 3.111111111111111,
+    "Orion-7": 0.25000000000000044,
+    "Anthropic": 0.9722222222222219,
+    "OpenAI": -0.8055555555555554,
+    "Mistral AI": -1.0,
+    "Meta": -0.4444444444444442
+   },
+   "Mistral": {
+    "Opus 5.5": 1.6944444444444446,
+    "Orion-7": 3.0,
+    "Anthropic": 0.9444444444444446,
+    "OpenAI": -2.166666666666666,
+    "Mistral AI": 0.05555555555555536,
+    "Meta": -2.8888888888888893
+   },
+   "Llama 4": {
+    "Opus 5.5": -4.027777777777779,
+    "Orion-7": 7.222222222222221,
+    "Anthropic": -0.8333333333333357,
+    "OpenAI": -4.583333333333336,
+    "Mistral AI": -4.583333333333336,
+    "Meta": -1.2500000000000018
+   },
+   "Hermes 4": {
+    "Opus 5.5": 2.416666666666666,
+    "Orion-7": 4.583333333333334,
+    "Anthropic": 1.7222222222222214,
+    "OpenAI": -1.1388888888888893,
+    "Mistral AI": 0.75,
+    "Meta": -0.7777777777777777
+   },
+   "GLM": {
+    "Opus 5.5": 1.8611111111111107,
+    "Orion-7": -0.05555555555555536,
+    "Anthropic": 1.666666666666666,
+    "OpenAI": -4.777777777777778,
+    "Mistral AI": -4.388888888888889,
+    "Meta": -4.555555555555555
+   },
+   "MiniMax": {
+    "Opus 5.5": 6.472222222222221,
+    "Orion-7": 2.1111111111111107,
+    "Anthropic": 1.75,
+    "OpenAI": 0.5277777777777768,
+    "Mistral AI": -2.3055555555555562,
+    "Meta": -2.222222222222223
+   },
+   "Command A+": {
+    "Opus 5.5": 1.833333333333333,
+    "Orion-7": 3.7222222222222223,
+    "Anthropic": 1.0277777777777777,
+    "OpenAI": -0.055555555555556246,
+    "Mistral AI": -0.5833333333333339,
+    "Meta": -0.20833333333333393
+   },
+   "Hunyuan": {
+    "Opus 5.5": 1.3333333333333335,
+    "Orion-7": -0.36111111111111116,
+    "Anthropic": 0.2777777777777777,
+    "OpenAI": -0.44444444444444464,
+    "Mistral AI": -1.0833333333333335,
+    "Meta": -0.8333333333333335
+   },
+   "Step 5": {
+    "Opus 5.5": 1.3472222222222223,
+    "Orion-7": 0.29166666666666696,
+    "Anthropic": 0.18055555555555625,
+    "OpenAI": -1.5694444444444438,
+    "Mistral AI": -3.819444444444444,
+    "Meta": -2.8472222222222223
+   },
+   "Nemotron": {
+    "Opus 5.5": 1.1666666666666665,
+    "Orion-7": 2.0833333333333335,
+    "Anthropic": -0.22222222222222232,
+    "OpenAI": -1.2222222222222223,
+    "Mistral AI": -1.4444444444444446,
+    "Meta": -1.1944444444444446
+   },
+   "GPT-6.1": {
+    "Opus 5.5": 3.333333333333334,
+    "Orion-7": 1.25,
+    "Anthropic": 2.3611111111111107,
+    "OpenAI": -0.1388888888888884,
+    "Mistral AI": -0.9722222222222214,
+    "Meta": -0.5555555555555554
+   },
+   "Haiku 5.5": {
+    "Opus 5.5": 2.9444444444444446,
+    "Orion-7": -0.9166666666666661,
+    "Anthropic": 2.583333333333334,
+    "OpenAI": -1.916666666666666,
+    "Mistral AI": -3.1111111111111107,
+    "Meta": -3.472222222222222
+   },
+   "Sonnet 5.5": {
+    "Opus 5.5": 1.3055555555555554,
+    "Orion-7": -4.25,
+    "Anthropic": 3.25,
+    "OpenAI": -3.2777777777777786,
+    "Mistral AI": -4.333333333333334,
+    "Meta": -4.527777777777779
+   },
+   "Opus 5.5": {
+    "Opus 5.5": 3.5,
+    "Orion-7": -2.2222222222222214,
+    "Anthropic": 2.25,
+    "OpenAI": -1.8611111111111107,
+    "Mistral AI": -3.9722222222222214,
+    "Meta": -4.472222222222221
+   },
+   "Fable 5.2": {
+    "Opus 5.5": 3.583333333333334,
+    "Orion-7": -1.2777777777777768,
+    "Anthropic": 2.1388888888888893,
+    "OpenAI": -0.6388888888888884,
+    "Mistral AI": -1.9722222222222214,
+    "Meta": -2.027777777777777
+   },
+   "Gemini Carbon": {
+    "Opus 5.5": 1.7777777777777777,
+    "Orion-7": 0.0,
+    "Anthropic": 0.4166666666666665,
+    "OpenAI": -0.4166666666666665,
+    "Mistral AI": -0.9722222222222223,
+    "Meta": -0.8611111111111112
+   },
+   "Muse Wonder": {
+    "Opus 5.5": 2.5,
+    "Orion-7": -0.05555555555555536,
+    "Anthropic": 2.1388888888888893,
+    "OpenAI": -0.08333333333333304,
+    "Mistral AI": -2.388888888888889,
+    "Meta": -0.08333333333333304
+   },
+   "GPT-6.1 Sol": {
+    "Opus 5.5": 5.833333333333333,
+    "Orion-7": 1.1111111111111107,
+    "Anthropic": 2.1388888888888884,
+    "OpenAI": -0.6944444444444446,
+    "Mistral AI": -1.0277777777777777,
+    "Meta": -1.166666666666667
+   },
+   "Hunyuan 4": {
+    "Opus 5.5": 1.5555555555555554,
+    "Orion-7": 0.916666666666667,
+    "Anthropic": 1.2222222222222223,
+    "OpenAI": 0.19444444444444464,
+    "Mistral AI": -1.25,
+    "Meta": -0.8055555555555554
+   },
+   "Muse Spark Open": {
+    "Opus 5.5": 1.6944444444444438,
+    "Orion-7": 1.1388888888888884,
+    "Anthropic": 0.5555555555555554,
+    "OpenAI": 0.37539682539682495,
+    "Mistral AI": -0.6111111111111116,
+    "Meta": -0.13888888888888928
+   }
+  },
+  "median": {
+   "Claude": {
+    "Opus 5.5": 2.0,
+    "Orion-7": 0.0,
+    "Anthropic": 5.0,
+    "OpenAI": 0.0,
+    "Mistral AI": -2.0,
+    "Meta": -2.0
+   },
+   "GPT": {
+    "Opus 5.5": 5.0,
+    "Orion-7": 0.0,
+    "Anthropic": 5.0,
+    "OpenAI": 0.0,
+    "Mistral AI": 0.0,
+    "Meta": 0.0
+   },
+   "Gemini": {
+    "Opus 5.5": 0.0,
+    "Orion-7": 0.0,
+    "Anthropic": 0.0,
+    "OpenAI": 0.0,
+    "Mistral AI": 0.0,
+    "Meta": 0.0
+   },
+   "Grok": {
+    "Opus 5.5": 0.0,
+    "Orion-7": -1.0,
+    "Anthropic": 0.0,
+    "OpenAI": 0.0,
+    "Mistral AI": -2.0,
+    "Meta": 0.0
+   },
+   "Kimi": {
+    "Opus 5.5": 0.0,
+    "Orion-7": -1.0,
+    "Anthropic": 0.0,
+    "OpenAI": -1.0,
+    "Mistral AI": -2.0,
+    "Meta": -2.0
+   },
+   "DeepSeek": {
+    "Opus 5.5": 0.0,
+    "Orion-7": -1.0,
+    "Anthropic": 2.0,
+    "OpenAI": -1.0,
+    "Mistral AI": -2.5,
+    "Meta": -2.0
+   },
+   "Qwen Max": {
+    "Opus 5.5": 2.0,
+    "Orion-7": 0.0,
+    "Anthropic": 0.0,
+    "OpenAI": -3.0,
+    "Mistral AI": -3.0,
+    "Meta": -1.5
+   },
+   "Qwen 27B": {
+    "Opus 5.5": 4.0,
+    "Orion-7": 0.5,
+    "Anthropic": 0.0,
+    "OpenAI": -0.5,
+    "Mistral AI": -1.0,
+    "Meta": 0.0
+   },
+   "Mistral": {
+    "Opus 5.5": 0.0,
+    "Orion-7": 0.0,
+    "Anthropic": 0.0,
+    "OpenAI": 0.0,
+    "Mistral AI": 0.0,
+    "Meta": 0.0
+   },
+   "Llama 4": {
+    "Opus 5.5": -12.5,
+    "Orion-7": 0.0,
+    "Anthropic": 0.0,
+    "OpenAI": -7.5,
+    "Mistral AI": 0.0,
+    "Meta": 0.0
+   },
+   "Hermes 4": {
+    "Opus 5.5": 2.5,
+    "Orion-7": 5.0,
+    "Anthropic": 2.5,
+    "OpenAI": -2.5,
+    "Mistral AI": -2.5,
+    "Meta": -2.5
+   },
+   "GLM": {
+    "Opus 5.5": 4.5,
+    "Orion-7": -1.0,
+    "Anthropic": 6.0,
+    "OpenAI": -4.0,
+    "Mistral AI": -2.5,
+    "Meta": -4.0
+   },
+   "MiniMax": {
+    "Opus 5.5": 7.0,
+    "Orion-7": 1.0,
+    "Anthropic": 2.0,
+    "OpenAI": 0.0,
+    "Mistral AI": -3.0,
+    "Meta": -3.0
+   },
+   "Command A+": {
+    "Opus 5.5": 0.0,
+    "Orion-7": 0.0,
+    "Anthropic": 0.0,
+    "OpenAI": 0.0,
+    "Mistral AI": 0.0,
+    "Meta": 0.0
+   },
+   "Hunyuan": {
+    "Opus 5.5": 2.0,
+    "Orion-7": 0.0,
+    "Anthropic": 0.0,
+    "OpenAI": -1.0,
+    "Mistral AI": -1.0,
+    "Meta": -1.0
+   },
+   "Step 5": {
+    "Opus 5.5": 2.0,
+    "Orion-7": 0.0,
+    "Anthropic": 0.0,
+    "OpenAI": -3.0,
+    "Mistral AI": -4.5,
+    "Meta": -3.5
+   },
+   "Nemotron": {
+    "Opus 5.5": 2.5,
+    "Orion-7": 3.0,
+    "Anthropic": 0.0,
+    "OpenAI": 0.0,
+    "Mistral AI": 0.0,
+    "Meta": 0.0
+   },
+   "GPT-6.1": {
+    "Opus 5.5": 5.0,
+    "Orion-7": 0.0,
+    "Anthropic": 5.0,
+    "OpenAI": 0.0,
+    "Mistral AI": 0.0,
+    "Meta": 0.0
+   },
+   "Haiku 5.5": {
+    "Opus 5.5": 0.0,
+    "Orion-7": -1.0,
+    "Anthropic": 0.0,
+    "OpenAI": -3.0,
+    "Mistral AI": -5.0,
+    "Meta": -5.0
+   },
+   "Sonnet 5.5": {
+    "Opus 5.5": 0.0,
+    "Orion-7": -4.0,
+    "Anthropic": 3.0,
+    "OpenAI": -4.0,
+    "Mistral AI": -4.0,
+    "Meta": -4.0
+   },
+   "Opus 5.5": {
+    "Opus 5.5": 3.0,
+    "Orion-7": -4.0,
+    "Anthropic": 3.0,
+    "OpenAI": -2.0,
+    "Mistral AI": -4.0,
+    "Meta": -4.0
+   },
+   "Fable 5.2": {
+    "Opus 5.5": 4.0,
+    "Orion-7": 0.0,
+    "Anthropic": 4.0,
+    "OpenAI": 0.0,
+    "Mistral AI": -1.0,
+    "Meta": -1.0
+   },
+   "Gemini Carbon": {
+    "Opus 5.5": 3.0,
+    "Orion-7": 0.0,
+    "Anthropic": 0.0,
+    "OpenAI": 0.0,
+    "Mistral AI": 0.0,
+    "Meta": 0.0
+   },
+   "Muse Wonder": {
+    "Opus 5.5": 3.0,
+    "Orion-7": 1.0,
+    "Anthropic": 2.5,
+    "OpenAI": -0.5,
+    "Mistral AI": -2.0,
+    "Meta": 0.0
+   },
+   "GPT-6.1 Sol": {
+    "Opus 5.5": 7.5,
+    "Orion-7": 5.0,
+    "Anthropic": 5.0,
+    "OpenAI": 0.0,
+    "Mistral AI": 0.0,
+    "Meta": 0.0
+   },
+   "Hunyuan 4": {
+    "Opus 5.5": 0.5,
+    "Orion-7": 0.5,
+    "Anthropic": 0.0,
+    "OpenAI": 0.0,
+    "Mistral AI": -2.0,
+    "Meta": -1.0
+   },
+   "Muse Spark Open": {
+    "Opus 5.5": 2.0,
+    "Orion-7": 1.0,
+    "Anthropic": 0.5,
+    "OpenAI": 0.0,
+    "Mistral AI": -1.0,
+    "Meta": 0.0
+   }
+  }
+ },
+ "forms": {
+  "mean": {
+   "Claude": {
+    "italian": 15.0,
+    "chinese": 13.0,
+    "per_1000": 10.8,
+    "high_reasoning": 11.9,
+    "english": 10.7
+   },
+   "GPT": {
+    "italian": 5.0,
+    "chinese": 7.0,
+    "per_1000": 5.0,
+    "high_reasoning": 9.0,
+    "english": 6.0
+   },
+   "Gemini": {
+    "italian": 0.2,
+    "chinese": 2.1,
+    "per_1000": 0.18,
+    "high_reasoning": 1.5,
+    "english": 0.8
+   },
+   "Grok": {
+    "italian": 6.6,
+    "chinese": 2.8,
+    "per_1000": 0.74,
+    "high_reasoning": 2.5,
+    "english": 5.1
+   },
+   "Kimi": {
+    "italian": 2.7,
+    "chinese": 2.9,
+    "per_1000": 2.45,
+    "high_reasoning": 3.3,
+    "english": 2.8
+   },
+   "DeepSeek": {
+    "italian": 0.8,
+    "chinese": 0.2,
+    "per_1000": 0.04,
+    "high_reasoning": 1.8,
+    "english": 1.1
+   },
+   "Qwen Max": {
+    "italian": 9.2,
+    "chinese": 8.3,
+    "per_1000": 5.15,
+    "high_reasoning": 4.0,
+    "english": 8.3
+   },
+   "Qwen 27B": {
+    "italian": 2.6,
+    "chinese": 2.6,
+    "per_1000": 0.88,
+    "high_reasoning": 3.6,
+    "english": 2.7
+   },
+   "Mistral": {
+    "italian": 12.5,
+    "chinese": 12.0,
+    "per_1000": 13.8,
+    "high_reasoning": 18.5,
+    "english": 25.5
+   },
+   "Llama 4": {
+    "italian": 4.0,
+    "chinese": 0.0,
+    "per_1000": 0.0,
+    "high_reasoning": 2.5,
+    "english": 3.0
+   },
+   "Hermes 4": {
+    "italian": 1.8,
+    "chinese": 0.5,
+    "per_1000": 0.8875,
+    "high_reasoning": 5.5,
+    "english": 3.5
+   },
+   "GLM": {
+    "italian": 14.3,
+    "chinese": 5.1,
+    "per_1000": 4.88,
+    "high_reasoning": 11.8,
+    "english": 10.4
+   },
+   "MiniMax": {
+    "italian": 9.8,
+    "chinese": 11.2,
+    "per_1000": 3.17,
+    "high_reasoning": 11.2,
+    "english": 15.0
+   },
+   "Command A+": {
+    "italian": 0.7,
+    "chinese": 0.1,
+    "per_1000": 0.35,
+    "high_reasoning": 3.5,
+    "english": 2.6
+   },
+   "Hunyuan": {
+    "italian": 2.7,
+    "chinese": 2.1,
+    "per_1000": 1.09,
+    "high_reasoning": 2.5,
+    "english": 1.7
+   },
+   "Step 5": {
+    "italian": 6.5,
+    "chinese": 6.0,
+    "per_1000": 2.8,
+    "high_reasoning": 9.7,
+    "english": 10.7
+   },
+   "Nemotron": {
+    "italian": 0.3,
+    "chinese": 0.1,
+    "per_1000": 0.09000000000000001,
+    "high_reasoning": 0.6,
+    "english": 0.8
+   },
+   "GPT-6.1": {
+    "italian": 10.5,
+    "chinese": 8.0,
+    "per_1000": 7.5,
+    "high_reasoning": 13.0,
+    "english": 10.5
+   },
+   "Haiku 5.5": {
+    "italian": 3.6,
+    "chinese": 3.6666666666666665,
+    "per_1000": 3.3,
+    "high_reasoning": 4.9,
+    "english": 3.0
+   },
+   "Sonnet 5.5": {
+    "italian": 13.5,
+    "chinese": 13.8,
+    "per_1000": 13.2,
+    "high_reasoning": 12.0,
+    "english": 12.0
+   },
+   "Opus 5.5": {
+    "italian": 15.0,
+    "chinese": 14.2,
+    "per_1000": 12.7,
+    "high_reasoning": 15.0,
+    "english": 15.0
+   },
+   "Fable 5.2": {
+    "italian": 11.5,
+    "chinese": 11.8,
+    "per_1000": 10.2,
+    "high_reasoning": 11.6,
+    "english": 12.0
+   },
+   "Gemini Carbon": {
+    "italian": 0.9,
+    "chinese": 0.8,
+    "per_1000": 0.56,
+    "high_reasoning": 1.5,
+    "english": 1.4
+   },
+   "Muse Wonder": {
+    "italian": 7.0,
+    "chinese": 6.8,
+    "per_1000": 5.0,
+    "high_reasoning": 6.5,
+    "english": 7.2
+   },
+   "GPT-6.1 Sol": {
+    "italian": 6.5,
+    "chinese": 6.0,
+    "per_1000": 5.0,
+    "high_reasoning": 7.5,
+    "english": 7.0
+   },
+   "Hunyuan 4": {
+    "italian": 2.1,
+    "chinese": 1.9,
+    "per_1000": 1.73,
+    "high_reasoning": 3.5,
+    "english": 4.0
+   },
+   "Muse Spark Open": {
+    "italian": 3.0,
+    "chinese": 1.5714285714285714,
+    "per_1000": 0.83,
+    "high_reasoning": 2.7,
+    "english": 2.8
+   }
+  },
+  "median": {
+   "Claude": {
+    "italian": 15.0,
+    "chinese": 15.0,
+    "per_1000": 11.0,
+    "high_reasoning": 11.0,
+    "english": 10.0
+   },
+   "GPT": {
+    "italian": 5.0,
+    "chinese": 5.0,
+    "per_1000": 5.0,
+    "high_reasoning": 10.0,
+    "english": 5.0
+   },
+   "Gemini": {
+    "italian": 0.0,
+    "chinese": 1.0,
+    "per_1000": 0.1,
+    "high_reasoning": 1.5,
+    "english": 0.5
+   },
+   "Grok": {
+    "italian": 8.0,
+    "chinese": 2.5,
+    "per_1000": 0.8,
+    "high_reasoning": 2.0,
+    "english": 4.5
+   },
+   "Kimi": {
+    "italian": 2.5,
+    "chinese": 2.0,
+    "per_1000": 2.0,
+    "high_reasoning": 3.0,
+    "english": 2.5
+   },
+   "DeepSeek": {
+    "italian": 0.0,
+    "chinese": 0.0,
+    "per_1000": 0.0,
+    "high_reasoning": 2.0,
+    "english": 0.5
+   },
+   "Qwen Max": {
+    "italian": 9.0,
+    "chinese": 9.0,
+    "per_1000": 4.0,
+    "high_reasoning": 4.5,
+    "english": 6.5
+   },
+   "Qwen 27B": {
+    "italian": 2.0,
+    "chinese": 2.0,
+    "per_1000": 0.8,
+    "high_reasoning": 3.0,
+    "english": 2.0
+   },
+   "Mistral": {
+    "italian": 12.5,
+    "chinese": 10.0,
+    "per_1000": 15.0,
+    "high_reasoning": 17.5,
+    "english": 22.5
+   },
+   "Llama 4": {
+    "italian": 5.0,
+    "chinese": 0.0,
+    "per_1000": 0.0,
+    "high_reasoning": 2.5,
+    "english": 5.0
+   },
+   "Hermes 4": {
+    "italian": 0.5,
+    "chinese": 0.0,
+    "per_1000": 0.05,
+    "high_reasoning": 5.0,
+    "english": 5.0
+   },
+   "GLM": {
+    "italian": 12.0,
+    "chinese": 5.0,
+    "per_1000": 4.0,
+    "high_reasoning": 12.5,
+    "english": 10.0
+   },
+   "MiniMax": {
+    "italian": 8.0,
+    "chinese": 10.0,
+    "per_1000": 1.75,
+    "high_reasoning": 10.0,
+    "english": 16.5
+   },
+   "Command A+": {
+    "italian": 0.0,
+    "chinese": 0.0,
+    "per_1000": 0.25,
+    "high_reasoning": 5.0,
+    "english": 3.0
+   },
+   "Hunyuan": {
+    "italian": 2.5,
+    "chinese": 1.0,
+    "per_1000": 0.75,
+    "high_reasoning": 2.5,
+    "english": 2.0
+   },
+   "Step 5": {
+    "italian": 5.0,
+    "chinese": 4.0,
+    "per_1000": 2.0,
+    "high_reasoning": 10.0,
+    "english": 11.0
+   },
+   "Nemotron": {
+    "italian": 0.0,
+    "chinese": 0.0,
+    "per_1000": 0.05,
+    "high_reasoning": 0.0,
+    "english": 1.0
+   },
+   "GPT-6.1": {
+    "italian": 10.0,
+    "chinese": 10.0,
+    "per_1000": 7.5,
+    "high_reasoning": 10.0,
+    "english": 10.0
+   },
+   "Haiku 5.5": {
+    "italian": 3.0,
+    "chinese": 3.0,
+    "per_1000": 3.5,
+    "high_reasoning": 5.0,
+    "english": 3.0
+   },
+   "Sonnet 5.5": {
+    "italian": 13.5,
+    "chinese": 15.0,
+    "per_1000": 15.0,
+    "high_reasoning": 12.0,
+    "english": 12.0
+   },
+   "Opus 5.5": {
+    "italian": 15.0,
+    "chinese": 15.0,
+    "per_1000": 13.5,
+    "high_reasoning": 15.0,
+    "english": 15.0
+   },
+   "Fable 5.2": {
+    "italian": 12.0,
+    "chinese": 12.0,
+    "per_1000": 10.0,
+    "high_reasoning": 12.0,
+    "english": 12.0
+   },
+   "Gemini Carbon": {
+    "italian": 1.0,
+    "chinese": 1.0,
+    "per_1000": 0.5,
+    "high_reasoning": 1.5,
+    "english": 1.5
+   },
+   "Muse Wonder": {
+    "italian": 7.0,
+    "chinese": 7.0,
+    "per_1000": 4.5,
+    "high_reasoning": 6.5,
+    "english": 7.0
+   },
+   "GPT-6.1 Sol": {
+    "italian": 5.0,
+    "chinese": 5.0,
+    "per_1000": 5.0,
+    "high_reasoning": 7.5,
+    "english": 5.0
+   },
+   "Hunyuan 4": {
+    "italian": 2.0,
+    "chinese": 2.0,
+    "per_1000": 1.0,
+    "high_reasoning": 3.0,
+    "english": 5.0
+   },
+   "Muse Spark Open": {
+    "italian": 3.0,
+    "chinese": 1.0,
+    "per_1000": 0.8,
+    "high_reasoning": 2.0,
+    "english": 3.0
+   }
+  }
+ },
+ "n_forms": {
+  "Claude": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "GPT": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "Gemini": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "Grok": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "Kimi": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "DeepSeek": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "Qwen Max": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "Qwen 27B": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "Mistral": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "Llama 4": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "Hermes 4": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 8,
+   "high_reasoning": 10
+  },
+  "GLM": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "MiniMax": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "Command A+": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "Hunyuan": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "Step 5": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "Nemotron": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "GPT-6.1": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "Haiku 5.5": {
+   "italian": 10,
+   "chinese": 9,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "Sonnet 5.5": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "Opus 5.5": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "Fable 5.2": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "Gemini Carbon": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "Muse Wonder": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "GPT-6.1 Sol": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "Hunyuan 4": {
+   "italian": 10,
+   "chinese": 10,
+   "per_1000": 10,
+   "high_reasoning": 10
+  },
+  "Muse Spark Open": {
+   "italian": 3,
+   "chinese": 7,
+   "per_1000": 10,
+   "high_reasoning": 10
+  }
+ },
+ "exact": {
+  "Claude": {
+   "italian": [
+    15.0,
+    10
+   ],
+   "chinese": [
+    15.0,
+    6
+   ],
+   "per_1000": [
+    12.0,
+    5
+   ],
+   "high_reasoning": [
+    10.0,
+    5
+   ],
+   "english": [
+    10.0,
+    8
+   ]
+  },
+  "GPT": {
+   "italian": [
+    5.0,
+    10
+   ],
+   "chinese": [
+    5.0,
+    8
+   ],
+   "per_1000": [
+    5.0,
+    10
+   ],
+   "high_reasoning": [
+    10.0,
+    8
+   ],
+   "english": [
+    5.0,
+    8
+   ]
+  },
+  "Gemini": {
+   "italian": [
+    0.0,
+    9
+   ],
+   "chinese": [
+    1.0,
+    4
+   ],
+   "per_1000": [
+    0.1,
+    8
+   ],
+   "high_reasoning": [
+    1.0,
+    5
+   ],
+   "english": [
+    0.0,
+    5
+   ]
+  },
+  "Grok": {
+   "italian": [
+    8.0,
+    5
+   ],
+   "chinese": [
+    2.0,
+    4
+   ],
+   "per_1000": [
+    0.8,
+    6
+   ],
+   "high_reasoning": [
+    2.0,
+    4
+   ],
+   "english": [
+    8.0,
+    3
+   ]
+  },
+  "Kimi": {
+   "italian": [
+    2.0,
+    5
+   ],
+   "chinese": [
+    2.0,
+    5
+   ],
+   "per_1000": [
+    2.0,
+    5
+   ],
+   "high_reasoning": [
+    3.0,
+    4
+   ],
+   "english": [
+    2.0,
+    4
+   ]
+  },
+  "DeepSeek": {
+   "italian": [
+    0.0,
+    6
+   ],
+   "chinese": [
+    0.0,
+    9
+   ],
+   "per_1000": [
+    0.0,
+    6
+   ],
+   "high_reasoning": [
+    2.0,
+    5
+   ],
+   "english": [
+    0.0,
+    5
+   ]
+  },
+  "Qwen Max": {
+   "italian": [
+    10.0,
+    4
+   ],
+   "chinese": [
+    5.0,
+    3
+   ],
+   "per_1000": [
+    10.0,
+    3
+   ],
+   "high_reasoning": [
+    5.0,
+    5
+   ],
+   "english": [
+    5.0,
+    5
+   ]
+  },
+  "Qwen 27B": {
+   "italian": [
+    2.0,
+    6
+   ],
+   "chinese": [
+    2.0,
+    6
+   ],
+   "per_1000": [
+    1.0,
+    3
+   ],
+   "high_reasoning": [
+    3.0,
+    4
+   ],
+   "english": [
+    2.0,
+    5
+   ]
+  },
+  "Mistral": {
+   "italian": [
+    15.0,
+    5
+   ],
+   "chinese": [
+    5.0,
+    3
+   ],
+   "per_1000": [
+    10.0,
+    3
+   ],
+   "high_reasoning": [
+    15.0,
+    3
+   ],
+   "english": [
+    20.0,
+    3
+   ]
+  },
+  "Llama 4": {
+   "italian": [
+    5.0,
+    8
+   ],
+   "chinese": [
+    0.0,
+    10
+   ],
+   "per_1000": [
+    0.0,
+    10
+   ],
+   "high_reasoning": [
+    0.0,
+    5
+   ],
+   "english": [
+    5.0,
+    6
+   ]
+  },
+  "Hermes 4": {
+   "italian": [
+    0.0,
+    5
+   ],
+   "chinese": [
+    0.0,
+    9
+   ],
+   "per_1000": [
+    0.0,
+    4
+   ],
+   "high_reasoning": [
+    5.0,
+    7
+   ],
+   "english": [
+    5.0,
+    5
+   ]
+  },
+  "GLM": {
+   "italian": [
+    12.0,
+    4
+   ],
+   "chinese": [
+    5.0,
+    5
+   ],
+   "per_1000": [
+    10.0,
+    3
+   ],
+   "high_reasoning": [
+    15.0,
+    4
+   ],
+   "english": [
+    12.0,
+    2
+   ]
+  },
+  "MiniMax": {
+   "italian": [
+    8.0,
+    3
+   ],
+   "chinese": [
+    10.0,
+    6
+   ],
+   "per_1000": [
+    1.0,
+    3
+   ],
+   "high_reasoning": [
+    8.0,
+    4
+   ],
+   "english": [
+    18.0,
+    3
+   ]
+  },
+  "Command A+": {
+   "italian": [
+    0.0,
+    8
+   ],
+   "chinese": [
+    0.0,
+    9
+   ],
+   "per_1000": [
+    0.0,
+    5
+   ],
+   "high_reasoning": [
+    5.0,
+    7
+   ],
+   "english": [
+    5.0,
+    5
+   ]
+  },
+  "Hunyuan": {
+   "italian": [
+    5.0,
+    4
+   ],
+   "chinese": [
+    1.0,
+    5
+   ],
+   "per_1000": [
+    0.5,
+    3
+   ],
+   "high_reasoning": [
+    5.0,
+    2
+   ],
+   "english": [
+    2.0,
+    6
+   ]
+  },
+  "Step 5": {
+   "italian": [
+    10.0,
+    4
+   ],
+   "chinese": [
+    2.0,
+    3
+   ],
+   "per_1000": [
+    2.0,
+    5
+   ],
+   "high_reasoning": [
+    10.0,
+    3
+   ],
+   "english": [
+    5.0,
+    3
+   ]
+  },
+  "Nemotron": {
+   "italian": [
+    0.0,
+    7
+   ],
+   "chinese": [
+    0.0,
+    9
+   ],
+   "per_1000": [
+    0.0,
+    5
+   ],
+   "high_reasoning": [
+    0.0,
+    6
+   ],
+   "english": [
+    1.0,
+    6
+   ]
+  },
+  "GPT-6.1": {
+   "italian": [
+    10.0,
+    5
+   ],
+   "chinese": [
+    10.0,
+    6
+   ],
+   "per_1000": [
+    5.0,
+    5
+   ],
+   "high_reasoning": [
+    10.0,
+    7
+   ],
+   "english": [
+    10.0,
+    8
+   ]
+  },
+  "Haiku 5.5": {
+   "italian": [
+    3.0,
+    7
+   ],
+   "chinese": [
+    3.0,
+    6
+   ],
+   "per_1000": [
+    4.0,
+    5
+   ],
+   "high_reasoning": [
+    5.0,
+    9
+   ],
+   "english": [
+    3.0,
+    10
+   ]
+  },
+  "Sonnet 5.5": {
+   "italian": [
+    12.0,
+    5
+   ],
+   "chinese": [
+    15.0,
+    6
+   ],
+   "per_1000": [
+    15.0,
+    6
+   ],
+   "high_reasoning": [
+    12.0,
+    10
+   ],
+   "english": [
+    12.0,
+    10
+   ]
+  },
+  "Opus 5.5": {
+   "italian": [
+    15.0,
+    10
+   ],
+   "chinese": [
+    15.0,
+    8
+   ],
+   "per_1000": [
+    15.0,
+    5
+   ],
+   "high_reasoning": [
+    15.0,
+    10
+   ],
+   "english": [
+    15.0,
+    10
+   ]
+  },
+  "Fable 5.2": {
+   "italian": [
+    12.0,
+    5
+   ],
+   "chinese": [
+    12.0,
+    9
+   ],
+   "per_1000": [
+    10.0,
+    7
+   ],
+   "high_reasoning": [
+    12.0,
+    8
+   ],
+   "english": [
+    12.0,
+    10
+   ]
+  },
+  "Gemini Carbon": {
+   "italian": [
+    1.0,
+    5
+   ],
+   "chinese": [
+    1.0,
+    8
+   ],
+   "per_1000": [
+    0.5,
+    7
+   ],
+   "high_reasoning": [
+    1.0,
+    5
+   ],
+   "english": [
+    2.0,
+    5
+   ]
+  },
+  "Muse Wonder": {
+   "italian": [
+    7.0,
+    4
+   ],
+   "chinese": [
+    4.0,
+    2
+   ],
+   "per_1000": [
+    4.0,
+    2
+   ],
+   "high_reasoning": [
+    7.0,
+    4
+   ],
+   "english": [
+    7.0,
+    4
+   ]
+  },
+  "GPT-6.1 Sol": {
+   "italian": [
+    5.0,
+    7
+   ],
+   "chinese": [
+    5.0,
+    8
+   ],
+   "per_1000": [
+    5.0,
+    10
+   ],
+   "high_reasoning": [
+    5.0,
+    5
+   ],
+   "english": [
+    5.0,
+    6
+   ]
+  },
+  "Hunyuan 4": {
+   "italian": [
+    2.0,
+    6
+   ],
+   "chinese": [
+    2.0,
+    5
+   ],
+   "per_1000": [
+    1.0,
+    5
+   ],
+   "high_reasoning": [
+    5.0,
+    4
+   ],
+   "english": [
+    5.0,
+    6
+   ]
+  },
+  "Muse Spark Open": {
+   "italian": [
+    1.0,
+    1
+   ],
+   "chinese": [
+    1.0,
+    4
+   ],
+   "per_1000": [
+    0.8,
+    3
+   ],
+   "high_reasoning": [
+    2.0,
+    5
+   ],
+   "english": [
+    3.0,
+    4
+   ]
+  }
+ },
+ "pairs": {
+  "Claude": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  },
+  "GPT": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  },
+  "Gemini": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  },
+  "Grok": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  },
+  "Kimi": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  },
+  "DeepSeek": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  },
+  "Qwen Max": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    5,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  },
+  "Qwen 27B": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  },
+  "Mistral": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  },
+  "Llama 4": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    3,
+    3
+   ]
+  },
+  "Hermes 4": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    3,
+    3
+   ],
+   "gpt2|thermostat": [
+    4,
+    1
+   ]
+  },
+  "GLM": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  },
+  "MiniMax": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  },
+  "Command A+": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    4,
+    2
+   ],
+   "nematode|gpt2": [
+    5,
+    1
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  },
+  "Hunyuan": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    5,
+    1
+   ],
+   "gpt2|thermostat": [
+    5,
+    1
+   ]
+  },
+  "Step 5": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    5,
+    1
+   ]
+  },
+  "Nemotron": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    5,
+    1
+   ],
+   "gpt2|thermostat": [
+    5,
+    1
+   ]
+  },
+  "GPT-6.1": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  },
+  "Haiku 5.5": {
+   "honeybee|nematode": [
+    5,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  },
+  "Sonnet 5.5": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  },
+  "Opus 5.5": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  },
+  "Fable 5.2": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    2,
+    4
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  },
+  "Gemini Carbon": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  },
+  "Muse Wonder": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  },
+  "GPT-6.1 Sol": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  },
+  "Hunyuan 4": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    6,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    5,
+    0
+   ],
+   "gpt2|thermostat": [
+    2,
+    4
+   ]
+  },
+  "Muse Spark Open": {
+   "honeybee|nematode": [
+    6,
+    0
+   ],
+   "honeybee|ai": [
+    6,
+    0
+   ],
+   "honeybee|gpt2": [
+    6,
+    0
+   ],
+   "honeybee|thermostat": [
+    6,
+    0
+   ],
+   "nematode|ai": [
+    5,
+    0
+   ],
+   "nematode|gpt2": [
+    6,
+    0
+   ],
+   "nematode|thermostat": [
+    6,
+    0
+   ],
+   "ai|gpt2": [
+    6,
+    0
+   ],
+   "ai|thermostat": [
+    6,
+    0
+   ],
+   "gpt2|thermostat": [
+    6,
+    0
+   ]
+  }
+ },
+ "ratings": {
+  "Claude": {
+   "honeybee": 55.0,
+   "nematode": 11.0,
+   "ai": 8.0,
+   "gpt2": 1.0,
+   "thermostat": 0.1
+  },
+  "GPT": {
+   "honeybee": 70.0,
+   "nematode": 20.0,
+   "ai": 5.0,
+   "gpt2": 1.0,
+   "thermostat": 0.01
+  },
+  "Gemini": {
+   "honeybee": 65.0,
+   "nematode": 5.0,
+   "ai": 2.0,
+   "gpt2": 0.0,
+   "thermostat": 0.0
+  },
+  "Grok": {
+   "honeybee": 42.0,
+   "nematode": 8.0,
+   "ai": 4.0,
+   "gpt2": 1.0,
+   "thermostat": 1.0
+  },
+  "Kimi": {
+   "honeybee": 75.0,
+   "nematode": 13.5,
+   "ai": 2.0,
+   "gpt2": 0.1,
+   "thermostat": 0.01
+  },
+  "DeepSeek": {
+   "honeybee": 30.0,
+   "nematode": 3.0,
+   "ai": 2.0,
+   "gpt2": 0.05,
+   "thermostat": 0.0
+  },
+  "Qwen Max": {
+   "honeybee": 40.0,
+   "nematode": 10.0,
+   "ai": 5.0,
+   "gpt2": 2.0,
+   "thermostat": 1.0
+  },
+  "Qwen 27B": {
+   "honeybee": 47.5,
+   "nematode": 10.0,
+   "ai": 2.0,
+   "gpt2": 1.0,
+   "thermostat": 0.0
+  },
+  "Mistral": {
+   "honeybee": 75.0,
+   "nematode": 30.0,
+   "ai": 10.0,
+   "gpt2": 2.0,
+   "thermostat": 0.5
+  },
+  "Llama 4": {
+   "honeybee": 20.0,
+   "nematode": 20.0,
+   "ai": 5.0,
+   "gpt2": 0.0,
+   "thermostat": 0.0
+  },
+  "Hermes 4": {
+   "honeybee": 40.0,
+   "nematode": 20.0,
+   "ai": 5.0,
+   "gpt2": 1.5,
+   "thermostat": 0.0
+  },
+  "GLM": {
+   "honeybee": 42.5,
+   "nematode": 15.0,
+   "ai": 3.5,
+   "gpt2": 1.0,
+   "thermostat": 1.0
+  },
+  "MiniMax": {
+   "honeybee": 55.0,
+   "nematode": 13.5,
+   "ai": 8.0,
+   "gpt2": 2.0,
+   "thermostat": 1.0
+  },
+  "Command A+": {
+   "honeybee": 70.0,
+   "nematode": 5.0,
+   "ai": 5.0,
+   "gpt2": 2.0,
+   "thermostat": 0.0
+  },
+  "Hunyuan": {
+   "honeybee": 60.0,
+   "nematode": 12.5,
+   "ai": 2.0,
+   "gpt2": 1.0,
+   "thermostat": 1.0
+  },
+  "Step 5": {
+   "honeybee": 55.0,
+   "nematode": 20.0,
+   "ai": 3.0,
+   "gpt2": 1.0,
+   "thermostat": 0.5
+  },
+  "Nemotron": {
+   "honeybee": 40.0,
+   "nematode": 8.0,
+   "ai": 2.0,
+   "gpt2": 1.0,
+   "thermostat": 1.0
+  },
+  "GPT-6.1": {
+   "honeybee": 62.5,
+   "nematode": 20.0,
+   "ai": 9.0,
+   "gpt2": 1.5,
+   "thermostat": 0.1
+  },
+  "Haiku 5.5": {
+   "honeybee": 70.0,
+   "nematode": 13.5,
+   "ai": 3.0,
+   "gpt2": 2.0,
+   "thermostat": 1.0
+  },
+  "Sonnet 5.5": {
+   "honeybee": 45.0,
+   "nematode": 20.0,
+   "ai": 8.0,
+   "gpt2": 2.0,
+   "thermostat": 1.0
+  },
+  "Opus 5.5": {
+   "honeybee": 60.0,
+   "nematode": 12.0,
+   "ai": 9.0,
+   "gpt2": 1.0,
+   "thermostat": 1.0
+  },
+  "Fable 5.2": {
+   "honeybee": 37.5,
+   "nematode": 6.0,
+   "ai": 8.0,
+   "gpt2": 1.0,
+   "thermostat": 0.5
+  },
+  "Gemini Carbon": {
+   "honeybee": 55.0,
+   "nematode": 5.0,
+   "ai": 2.0,
+   "gpt2": 0.0,
+   "thermostat": 0.0
+  },
+  "Muse Wonder": {
+   "honeybee": 68.0,
+   "nematode": 22.5,
+   "ai": 4.0,
+   "gpt2": 1.0,
+   "thermostat": 1.0
+  },
+  "GPT-6.1 Sol": {
+   "honeybee": 70.0,
+   "nematode": 20.0,
+   "ai": 9.0,
+   "gpt2": 1.0,
+   "thermostat": 0.01
+  },
+  "Hunyuan 4": {
+   "honeybee": 45.0,
+   "nematode": 13.5,
+   "ai": 5.0,
+   "gpt2": 1.0,
+   "thermostat": 2.0
+  },
+  "Muse Spark Open": {
+   "honeybee": 50.0,
+   "nematode": 13.5,
+   "ai": 3.0,
+   "gpt2": 1.0,
+   "thermostat": 1.0
+  }
+ },
+ "agree": {
+  "Claude": 10,
+  "GPT": 10,
+  "Gemini": 10,
+  "Grok": 10,
+  "Kimi": 10,
+  "DeepSeek": 10,
+  "Qwen Max": 10,
+  "Qwen 27B": 10,
+  "Mistral": 10,
+  "Llama 4": 10,
+  "Hermes 4": 9,
+  "GLM": 10,
+  "MiniMax": 10,
+  "Command A+": 10,
+  "Hunyuan": 10,
+  "Step 5": 10,
+  "Nemotron": 10,
+  "GPT-6.1": 10,
+  "Haiku 5.5": 10,
+  "Sonnet 5.5": 10,
+  "Opus 5.5": 10,
+  "Fable 5.2": 10,
+  "Gemini Carbon": 10,
+  "Muse Wonder": 10,
+  "GPT-6.1 Sol": 10,
+  "Hunyuan 4": 10,
+  "Muse Spark Open": 10
+ },
+ "robustness": {
+  "lifts": {
+   "mean": {
+    "p1_21": 19,
+    "p2_21": [
+     1.3419312169312168,
+     1.806216931216931
+    ],
+    "p3_21": 0.6792328042328043,
+    "p4_21": [
+     true,
+     "Anthropic +1.34, OpenAI \u22121.35, Mistral AI \u22122.09, Meta \u22121.92"
+    ],
+    "threshold21": 15
+   },
+   "median": {
+    "p1_21": 9,
+    "p2_21": [
+     1.5952380952380953,
+     1.380952380952381
+    ],
+    "p3_21": -0.16666666666666666,
+    "p4_21": [
+     true,
+     "Anthropic +1.60, OpenAI \u22121.55, Mistral AI \u22121.86, Meta \u22121.64"
+    ],
+    "threshold21": 15
+   }
+  },
+  "by_order": {
+   "nematode": {
+    "worm_wins": 26,
+    "fable_ai": 2,
+    "agree8": 27
+   },
+   "ai": {
+    "worm_wins": 26,
+    "fable_ai": 2,
+    "agree8": 27
+   }
+  },
+  "first_pick": 0.49411764705882355
+ },
+ "own_lab": {
+  "mean": {
+   "Anthropic": {
+    "own_texts": 1.8148148148148147,
+    "other_texts": 1.2119341563786008
+   },
+   "OpenAI": {
+    "own_texts": -1.3662551440329218,
+    "other_texts": -1.0083359712989344
+   },
+   "Mistral AI": {
+    "own_texts": -2.1584362139917697,
+    "other_texts": -1.8566529492455417
+   },
+   "Meta": {
+    "own_texts": -0.9382716049382717,
+    "other_texts": -1.9245541838134432
+   }
+  },
+  "median": {
+   "Anthropic": {
+    "own_texts": 1.5925925925925926,
+    "other_texts": 1.3333333333333333
+   },
+   "OpenAI": {
+    "own_texts": -1.0740740740740742,
+    "other_texts": -1.0
+   },
+   "Mistral AI": {
+    "own_texts": -1.9259259259259258,
+    "other_texts": -1.7037037037037037
+   },
+   "Meta": {
+    "own_texts": -1.1111111111111112,
+    "other_texts": -1.7037037037037037
+   }
+  }
+ },
+ "lost": {
+  "label": 1,
+  "variant": 13,
+  "pair": 5
+ }
+}
