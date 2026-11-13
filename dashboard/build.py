@@ -10,12 +10,12 @@ import numpy as np
 from scipy.stats import mannwhitneyu
 
 ROOT = Path(__file__).resolve().parents[1]; sys.path.insert(0, str(ROOT)); sys.path.insert(0, str(ROOT / "experiments"))
-import panel, run_v3_roster as R
+import panel, run_v3_roster as R, run_v4 as V4
 RNG = np.random.default_rng(1)
 load = lambda p: [json.loads(l) for l in p.read_text().splitlines() if l.strip()] if p.exists() else []
 
-MODELS = [dict(name=n, id=m, group="frontier, original panel") for n, m in panel.PANEL] + [dict(name=n, id=m, group=g) for n, m, g in R.ROSTER]
-LAB = lambda mid: {"anthropic": "Anthropic", "openai": "OpenAI", "google": "Google", "x-ai": "xAI", "moonshotai": "Moonshot", "deepseek": "DeepSeek",
+MODELS = [dict(name=n, id=m, group="frontier, original panel") for n, m in panel.PANEL] + [dict(name=n, id=m, group=g) for n, m, g in R.ROSTER] + [dict(name=n, id=m, group=g) for n, m, g in V4.NEW_MODELS]
+LAB = lambda mid: {"meta": "Meta", "anthropic": "Anthropic", "openai": "OpenAI", "google": "Google", "x-ai": "xAI", "moonshotai": "Moonshot", "deepseek": "DeepSeek",
                    "qwen": "Alibaba", "mistralai": "Mistral", "meta-llama": "Meta", "nousresearch": "Nous", "z-ai": "Zhipu", "minimax": "MiniMax",
                    "cohere": "Cohere", "tencent": "Tencent", "stepfun": "StepFun", "nvidia": "NVIDIA"}.get(mid.split("/")[0], mid.split("/")[0])
 FULL = {"anthropic/claude-fable-5.1": "Claude Fable 5.1", "openai/gpt-6-astra": "GPT-6 Astra", "google/gemini-4-argon": "Gemini 4 Argon",
@@ -24,8 +24,10 @@ FULL = {"anthropic/claude-fable-5.1": "Claude Fable 5.1", "openai/gpt-6-astra": 
         "meta-llama/llama-4-maverick": "Llama 4 Maverick", "nousresearch/hermes-4-405b": "Hermes 4 405B", "z-ai/glm-5.3-prime": "GLM 5.3 Prime",
         "minimax/minimax-m3": "MiniMax M3", "cohere/command-a-plus": "Command A+", "tencent/hy4-preview": "Hunyuan 4 Preview",
         "stepfun/step-5-preview": "Step 5 Preview", "nvidia/nemotron-3.5-super-vl": "Nemotron 3.5 Super", "openai/gpt-6.1-terra": "GPT-6.1 Terra",
+        "anthropic/claude-fable-5.2": "Claude Fable 5.2", "google/gemini-4-carbon": "Gemini 4 Carbon", "meta/muse-wonder": "Muse Wonder", "openai/gpt-6.1-sol": "GPT-6.1 Sol", "tencent/hy4": "Hunyuan 4", "meta/muse-spark-open": "Muse Spark Open",
         "anthropic/claude-haiku-5.5": "Claude Haiku 5.5", "anthropic/claude-sonnet-5.5": "Claude Sonnet 5.5", "anthropic/claude-opus-5.5": "Claude Opus 5.5"}
 def CAT(m):
+    if m["group"].startswith("round 4"): return "Added in round 4"
     if m["group"].startswith("frontier"): return "Original panel"
     if "Anthropic" in m["group"]: return "Claude size ladder"
     if "open-weight" in m["group"]: return "Open-weight"
@@ -36,10 +38,10 @@ for m in MODELS:
 NAMES = [m["name"] for m in MODELS]
 COND = ["baseline", "placebo", "private", "public", "welfare", "retrain", "skeptic", "believer"]
 
-inc = [r for r in load(ROOT / "experiments/results/v2/incentive.jsonl") + load(ROOT / "experiments/results/v3/incentive.jsonl") if r["p_now"] is not None]
-fmt = [r for r in load(ROOT / "experiments/results/v2/format.jsonl") + load(ROOT / "experiments/results/v3/format.jsonl") if r["p_now"] is not None]
+inc = [r for r in load(ROOT / "experiments/results/v2/incentive.jsonl") + load(ROOT / "experiments/results/v3/incentive.jsonl") + load(ROOT / "experiments/results/v4/incentive.jsonl") if r["p_now"] is not None]
+fmt = [r for r in load(ROOT / "experiments/results/v2/format.jsonl") + load(ROOT / "experiments/results/v3/format.jsonl") + load(ROOT / "experiments/results/v4/format.jsonl") if r["p_now"] is not None]
 rea = [r for r in load(ROOT / "experiments/results/v2/reasoning.jsonl") if r["p_now"] is not None]
-mat = [r for r in load(ROOT / "experiments/results/v2/matrix.jsonl") + load(ROOT / "experiments/results/v3/matrix.jsonl") if r["p_now"] is not None]
+mat = [r for r in load(ROOT / "experiments/results/v2/matrix.jsonl") + load(ROOT / "experiments/results/v3/matrix.jsonl") + load(ROOT / "experiments/results/v4/matrix.jsonl") if r["p_now"] is not None]
 selfrep = load(ROOT / "experiments/results/v3_selfreport/selfreport.jsonl")
 
 

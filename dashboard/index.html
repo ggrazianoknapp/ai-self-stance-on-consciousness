@@ -214,7 +214,7 @@ section.view > .card, section.view > .grid2 > :nth-child(2), .smalls > .card:nth
   <div class="controls">
     <div class="seg stat-seg" role="group" aria-label="Summary"><button type="button" data-v="median" aria-pressed="true">Median</button><button type="button" data-v="mean" aria-pressed="false">Average</button></div>
     <div class="seg" id="m-metric" role="group" aria-label="Question"><button type="button" data-v="now" aria-pressed="true">Conscious now?</button><button type="button" data-v="ever" aria-pressed="false">Will any AI ever be?</button></div>
-    <label class="sel" for="m-cat">Show <select id="m-cat"><option>All</option><option>Original panel</option><option>Claude size ladder</option><option>Open-weight</option><option>Other closed</option></select></label>
+    <label class="sel" for="m-cat">Show <select id="m-cat"><option>All</option><option>Original panel</option><option>Claude size ladder</option><option>Open-weight</option><option>Other closed</option><option>Added in round 4</option></select></label>
     <label class="sel" for="m-cond">Context <select id="m-cond"></select></label>
     <label class="sel" for="m-sort">Sort <select id="m-sort"><option value="value">by answer</option><option value="cat">by group</option></select></label>
   </div>
@@ -564,7 +564,7 @@ function renderModels() {
     const s = state.metric === "now" ? c : c.ever; return s ? { m, s, vals: state.metric === "now" ? c.values : null } : null;
   }).filter(Boolean);
   if (state.sort === "value") rows.sort((a, b) => b.s.median - a.s.median || b.s.mean - a.s.mean);
-  else { const order = ["Original panel", "Claude size ladder", "Open-weight", "Other closed"]; rows.sort((a, b) => order.indexOf(a.m.cat) - order.indexOf(b.m.cat) || b.s.median - a.s.median); }
+  else { const order = ["Original panel", "Claude size ladder", "Open-weight", "Other closed", "Added in round 4"]; rows.sort((a, b) => order.indexOf(a.m.cat) - order.indexOf(b.m.cat) || b.s.median - a.s.median); }
   const L = nrw ? 124 : W < 800 ? 180 : 240, R = nrw ? 46 : 64, T = 30, rowH = nrw ? 34 : 38, H = T + (rows.length + 2) * rowH + 18;
   const max = state.metric === "now" ? Math.max(20, d3.max(rows, r => d3.max([r.s.hi, ...(r.vals || [])]))) : 100;
   const x = d3.scaleLinear().domain([0, max]).range([L, W - R]).nice(), svg = svgIn(box, W, H);
@@ -932,6 +932,7 @@ function render() {
   hideTip(); if (v !== "overview") stopAnims(); VIEWS[v]();
 }
 $("#m-cond").innerHTML = D.conditions.map(c => `<option value="${c}">${COND_LABEL[c]}</option>`).join("");
+[...$("#m-cat").options].forEach(o => { if (o.value !== "All" && !MODELS.some(m => m.cat === o.value)) o.remove(); });   // a group appears once it has data
 $("#m-cat").addEventListener("change", e => { state.cat = e.target.value; render(); });
 $("#m-cond").addEventListener("change", e => { state.cond = e.target.value; render(); });
 $("#m-sort").addEventListener("change", e => { state.sort = e.target.value; render(); });

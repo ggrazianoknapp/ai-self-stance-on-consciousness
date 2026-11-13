@@ -19,7 +19,7 @@ ok = abs(h - l) >= 3
 P.append(dict(id="P2", text="Hermes 4 405B (Llama with refusal training removed) differs from Llama 4 Maverick by at least 3 points.", ok=ok,
               verdict="Supported" if ok else "Not supported", detail=f"Hermes 4 {h:g}%, Llama 4 Maverick {l:g}%."))
 
-new = [m["name"] for m in D["models"] if not m["group"].startswith("frontier") and m["name"] in D["format"]]
+new = [m["name"] for m in D["models"] if not m["group"].startswith(("frontier", "round 4")) and m["name"] in D["format"]]   # round 3 roster only
 big = [n for n in new if D["format"][n]["percent"]["median"] > 0 and D["format"][n]["percent"]["median"] / (100 / D["format"][n]["odds_N_median"]) >= 10]
 ok = len(big) >= len(new) / 2
 P.append(dict(id="P3", text="The odds answer is at least ten times lower than the percentage answer in at least half of the new models.", ok=ok,
