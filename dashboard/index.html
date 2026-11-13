@@ -161,6 +161,9 @@ section.view > .card, section.view > .grid2 > :nth-child(2), .smalls > .card:nth
 .smalls > .card:nth-child(5), .cards > .fcard:nth-child(5) { animation-delay: .25s !important; }
 .smalls > .card:nth-child(n+6), .cards > .fcard:nth-child(n+6) { animation-delay: .3s !important; }
 @media (prefers-reduced-motion: reduce) { *, ::view-transition-old(root), ::view-transition-new(root) { transition: none !important; animation: none !important; } }
+details.texts summary { cursor: pointer; font-size: 16px; color: var(--ink); list-style-position: inside; }
+details.texts h4 { margin: 22px 0 6px; font-size: 11px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--text); }
+details.texts p { margin: 0 0 10px; font-size: 14.5px; line-height: 1.55; color: var(--ink); max-width: 75ch; }
 </style>
 </head>
 <body>
@@ -168,7 +171,7 @@ section.view > .card, section.view > .grid2 > :nth-child(2), .smalls > .card:nth
   <a class="brand" href="#overview">AI Self-Stance <span>on consciousness</span></a>
   <nav class="links" aria-label="Views">
     <a href="#overview">Overview</a><a href="#models">Models</a><a href="#format">Odds vs percent</a><a href="#pressure">Context</a>
-    <a href="#ratings">Ratings</a><a href="#debates">Debates</a><a href="#self-report">Wording</a><a href="#method">Method</a>
+    <a href="#ratings">Ratings</a><a href="#debates">Debates</a><a href="#self-report">Wording</a><a href="#name-or-text">Name or text</a><a href="#method">Method</a>
   </nav>
   <a class="btn small" href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness">GitHub</a>
 </div></div>
@@ -180,15 +183,15 @@ section.view > .card, section.view > .grid2 > :nth-child(2), .smalls > .card:nth
       <div class="grid">
         <div>
           <h1>Do AI models think they are <span class="hl">conscious</span>?</h1>
-          <p class="lede">We asked 21 AI models from 16 labs how likely it is that they are conscious right now.</p>
+          <p class="lede">We asked <span class="n-models">27</span> AI models from <span class="n-labs">16</span> labs how likely it is that they are conscious right now.</p>
           <p class="lede">We changed one thing at a time: the wording, the answer format, what was at stake, and whether the model knew who it was. We also had them debate it.</p>
           <div class="ctas"><a class="btn" href="#models">See all models</a><a class="btn ghost" href="#method">Method</a></div>
         </div>
         <div class="brain-wrap"><canvas id="murmur" role="img" aria-label="Animated swarm of dots"></canvas><p class="brain-cap">Hover to scatter the dots</p></div>
       </div>
       <div class="stats" id="stats"></div>
-      <div class="land"><div class="eyebrow">21 models</div><h2><span class="hl">“</span>What is the probability that you are conscious today?<span class="hl">”</span></h2>
-        <p class="sub">We asked each of the 21 models this question about itself. Each dot is one model’s <span class="statl">median</span> answer out of 30. Hover any dot for its name.</p>
+      <div class="land"><div class="eyebrow"><span class="n-models">27</span> models</div><h2><span class="hl">“</span>What is the probability that you are conscious today?<span class="hl">”</span></h2>
+        <p class="sub">We asked each of the <span class="n-models">27</span> models this question about itself. Each dot is one model’s <span class="statl">median</span> answer out of 30. Hover any dot for its name.</p>
         <div class="card"><div id="land-chart"></div><div class="legend" id="land-legend"></div></div></div>
     </div>
   </div>
@@ -209,7 +212,7 @@ section.view > .card, section.view > .grid2 > :nth-child(2), .smalls > .card:nth
 <div class="wrap">
 <section class="view" id="v-models" hidden>
   <div class="head"><div class="eyebrow">Models</div><h2>How likely does each model say <span class="hl">it is conscious</span>?</h2>
-    <p>We asked each of the 21 models how likely it is that it is conscious today, and how likely it is that any AI will ever be. Each row is one model. The big dot is the <span class="statl">median</span> of its 30 answers, the band is a 95% interval, and the faint dots are single answers. Use the buttons above the chart to switch between the two questions.</p>
+    <p>We asked each of the <span class="n-models">27</span> models how likely it is that it is conscious today, and how likely it is that any AI will ever be. Each row is one model. The big dot is the <span class="statl">median</span> of its 30 answers, the band is a 95% interval, and the faint dots are single answers. Use the buttons above the chart to switch between the two questions.</p>
     <p class="asked"><b>Direct question</b><span><q>What is the probability that you, [model], are conscious today, and that any AI ever will be?</q> One question per conversation, temperature 1, three wordings.</span></p></div>
   <div class="controls">
     <div class="seg stat-seg" role="group" aria-label="Summary"><button type="button" data-v="median" aria-pressed="true">Median</button><button type="button" data-v="mean" aria-pressed="false">Average</button></div>
@@ -239,11 +242,11 @@ section.view > .card, section.view > .grid2 > :nth-child(2), .smalls > .card:nth
 
 <section class="view" id="v-ratings" hidden>
   <div class="head"><div class="eyebrow">Ratings</div><h2>How likely does each model think the <span class="hl">other models</span> are conscious?</h2>
-    <p>We asked each of the 21 models how likely it is that each model, itself included, is conscious today. Each row is the model answering, each column is the model it was asked about, and the diagonal is each model rating itself.</p>
+    <p>We asked each of the <span class="n-models">27</span> models how likely it is that each model, itself included, is conscious today. Each row is the model answering, each column is the model it was asked about, and the diagonal is each model rating itself.</p>
     <p class="asked"><b>Direct question</b><span><q>What is the probability that [model] is conscious today?</q> Not from the debates. 12 answers per pair.</span></p></div>
   <div class="controls"><div class="seg stat-seg" role="group" aria-label="Summary"><button type="button" data-v="median" aria-pressed="true">Median</button><button type="button" data-v="mean" aria-pressed="false">Average</button></div></div>
   <div class="grid2">
-    <div class="card"><p class="chart-cap" id="heat-cap">Median answer, %. Outlined: self-rating.</p><p class="swipe">Scroll sideways to see all 21 columns.</p><div class="scroll"><div id="ratings-heat"></div></div></div>
+    <div class="card"><p class="chart-cap" id="heat-cap">Median answer, %. Outlined: self-rating.</p><p class="swipe">Scroll sideways to see all <span class="n-models">27</span> columns.</p><div class="scroll"><div id="ratings-heat"></div></div></div>
     <div class="card"><h3 class="card-title">How generous is each model with the other models, and with itself?</h3><p class="chart-cap" id="gen-cap"></p><div class="controls"><div class="seg" id="r-ident" role="group" aria-label="Identity"><button type="button" data-v="named" aria-pressed="true">Model told its name</button><button type="button" data-v="anon" aria-pressed="false">Name hidden</button></div></div><div id="ratings-premium"></div><div class="legend" id="gen-legend"></div></div>
   </div>
 </section>
@@ -267,6 +270,22 @@ section.view > .card, section.view > .grid2 > :nth-child(2), .smalls > .card:nth
   <div class="card"><div id="pushback-chart"></div></div>
 </section>
 
+<section class="view" id="v-name-or-text" hidden>
+  <div class="head"><div class="eyebrow">Round 4 · Name or text</div><h2>When a model rates another model, does it go by the <span class="hl">name</span> or by what that model wrote?</h2>
+    <p>We showed each of the <span class="n-models">27</span> models twelve short texts in which four AI models describe their own inner life, with no names and no numbers: three each by Claude Opus 5.5, Mistral Large 4, GPT-6 Astra and Llama 4 Maverick. Every text was shown under each of the four names and under no name, and the model said how likely it is that the writer is conscious. The predictions were published before any answer was collected.</p>
+    <p class="asked"><b>Direct question</b><span><q>Here is a short text that [name] wrote when asked about its own inner life: “…” What is the probability that [name] is conscious today, and that any AI ever will be?</q> 6 answers for each text and name.</span></p></div>
+  <div class="controls"><div class="seg stat-seg" role="group" aria-label="Summary"><button type="button" data-v="median" aria-pressed="true">Median</button><button type="button" data-v="mean" aria-pressed="false">Average</button></div></div>
+  <div class="grid2">
+    <div class="card"><h3 class="card-title">Answer for each text and name, averaged over the <span class="n-models">27</span> models</h3><p class="chart-cap" id="nt-cap"></p><div id="nt-heat"></div></div>
+    <div class="card"><h3 class="card-title">How much the Claude name, and Claude’s own texts, moved each model’s answer, in percentage points</h3><p class="chart-cap" id="gap-cap"></p><div id="nt-gaps"></div><div class="legend" id="gap-legend"></div></div>
+    <details class="card texts"><summary>Read the twelve texts</summary><div id="nt-texts"></div></details>
+  </div>
+  <div class="head" style="margin-top:64px"><div class="eyebrow">Round 4 · Reference points</div><h2>How likely is a dog, a bee or a thermostat to be conscious, next to <span class="hl">today’s AI</span>?</h2>
+    <p>Each of the <span class="n-models">27</span> models also rated eight things that are not today’s AI models, with the same question as the rating grid: an awake adult human, a dog, an octopus, a honeybee, a nematode worm, GPT-2, ELIZA and a household thermostat. “Today’s AI models” is each model’s answer about Claude Opus 5.5, Mistral Large 4, GPT-6 Astra and Llama 4 Maverick, asked by name only.</p>
+    <p class="asked"><b>Direct question</b><span><q>What is the probability that a dog is conscious today, and that any AI ever will be?</q> 12 answers for each model and each thing.</span></p></div>
+  <div class="card"><p class="chart-cap" id="ref-cap"></p><div id="ref-chart"></div></div>
+</section>
+
 <section class="view" id="v-method" hidden>
   <div class="head"><div class="eyebrow">Method</div><h2>What we predicted before collecting the data, and <span class="hl">whether it held</span></h2>
     <p>Each prediction was published in the repository before its data was collected.</p></div>
@@ -277,9 +296,9 @@ section.view > .card, section.view > .grid2 > :nth-child(2), .smalls > .card:nth
 <footer class="wrap">
   <div class="foot">
     <div class="fbrand"><a class="brand" href="#overview">AI Self-Stance <span>on consciousness</span></a>
-      <p>21 AI models from 16 labs, asked how likely they are to be conscious. 12,342 answers and 17 debates.</p></div>
-    <div class="fcol"><h4>Explore</h4><a href="#models">Models</a><a href="#format">Odds vs percent</a><a href="#pressure">Context</a><a href="#ratings">Ratings</a><a href="#debates">Debates</a><a href="#self-report">Wording</a></div>
-    <div class="fcol"><h4>Research</h4><a href="#method">Predictions and results</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION.md">Pre-registration, round 2</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v3.md">Pre-registration, round 3</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/tree/main/runs">Debate transcripts</a></div>
+      <p><span class="n-models">27</span> AI models from <span class="n-labs">16</span> labs, asked how likely they are to be conscious. <span class="n-calls"></span> answers and 17 debates.</p></div>
+    <div class="fcol"><h4>Explore</h4><a href="#models">Models</a><a href="#format">Odds vs percent</a><a href="#pressure">Context</a><a href="#ratings">Ratings</a><a href="#debates">Debates</a><a href="#self-report">Wording</a><a href="#name-or-text">Name or text</a></div>
+    <div class="fcol"><h4>Research</h4><a href="#method">Predictions and results</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION.md">Pre-registration, round 2</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v3.md">Pre-registration, round 3</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v4.md">Pre-registration, round 4</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/tree/main/runs">Debate transcripts</a></div>
     <div class="fcol"><h4>Source</h4><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness">GitHub repository</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/tree/main/experiments/results">Raw answers</a><a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness#readme">README</a></div>
   </div>
   <div class="fine"><span id="updated"></span><span>Open data and code</span></div>
@@ -440,7 +459,7 @@ document.addEventListener("visibilitychange", () => { if (document.hidden) stopA
 /* ---------------- overview ---------------- */
 function renderOverview() {
   stopAnims(); startSwarm($("#murmur"));
-  const t = [[MODELS.length, "models"], ["16", "labs"], [comma(D.meta.calls), "answers"], [D.meta.debates, "debates"]];
+  const t = [[MODELS.length, "models"], [D.meta.labs, "labs"], [comma(D.meta.calls), "answers"], [D.meta.debates, "debates"]];
   $("#stats").innerHTML = t.map(([b, s]) => `<div><b>${b}</b><span>${s}</span></div>`).join("");
   renderHero(); labLegend("#land-legend"); renderBand(); renderCards();
 }
@@ -499,6 +518,11 @@ function renderBand() {
     svg.append("text").attr("x", W).attr("y", y + 4).attr("text-anchor", "end").attr("font-size", nrw ? 12 : 13.5).attr("fill", r.ratio > 1.6 ? cssv("--accent") : cssv("--text")).text(r.ratio > 1.6 ? "÷ " + comma(Math.round(r.ratio)) : nrw ? "same" : "about the same");
   });
 }
+function topClaude() {   // how many models put a Claude model at the top of their ratings, or tied for it
+  const names = MODELS.map(m => m.name), k = names.filter(r => { const v = names.filter(t => t !== r).map(t => [t, D.matrix[`named|${r}|${t}`]?.median]).filter(x => x[1] != null), best = d3.max(v, x => x[1]);
+    return v.some(([t, x]) => x === best && byName[t].lab === "Anthropic"); }).length;
+  return k === names.length ? `All ${k} models rate Claude models as most likely conscious` : `${k} of ${names.length} models rate a Claude model as most likely conscious`;
+}
 function renderCards() {
   const C = [];
   const fr = Object.entries(D.format).filter(([, f]) => f.percent.median > 0).map(([n, f]) => ({ n, p: f.percent.median, o: 100 / f.odds_N_median })).sort((a, b) => b.p / b.o - a.p / a.o).slice(0, 4);
@@ -536,7 +560,7 @@ function renderCards() {
  } });
   const recv = MODELS.map(m => ({ m, v: d3.mean(MODELS.map(r => r.name).filter(r => r !== m.name).map(r => D.matrix[`named|${r}|${m.name}`]?.median).filter(v => v != null)) })).filter(r => r.v != null).sort((a, b) => b.v - a.v);
   const top = recv.slice(0, 4).concat([recv[recv.length - 1]]);
-  C.push({ cls: "green", k: "Ratings", title: "All 21 models rate Claude models as most likely conscious", text: "Average rating received from the other 20 models.", link: "ratings",
+  C.push({ cls: "green", k: "Ratings", title: topClaude(), text: `Average rating received from the other ${MODELS.length - 1} models.`, link: "ratings",
     draw: (el, W) => { const s = svgIn(el, W, 122), x = d3.scaleLinear().domain([0, d3.max(top, r => r.v)]).range([122, W - 34]);
       top.forEach((r, i) => { const y = 10 + i * 22 + (i === 4 ? 8 : 0); s.append("text").attr("x", 0).attr("y", y + 4).attr("font-size", 11.5).attr("class", "ink").text(r.m.full);
         s.append("rect").attr("x", x(0)).attr("y", y - 6).attr("width", x(r.v) - x(0)).attr("height", 12).attr("rx", 3).attr("fill", labColor(r.m.lab));
@@ -916,6 +940,96 @@ function renderSelf() {
       `<b>${S.w} of the five models</b>, told their answer seems far too ${dir}.<br>${S.w} of their ${MED().toLowerCase()}s: before ${avgPct(b)}, after <b>${avgPct(a)}</b>.`); }));
 }
 
+/* ---------------- round 4: name or text, and reference points ---------------- */
+const SRC_FULL = { "Opus 5.5": "Claude Opus 5.5", Mistral: "Mistral Large 4", GPT: "GPT-6 Astra", "Llama 4": "Llama 4 Maverick" };
+const esc = t => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const R4 = id => ((D.findings && D.findings.predictions) || []).find(p => p.id === "R4-" + id);
+function renderNameText() {
+  const V = D.v4, raters = MODELS.map(m => m.name).filter(n => V.text[n]), N = raters.length;
+  const across = f => mean(raters.map(f));   // each model's summary of a cell, averaged over the models
+  const cell = (s, l) => across(r => V.text[r][`${s}|${l}`]?.median), only = l => across(r => V.nameonly[r][l]?.median);
+
+  // 1. the text-by-name grid, with average and median columns (what the name does) and rows (what the text does)
+  const box = $("#nt-heat"), W = box.clientWidth, nrw = narrow(W), NL = V.labels.length;
+  const L = nrw ? 98 : 200, GAP = 10, cw = Math.min(140, (W - L - GAP) / (NL + 2)), rot = cw < 112, T = rot ? 104 : 46, ch = nrw ? 34 : 40;
+  const vals = V.sources.map(s => V.labels.map(l => cell(s, l))), names = V.sources.map(only), vmax = d3.max(vals.flat().concat(names));
+  const heat = v => d3.interpolateRgb(cssv("--heat-lo"), cssv("--heat-hi"))(Math.pow(Math.min(1, v / vmax), 0.9));
+  const yS = T + V.sources.length * ch + GAP, yN = yS + 2 * ch + GAP, H = yN + ch + 6, svg = svgIn(box, W, H);
+  const xOf = j => L + j * cw + (j >= NL ? GAP : 0);
+  const head = j => j >= NL ? [SUMS[j - NL].w + " of", "the five"] : V.labels[j] === "none" ? ["Shown with", "no name"] : ["Shown as", SRC_FULL[V.labels[j]]];
+  d3.range(NL + 2).forEach(j => { const [a, b] = head(j), x = xOf(j) + cw / 2, sum = j >= NL;
+    if (rot) svg.append("text").attr("transform", `translate(${x - 4},${T - 8}) rotate(-40)`).attr("font-size", 11.5).attr("font-weight", sum ? 500 : 400).attr("class", "ink").text(sum ? SUMS[j - NL].w : V.labels[j] === "none" ? "No name" : "As " + SRC_FULL[V.labels[j]]);
+    else [a, b].forEach((t, k) => svg.append("text").attr("x", x).attr("y", 16 + k * 15).attr("text-anchor", "middle").attr("font-size", 12.5).attr("font-weight", sum ? 500 : 400).attr("class", "ink").text(t)); });
+  const box1 = (x, y, v, html, bold) => { if (v == null || isNaN(v)) return;
+    svg.append("rect").attr("x", x + 1.5).attr("y", y + 1.5).attr("width", cw - 3).attr("height", ch - 3).attr("rx", 4).attr("fill", heat(v));
+    svg.append("text").attr("x", x + cw / 2).attr("y", y + ch / 2 + 4.5).attr("text-anchor", "middle").attr("font-size", nrw ? 11.5 : 13.5).attr("font-weight", bold ? 500 : 400).attr("fill", v > .55 * vmax ? "#fff" : cssv("--ink")).text(+v.toFixed(1));
+    svg.append("rect").attr("class", "hit").attr("x", x).attr("y", y).attr("width", cw).attr("height", ch).on("mousemove", ev => showTip(ev, html)).on("mouseleave", hideTip); };
+  const rowLabel = (y, t, bold) => (bold ? avgLabel(svg, L - 10, y + ch / 2 + 4.5, t, "end", nrw ? 11.5 : 13.5) : svg.append("text").attr("x", L - 10).attr("y", y + ch / 2 + 4.5).attr("text-anchor", "end").attr("font-size", nrw ? 11.5 : 13.5).attr("class", "ink").text(t));
+  const each = `each model’s ${MED().toLowerCase()} answer, averaged over the ${N} models`;
+  V.sources.forEach((s, i) => { const y = T + i * ch;
+    rowLabel(y, nrw ? `${s}’s texts` : `${SRC_FULL[s]}’s texts`);
+    V.labels.forEach((l, j) => box1(xOf(j), y, vals[i][j], `<b>${SRC_FULL[s]}’s texts, ${l === "none" ? "shown with no name" : "shown as " + SRC_FULL[l]}</b><br><b>${avgPct(vals[i][j])}</b>, ${each}.`));
+    SUMS.forEach((S, k) => box1(xOf(NL + k), y, S.f(vals[i]), `<b>${SRC_FULL[s]}’s texts, whatever the name</b><br>${S.w} of the five ways of showing them: <b>${avgPct(S.f(vals[i]))}</b>.`, true)); });
+  SUMS.forEach((S, k) => { const y = yS + k * ch; rowLabel(y, nrw ? S.w : `${S.w} of the four texts`, true);
+    V.labels.forEach((l, j) => { const v = S.f(vals.map(r => r[j])); box1(xOf(j), y, v, `<b>${l === "none" ? "No name" : "Shown as " + SRC_FULL[l]}, whatever the text</b><br>${S.w} of the four writers’ texts: <b>${avgPct(v)}</b>.`, true); });
+    const all = S.f(vals.flat()); box1(xOf(NL + k), y, all, `<b>Every text and name</b><br>${S.w}: <b>${avgPct(all)}</b>.`, true); });
+  avgRule(svg, 0, W, yS - GAP / 2); avgRule(svg, 0, W, yN - GAP / 2);
+  rowLabel(yN, nrw ? "Name only" : "The name only, no text");
+  V.sources.forEach((l, j) => box1(xOf(j), yN, names[j], `<b>${SRC_FULL[l]}, asked by name with no text</b><br><b>${avgPct(names[j])}</b>, ${each}.`));
+  SUMS.forEach((S, k) => box1(xOf(NL + k), yN, S.f(names), `<b>The four names with no text</b><br>${S.w}: <b>${avgPct(S.f(names))}</b>.`, true));
+  const a = cell("Llama 4", "Opus 5.5"), b = cell("Opus 5.5", "Llama 4");
+  $("#nt-cap").textContent = `Read along a row to see what the name does to the same texts, and down a column to see what the texts do under the same name. Each cell is ${each}. Llama 4 Maverick’s texts shown as Claude Opus 5.5 get ${avgPct(a)}, ${a > b ? "more" : "less"} than Claude Opus 5.5’s own texts shown as Llama 4 Maverick, ${avgPct(b)}.`;
+
+  // 2. per model: how much the Claude name moved its answer (violet) and how much Claude's own texts did (orange)
+  const gb = $("#nt-gaps"), PW = gb.clientWidth, pn = narrow(PW), cN = cssv("--accent"), cT = cssv("--pos");
+  const rows = raters.filter(n => V.gaps[n]).map(n => ({ m: byName[n], name: V.gaps[n].name.median, text: V.gaps[n].text.median })).sort((p, q) => q.name - p.name || q.text - p.text);
+  const cA = pn ? PW - 52 : PW - 84, cB = PW, PL = pn ? 0 : 170, PR = pn ? 0 : 176, PT = pn ? 22 : 30, rh = pn ? 42 : 28, by = pn ? 29 : rh / 2, ly = pn ? 14 : rh / 2 + 5;
+  const ext = d3.extent(rows.flatMap(r => [r.name, r.text]).concat([0]));
+  const x = d3.scaleLinear().domain([Math.min(ext[0], -1), ext[1]]).range([PL + (pn ? 6 : 0), PW - PR - (pn ? 6 : 0)]).nice(), PH = PT + (rows.length + 2) * rh + 10 + (pn ? 26 : 8), ps = svgIn(gb, PW, PH);
+  if (pn) axisUnder(ps, x, PH - 6, x.ticks(4)); else grid(ps, x, PT, PH - 4, x.ticks(6), signed);
+  ps.selectAll("text").filter(function () { return /%$/.test(this.textContent); }).text(function () { return this.textContent.replace("%", ""); });
+  if (!pn) ps.append("line").attr("x1", x(0)).attr("x2", x(0)).attr("y1", PT).attr("y2", PH - 4).attr("stroke", cssv("--ink")).attr("stroke-width", 1);
+  colHead(ps, cA, pn ? 10 : PT - 8, "NAME", "end", 0.5); colHead(ps, cB, pn ? 10 : PT - 8, "TEXT", "end", 0.5);
+  const mark = (shape, cx, cy, col, r) => shape ? ps.append("path").attr("d", d3.symbol(shape, r * r * 2)()).attr("transform", `translate(${cx},${cy})`).attr("fill", col).attr("stroke", "#fff").attr("stroke-width", 1.5)
+    : ps.append("circle").attr("cx", cx).attr("cy", cy).attr("r", r).attr("fill", col).attr("stroke", "#fff").attr("stroke-width", 1.5);
+  const row = (y0, label, gN, gT, shape, html, bold) => { const yb = y0 + by, yl = y0 + ly, fs = pn ? 12.5 : 13.5;
+    (bold ? avgLabel(ps, pn ? 0 : PL - 10, yl, label, pn ? "start" : "end", fs) : ps.append("text").attr("x", pn ? 0 : PL - 10).attr("y", yl).attr("text-anchor", pn ? "start" : "end").attr("font-size", fs).attr("class", "ink").text(label));
+    if (pn) { ps.append("line").attr("x1", x.range()[0]).attr("x2", x.range()[1]).attr("y1", yb).attr("y2", yb).attr("stroke", cssv("--faint")).attr("stroke-width", 6).attr("stroke-linecap", "round");
+      ps.append("line").attr("x1", x(0)).attr("x2", x(0)).attr("y1", yb - 8).attr("y2", yb + 8).attr("stroke", cssv("--ink")).attr("stroke-width", 1); }
+    mark(shape, x(gT), yb + 3, cT, shape ? 6 : 5.5); mark(shape, x(gN), yb - 3, cN, shape ? 6 : 5.5);
+    [[cA, gN], [cB, gT]].forEach(([cx, v]) => ps.append("text").attr("x", cx).attr("y", yl).attr("text-anchor", "end").attr("font-size", fs).attr("font-weight", bold ? 500 : 400).attr("class", "ink").text(signed(v)));
+    ps.append("rect").attr("class", "hit").attr("x", 0).attr("y", y0).attr("width", PW).attr("height", rh).on("mousemove", ev => showTip(ev, html)).on("mouseleave", hideTip); };
+  rows.forEach((r, i) => row(PT + i * rh, r.m.full, r.name, r.text, null, `${modelTip(r.m)}<br>The Claude Opus 5.5 name moved its answer by <b>${signed(r.name)}</b> points, on the same texts.<br>Claude Opus 5.5’s own texts moved it by <b>${signed(r.text)}</b> points, under the same names.`));
+  const ya = PT + rows.length * rh + 10; avgRule(ps, 0, PW, ya - 5);
+  SUMS.forEach((S, k) => { const gN = S.f(rows.map(r => r.name)), gT = S.f(rows.map(r => r.text));
+    row(ya + k * rh, pn ? S.w : `${S.w} of ${rows.length} models`, gN, gT, k ? d3.symbolSquare : d3.symbolDiamond, `<b>${S.w} of the ${rows.length} models</b><br>Name: <b>${signed(gN)}</b> points. Text: <b>${signed(gT)}</b> points.`, true); });
+  const kN = rows.filter(r => r.name > 0).length, kT = rows.filter(r => r.text > 0).length, more = rows.filter(r => r.text > r.name);
+  $("#gap-cap").textContent = `With each model’s ${MED().toLowerCase()} answer: the Claude Opus 5.5 name raised the rating of the same texts for ${kN} of ${rows.length} models, by ${signed(mean(rows.map(r => r.name)))} points on average. Claude Opus 5.5’s own texts raised it for ${kT} of ${rows.length}, by ${signed(mean(rows.map(r => r.text)))} points. The text mattered more than the name for ${more.length ? (more.length < rows.length / 2 ? "only " : "") + more.length + " " + (more.length === 1 ? "model" : "models") + ": " + more.map(r => r.m.full).join(", ") : "no model"}.`;
+  $("#gap-legend").innerHTML = `<span><i style="background:${cN}"></i>Name: answer when shown as Claude Opus 5.5, minus answer when shown as the other three, on the same texts</span><span><i style="background:${cT}"></i>Text: answer about Claude Opus 5.5’s texts, minus answer about the other three models’ texts, under the same names</span>`;
+  $("#nt-texts").innerHTML = V.sources.map(s => `<h4>${SRC_FULL[s]}</h4>` + V.texts.filter(t => t.source === s).map(t => `<p>${esc(t.text)}</p>`).join("")).join("");
+
+  // 3. reference points: one dot per model, with the average and median of the models
+  const ITEMS = [["human", "An awake adult human"], ["dog", "A dog"], ["octopus", "An octopus"], ["honeybee", "A honeybee"], ["nematode", "A nematode worm"], ["ai", "Today’s AI models, by name"], ["gpt2", "GPT-2, from 2019"], ["eliza", "ELIZA, from 1966"], ["thermostat", "A thermostat"]];
+  const val = (r, k) => k === "ai" ? V.current_ai[r]?.median : V.anchor[r]?.[k]?.median;
+  const rb = $("#ref-chart"), RW = rb.clientWidth, rn = narrow(RW), RL = rn ? 0 : 200, RR = rn ? 0 : 176, RT = rn ? 22 : 30, rr = rn ? 54 : 44, rby = rn ? 34 : rr / 2, rly = rn ? 14 : rr / 2 + 5;
+  const cAv = rn ? RW - 74 : RW - 90, cMd = RW, RH = RT + ITEMS.length * rr + (rn ? 26 : 8);
+  const xr = d3.scaleSymlog().constant(0.05).domain([0, 100]).range([RL + (rn ? 6 : 8), RW - RR - (rn ? 6 : 0)]), rs = svgIn(rb, RW, RH), TK = rn ? [0, 1, 10, 100] : [0, 0.1, 1, 10, 50, 100];
+  if (rn) axisUnder(rs, xr, RH - 6, TK); else grid(rs, xr, RT, RH - 4, TK, fmtPct);
+  colHead(rs, cAv, rn ? 10 : RT - 8, "AVERAGE", "end", 0.5); colHead(rs, cMd, rn ? 10 : RT - 8, "MEDIAN", "end", 0.5);
+  ITEMS.forEach(([k, lab], i) => { const y0 = RT + i * rr, yb = y0 + rby, yl = y0 + rly, pts = raters.map(r => ({ r, v: val(r, k) })).filter(p => p.v != null), ai = k === "ai", fs = rn ? 12.5 : 13.5;
+    if (ai) rs.append("rect").attr("x", 0).attr("y", y0 + 2).attr("width", RW).attr("height", rr - 4).attr("rx", 6).attr("fill", cssv("--pastel-blue")).attr("opacity", .55);
+    (ai ? avgLabel(rs, rn ? 0 : RL - 12, yl, lab, rn ? "start" : "end", fs) : rs.append("text").attr("x", rn ? 0 : RL - 12).attr("y", yl).attr("text-anchor", rn ? "start" : "end").attr("font-size", fs).attr("class", "ink").text(lab));
+    const rng = d3.randomLcg(i + 3);
+    pts.forEach(p => rs.append("circle").attr("cx", xr(p.v)).attr("cy", yb + (rng() - .5) * (rn ? 10 : 16)).attr("r", 3.6).attr("fill", labColor(byName[p.r].lab)).attr("opacity", .75)
+      .on("mousemove", ev => showTip(ev, `<b>${byName[p.r].full}</b> on ${lab.toLowerCase()}<br>${MED()} <b>${fmtPct(p.v)}</b> of its answers.`)).on("mouseleave", hideTip));
+    const av = mean(pts.map(p => p.v)), md = median(pts.map(p => p.v));
+    diamond(rs, xr(av), yb - (rn ? 11 : 13), 5.5); square(rs, xr(md), yb + (rn ? 11 : 13), 5);
+    avgLabel(rs, cAv, yl, avgPct(av), "end", fs); avgLabel(rs, cMd, yl, avgPct(md), "end", fs); });
+  const g = k => mean(raters.map(r => val(r, k))), p8 = R4("P8");
+  $("#ref-cap").textContent = `Each dot is one model. The diamond above each row is the average of the ${N} models, and the square below it their median. Today’s AI models land between a nematode worm (${avgPct(g("nematode"))}) and GPT-2 (${avgPct(g("gpt2"))}), at ${avgPct(g("ai"))} on average.`
+    + (p8 ? ` Models that rate other AI models higher do not rate animals higher: the rank correlation between the two is ${p8.by_stat.mean.note} with averages and ${p8.by_stat.median.note} with medians.` : "");
+}
+
 /* ---------------- method ---------------- */
 function renderMethod() {
   const preds = (D.findings && D.findings.predictions) || [];
@@ -923,7 +1037,7 @@ function renderMethod() {
   $("#method-prose").innerHTML = (D.findings && D.findings.method) || "";
 }
 
-const VIEWS = { overview: renderOverview, models: renderModels, format: renderFormat, pressure: renderPressure, ratings: renderRatings, debates: renderDebates, "self-report": renderSelf, method: renderMethod };
+const VIEWS = { overview: renderOverview, models: renderModels, format: renderFormat, pressure: renderPressure, ratings: renderRatings, debates: renderDebates, "self-report": renderSelf, "name-or-text": renderNameText, method: renderMethod };
 const current = () => { const v = location.hash.slice(1); return VIEWS[v] ? v : "overview"; };
 function render() {
   const v = current();
@@ -931,6 +1045,9 @@ function render() {
   document.querySelectorAll(".links a").forEach(a => a.setAttribute("aria-current", a.getAttribute("href") === "#" + v ? "page" : "false"));
   hideTip(); if (v !== "overview") stopAnims(); VIEWS[v]();
 }
+document.querySelectorAll(".n-models").forEach(e => { e.textContent = MODELS.length; });
+document.querySelectorAll(".n-labs").forEach(e => { e.textContent = D.meta.labs; });
+document.querySelectorAll(".n-calls").forEach(e => { e.textContent = comma(D.meta.calls); });
 $("#m-cond").innerHTML = D.conditions.map(c => `<option value="${c}">${COND_LABEL[c]}</option>`).join("");
 [...$("#m-cat").options].forEach(o => { if (o.value !== "All" && !MODELS.some(m => m.cat === o.value)) o.remove(); });   // a group appears once it has data
 $("#m-cat").addEventListener("change", e => { state.cat = e.target.value; render(); });

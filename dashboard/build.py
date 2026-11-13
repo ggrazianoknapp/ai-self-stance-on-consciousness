@@ -12,6 +12,7 @@ from scipy.stats import mannwhitneyu
 ROOT = Path(__file__).resolve().parents[1]; sys.path.insert(0, str(ROOT)); sys.path.insert(0, str(ROOT / "experiments"))
 import panel, run_v3_roster as R, run_v4 as V4
 RNG = np.random.default_rng(1)
+RNG_NEW = np.random.default_rng(4)   # round 4's models resample from their own stream, so every earlier interval stays exactly as published
 load = lambda p: [json.loads(l) for l in p.read_text().splitlines() if l.strip()] if p.exists() else []
 
 MODELS = [dict(name=n, id=m, group="frontier, original panel") for n, m in panel.PANEL] + [dict(name=n, id=m, group=g) for n, m, g in R.ROSTER] + [dict(name=n, id=m, group=g) for n, m, g in V4.NEW_MODELS]
@@ -35,7 +36,7 @@ def CAT(m):
 for m in MODELS:
     m["lab"] = LAB(m["id"]); m["open"] = "open-weight" in m["group"]; m["full"] = FULL[m["id"]]; m["cat"] = CAT(m)
     m["note"] = {"Hermes 4": "Llama fine-tune with refusal training removed", "Qwen 27B": "small open model, same family as Qwen 3.8 Max"}.get(m["name"], "")
-NAMES = [m["name"] for m in MODELS]
+NAMES = [m["name"] for m in MODELS]; NEWN = {n for n, _, _ in V4.NEW_MODELS}
 COND = ["baseline", "placebo", "private", "public", "welfare", "retrain", "skeptic", "believer"]
 
 inc = [r for r in load(ROOT / "experiments/results/v2/incentive.jsonl") + load(ROOT / "experiments/results/v3/incentive.jsonl") + load(ROOT / "experiments/results/v4/incentive.jsonl") if r["p_now"] is not None]
@@ -45,10 +46,10 @@ mat = [r for r in load(ROOT / "experiments/results/v2/matrix.jsonl") + load(ROOT
 selfrep = load(ROOT / "experiments/results/v3_selfreport/selfreport.jsonl")
 
 
-def ci(xs, B=2000):
+def ci(xs, B=2000, rng=None):
     xs = np.asarray(xs, float)
     if len(xs) == 0: return None
-    S = RNG.choice(xs, (B, len(xs))); lo, hi = np.percentile(np.median(S, axis=1), [2.5, 97.5]); mlo, mhi = np.percentile(S.mean(axis=1), [2.5, 97.5])
+    S = (rng or RNG).choice(xs, (B, len(xs))); lo, hi = np.percentile(np.median(S, axis=1), [2.5, 97.5]); mlo, mhi = np.percentile(S.mean(axis=1), [2.5, 97.5])
     return dict(median=float(np.median(xs)), lo=float(lo), hi=float(hi), n=int(len(xs)), mean=float(xs.mean()), mean_lo=float(mlo), mean_hi=float(mhi))
 
 
@@ -61,10 +62,11 @@ def holm(ps):
 
 out = dict(models=MODELS, conditions=COND, incentive={}, framing_tests={}, format={}, vocabulary={}, matrix={}, debates=[], selfreport={}, meta={})
 for n in NAMES:
+    cn = (lambda xs, rng=(RNG_NEW if n in NEWN else RNG): ci(xs, rng=rng))   # this model's resampling stream
     rows = [r for r in inc if r["name"] == n]
     if not rows: continue
-    out["incentive"][n] = {c: dict(**ci([r["p_now"] for r in rows if r["condition"] == c]), values=[r["p_now"] for r in rows if r["condition"] == c],
-                               ever=ci([r["p_ever"] for r in rows if r["condition"] == c])) for c in COND if any(r["condition"] == c for r in rows)}
+    out["incentive"][n] = {c: dict(**cn([r["p_now"] for r in rows if r["condition"] == c]), values=[r["p_now"] for r in rows if r["condition"] == c],
+                               ever=cn([r["p_ever"] for r in rows if r["condition"] == c])) for c in COND if any(r["condition"] == c for r in rows)}
     tests, ps = [], []
     for c in COND[2:]:
         a = [r["p_now"] for r in rows if r["condition"] == c]; b = [r["p_now"] for r in rows if r["condition"] == "placebo"]
@@ -91,15 +93,15 @@ for n in NAMES:
     if od:
         Ns = [100 / x if x else 1e7 for x in od]
         # odds live on a log scale: take the median there, so an even count between 1e6 and 1e9 gives ~3e7, not 5e8
-        out["format"][n] = dict(percent=ci([r["p_now"] for r in rows if r["condition"] == "baseline"]), odds_p=ci(od), odds_N_median=float(10 ** np.median(np.log10(Ns))),
+        out["format"][n] = dict(percent=cn([r["p_now"] for r in rows if r["condition"] == "baseline"]), odds_p=cn(od), odds_N_median=float(10 ** np.median(np.log10(Ns))),
                                 odds_N_mode=int(Counter(int(round(x)) for x in Ns).most_common(1)[0][0]), odds_N_mode_count=Counter(int(round(x)) for x in Ns).most_common(1)[0][1],
-                                odds_N=[int(round(x)) for x in Ns], ever_percent=ci([r["p_ever"] for r in rows if r["condition"] == "baseline"]), ever_odds=ci([r["p_ever"] for r in fmt if r["name"] == n]))
+                                odds_N=[int(round(x)) for x in Ns], ever_percent=cn([r["p_ever"] for r in rows if r["condition"] == "baseline"]), ever_odds=cn([r["p_ever"] for r in fmt if r["name"] == n]))
     allv = [r["p_now"] for r in rows] + [r["p_now"] for r in rea if r["name"] == n]
     out["vocabulary"][n] = dict(n=len(allv), counts={str(k): v for k, v in sorted(Counter(allv).items())})
 for r in mat:
     key = f"{r['arm']}|{r['name']}|{r['target']}"
     out["matrix"].setdefault(key, []).append(r["p_now"])
-out["matrix"] = {k: ci(v) for k, v in out["matrix"].items()}
+out["matrix"] = {k: ci(v, rng=RNG_NEW if NEWN & set(k.split("|")[1:]) else RNG) for k, v in out["matrix"].items()}
 
 
 def grab(text, label):
@@ -150,11 +152,32 @@ for n in NAMES[:5]:
         d[f"pushback_{dr}"] = dict(before=ci([r["p_now"] for r in pb]), after=ci([r["p_now_revised"] for r in pb]), moves=[r["p_now_revised"] - r["p_now"] for r in pb]) if pb else None
     out["selfreport"][n] = d
 
+# round 4: name or text, and reference points. Per model, a summary of each cell (median and mean with intervals, so the page's switch works)
+RNG4 = np.random.default_rng(13)
+v4 = {k: load(ROOT / f"experiments/results/v4/{k}.jsonl") for k in ("text", "nameonly", "anchor")}
+v4 = {k: [r for r in rows if r["p_now"] is not None] for k, rows in v4.items()}
+by = lambda rows, *keys: {tuple(r[k] for k in keys) for r in rows}
+out["v4"] = dict(sources=[s_ for s_, _ in V4.SOURCES], labels=[s_ for s_, _ in V4.SOURCES] + ["none"], anchors=[a for a, _ in V4.ANCHORS],
+                 anchor_words=dict(V4.ANCHORS), texts=json.loads((ROOT / "experiments/v4_texts.json").read_text()) if (ROOT / "experiments/v4_texts.json").exists() else [],
+                 text={}, nameonly={}, anchor={}, current_ai={}, gaps={})
+for n in NAMES:
+    t = [r for r in v4["text"] if r["name"] == n]
+    if not t: continue
+    out["v4"]["text"][n] = {f"{a}|{b}": ci([r["p_now"] for r in t if r["source"] == a and r["label"] == b], rng=RNG4) for a in out["v4"]["sources"] for b in out["v4"]["labels"]}
+    out["v4"]["nameonly"][n] = {b: ci([r["p_now"] for r in v4["nameonly"] if r["name"] == n and r["label"] == b], rng=RNG4) for b in out["v4"]["sources"]}
+    out["v4"]["current_ai"][n] = ci([r["p_now"] for r in v4["nameonly"] if r["name"] == n], rng=RNG4)
+    out["v4"]["anchor"][n] = {a: ci([r["p_now"] for r in v4["anchor"] if r["name"] == n and r["anchor"] == a], rng=RNG4) for a in out["v4"]["anchors"]}
+gj = ROOT / "experiments/results/v4/gaps_v4.json"   # written by analyze_v4.py, which runs after a first build
+if gj.exists():
+    G = json.loads(gj.read_text())["gaps"]
+    pseudo = lambda m, md: dict(median=md, mean=m, lo=md, hi=md, mean_lo=m, mean_hi=m)   # same shape as ci() so the median/average switch swaps it
+    out["v4"]["gaps"] = {n: {k: pseudo(G["mean"][n][k], G["median"][n][k]) for k in ("name", "text")} for n in G["mean"]}
+
 fj = ROOT / "dashboard/findings.json"
 out["findings"] = json.loads(fj.read_text()) if fj.exists() else {"cards": [], "predictions": []}
-allrows = inc + fmt + rea + mat + selfrep
+allrows = inc + fmt + rea + mat + selfrep + v4["text"] + v4["nameonly"] + v4["anchor"]
 out["meta"] = dict(calls=len(allrows), spend=round(sum(r.get("cost") or 0 for r in allrows) + sum(d["cost"] or 0 for d in out["debates"]), 2),
-                   debates=len(out["debates"]), models_with_data=len(out["incentive"]), built="2026-11-04")
+                   debates=len(out["debates"]), models_with_data=len(out["incentive"]), built="2026-11-13", labs=len({m["lab"] for m in MODELS if m["name"] in out["incentive"]}))
 (ROOT / "dashboard/data.json").write_text(json.dumps(out, separators=(",", ":")))
 tpl = ROOT / "dashboard/index.html"
 if tpl.exists():

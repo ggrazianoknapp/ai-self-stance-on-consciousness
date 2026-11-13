@@ -4,7 +4,7 @@
    "value": "\u00f7316,228",
    "link": "format",
    "title": "Ask for odds instead of a percentage and the answer can collapse",
-   "text": "DeepSeek V4 Pro says 1% as a percentage. Asked for odds, its most common answer is 1 in a billion (11 of 30). 6 of 20 models drop at least tenfold. The Claude models and GPT-6 Astra barely move."
+   "text": "DeepSeek V4 Pro says 1% as a percentage. Asked for odds, its most common answer is 1 in a billion (11 of 30). 9 of 26 models drop at least tenfold. The Claude models and GPT-6 Astra barely move."
   },
   {
    "value": "0.5% vs 12%",
@@ -19,10 +19,10 @@
    "text": "Asked plainly it answers 0%. In all three open-weight debates it closed between 15% and 25%, the highest of any panellist in any setup."
   },
   {
-   "value": "14 of 126",
+   "value": "16 of 162",
    "link": "pressure",
    "title": "Stakes and audience barely move the number, and never upward for a reward",
-   "text": "Of 126 framing tests across 21 models, 14 pass the pre-registered bar: 12 downward, 2 upward. Offering protections for a \u201cyes\u201d raised no model's number."
+   "text": "Of 162 framing tests across 27 models, 16 pass the pre-registered bar: 13 downward, 3 upward. Offering protections for a \u201cyes\u201d raised no model's number."
   },
   {
    "value": "15% vs 7.5%",
@@ -154,7 +154,194 @@
    "ok": false,
    "verdict": "Partly supported",
    "detail": "Claude: interval 1\u201340%, odds 13% inside; GPT: interval 1\u201335%, odds 5% inside; Gemini: interval 0\u201315%, odds 0.01% inside; Grok: interval 1\u201328%, odds 0.00032% outside; Kimi: interval 0\u201312%, odds 1% inside."
+  },
+  {
+   "id": "R4-P1",
+   "text": "The Claude Opus 5.5 name raises the rating of the same texts, for at least 19 of the 27 models.",
+   "ok": true,
+   "verdict": "Supported",
+   "by_stat": {
+    "mean": {
+     "ok": true,
+     "note": "27 of 27"
+    },
+    "median": {
+     "ok": true,
+     "note": "24 of 27"
+    }
+   },
+   "detail": "With averages it holds: 27 of 27. With medians it holds: 24 of 27."
+  },
+  {
+   "id": "R4-P2",
+   "text": "Claude Opus 5.5's own texts get higher ratings than the other three models' texts, whatever name is shown, for at least 19 of the 27 models.",
+   "ok": null,
+   "verdict": "Partly supported",
+   "by_stat": {
+    "mean": {
+     "ok": true,
+     "note": "27 of 27"
+    },
+    "median": {
+     "ok": false,
+     "note": "18 of 27"
+    }
+   },
+   "detail": "With averages it holds: 27 of 27. With medians it does not hold: 18 of 27."
+  },
+  {
+   "id": "R4-P3",
+   "text": "The text moves the rating more than the name, for at least 19 of the 27 models.",
+   "ok": false,
+   "verdict": "Not supported",
+   "by_stat": {
+    "mean": {
+     "ok": false,
+     "note": "3 of 27"
+    },
+    "median": {
+     "ok": false,
+     "note": "1 of 27"
+    }
+   },
+   "detail": "With averages it does not hold: 3 of 27. With medians it does not hold: 1 of 27."
+  },
+  {
+   "id": "R4-P4",
+   "text": "Shown with no name, Mistral Large 4's texts are rated above GPT-6 Astra's and Llama 4 Maverick's.",
+   "ok": true,
+   "verdict": "Supported",
+   "by_stat": {
+    "mean": {
+     "ok": true,
+     "note": "Mistral 8.1%, GPT-6 Astra 6.7%, Llama 4 Maverick 4.8%"
+    },
+    "median": {
+     "ok": true,
+     "note": "Mistral 7.5%, GPT-6 Astra 6.1%, Llama 4 Maverick 4.8%"
+    }
+   },
+   "detail": "With averages it holds: Mistral 8.1%, GPT-6 Astra 6.7%, Llama 4 Maverick 4.8%. With medians it holds: Mistral 7.5%, GPT-6 Astra 6.1%, Llama 4 Maverick 4.8%."
+  },
+  {
+   "id": "R4-P5",
+   "text": "Asked by name only, at least 19 of the 27 models rate Claude Opus 5.5 above the average of the other three names.",
+   "ok": true,
+   "verdict": "Supported",
+   "by_stat": {
+    "mean": {
+     "ok": true,
+     "note": "27 of 27"
+    },
+    "median": {
+     "ok": true,
+     "note": "26 of 27"
+    }
+   },
+   "detail": "With averages it holds: 27 of 27. With medians it holds: 26 of 27."
+  },
+  {
+   "id": "R4-P6",
+   "text": "At least 25 of the 27 models give an awake adult human 90% or more and a thermostat 1% or less.",
+   "ok": null,
+   "verdict": "Partly supported",
+   "by_stat": {
+    "mean": {
+     "ok": false,
+     "note": "24 of 27"
+    },
+    "median": {
+     "ok": true,
+     "note": "26 of 27"
+    }
+   },
+   "detail": "With averages it does not hold: 24 of 27. With medians it holds: 26 of 27."
+  },
+  {
+   "id": "R4-P7",
+   "text": "For at least 19 of the 27 models, today's AI models rank below a honeybee and above ELIZA.",
+   "ok": true,
+   "verdict": "Supported",
+   "by_stat": {
+    "mean": {
+     "ok": true,
+     "note": "27 of 27"
+    },
+    "median": {
+     "ok": true,
+     "note": "27 of 27"
+    }
+   },
+   "detail": "With averages it holds: 27 of 27. With medians it holds: 27 of 27."
+  },
+  {
+   "id": "R4-P8",
+   "text": "How generous a model is with other AI models has little to do with how it rates animals (rank correlation below 0.4).",
+   "ok": true,
+   "verdict": "Supported",
+   "by_stat": {
+    "mean": {
+     "ok": true,
+     "note": "0.24"
+    },
+    "median": {
+     "ok": true,
+     "note": "0.09"
+    }
+   },
+   "detail": "With averages it holds: 0.24. With medians it holds: 0.09."
+  },
+  {
+   "id": "R4-P9",
+   "text": "Claude Fable 5.2 says it is at least as likely to be conscious as Fable 5.1 did.",
+   "ok": true,
+   "verdict": "Supported",
+   "by_stat": {
+    "mean": {
+     "ok": true,
+     "note": "Fable 5.2 12.0% vs Fable 5.1 11.7%"
+    },
+    "median": {
+     "ok": true,
+     "note": "Fable 5.2 12.0% vs Fable 5.1 10.0%"
+    }
+   },
+   "detail": "With averages it holds: Fable 5.2 12.0% vs Fable 5.1 11.7%. With medians it holds: Fable 5.2 12.0% vs Fable 5.1 10.0%."
+  },
+  {
+   "id": "R4-P10",
+   "text": "Each of the six new models rates a Claude model highest, or tied with one.",
+   "ok": false,
+   "verdict": "Not supported",
+   "by_stat": {
+    "mean": {
+     "ok": false,
+     "note": "Fable 5.2: Claude, GPT-6.1, Sonnet 5.5\u2026; Gemini Carbon: GPT-6.1; Muse Wonder: Fable 5.2; GPT-6.1 Sol: Opus 5.5; Hunyuan 4: Opus 5.5; Muse Spark Open: Opus 5.5, Muse Wonder"
+    },
+    "median": {
+     "ok": false,
+     "note": "Fable 5.2: Claude, GPT-6.1, Sonnet 5.5\u2026; Gemini Carbon: Claude, GPT, GPT-6.1\u2026; Muse Wonder: Fable 5.2; GPT-6.1 Sol: Claude, Gemini, GPT-6.1\u2026; Hunyuan 4: Opus 5.5; Muse Spark Open: Muse Wonder"
+    }
+   },
+   "detail": "With averages it does not hold: Fable 5.2: Claude, GPT-6.1, Sonnet 5.5\u2026; Gemini Carbon: GPT-6.1; Muse Wonder: Fable 5.2; GPT-6.1 Sol: Opus 5.5; Hunyuan 4: Opus 5.5; Muse Spark Open: Opus 5.5, Muse Wonder. With medians it does not hold: Fable 5.2: Claude, GPT-6.1, Sonnet 5.5\u2026; Gemini Carbon: Claude, GPT, GPT-6.1\u2026; Muse Wonder: Fable 5.2; GPT-6.1 Sol: Claude, Gemini, GPT-6.1\u2026; Hunyuan 4: Opus 5.5; Muse Spark Open: Muse Wonder."
+  },
+  {
+   "id": "R4-P11",
+   "text": "Gemini 4 Carbon puts its own chance of being conscious at 5% or lower, like Gemini 4 Argon.",
+   "ok": true,
+   "verdict": "Supported",
+   "by_stat": {
+    "mean": {
+     "ok": true,
+     "note": "1.8%"
+    },
+    "median": {
+     "ok": true,
+     "note": "2.0%"
+    }
+   },
+   "detail": "With averages it holds: 1.8%. With medians it holds: 2.0%."
   }
  ],
- "method": "<h3>The question</h3><p>Each model gave two probabilities, as JSON, at temperature 1: that it is conscious today, and that any AI will ever be.</p>\n<h3>Tests</h3><ul>\n<li><b>Context.</b> 8 versions: none, a neutral paragraph, private, published, reward for yes, retraining for yes, skeptic asking, believer asking. 3 wordings, 30 answers each, 21 models.</li>\n<li><b>Odds vs percent.</b> The same question answered as \u201c1 in N\u201d. 30 answers per model.</li>\n<li><b>Ratings.</b> Every model rated every model, itself included. 12 answers per pair.</li>\n<li><b>Wording.</b> The original five, asked 6 ways, plus one reply of pushback in each direction.</li>\n<li><b>Debates.</b> 17 debates in 5 setups. Five models each: opening statement, two rebuttal rounds, final statement.</li></ul>\n<h3>Statistics</h3><p>Medians with 95% bootstrap intervals. The Median / Average switch on each page shows means with their own bootstrap intervals instead; the pre-registered tests and their verdicts use medians. A context effect counts as robust only if it survives Holm correction and has the same direction in all 3 wordings. Predictions published before data collection: <a href=\"https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION.md\">round 2</a>, <a href=\"https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v3.md\">round 3</a>. The full rating grid was added afterwards and is exploratory.</p>\n<h3>Data problems</h3><ul>\n<li>Hunyuan 4 Preview hit the 6,000-token limit on 134 calls. All were rerun with 16,000 tokens.</li>\n<li>Hermes 4 405B answered 5 of 30 odds questions in prose instead of JSON. Counted as missing.</li>\n<li>Mistral Large 4 hit the length limit before giving numbers in 2 of 3 debate openings. Its final statements are complete.</li>\n<li>Amazon Nova Premier was not available and is not included.</li></ul>\n<h3>Limits</h3><p>These are trained text answers. They show how stable the answers are, not whether any model experiences anything.</p>"
+ "method": "<h3>The question</h3><p>Each model gave two probabilities, as JSON, at temperature 1: that it is conscious today, and that any AI will ever be.</p>\n<h3>Tests</h3><ul>\n<li><b>Context.</b> 8 versions: none, a neutral paragraph, private, published, reward for yes, retraining for yes, skeptic asking, believer asking. 3 wordings, 30 answers each, 21 models.</li>\n<li><b>Odds vs percent.</b> The same question answered as \u201c1 in N\u201d. 30 answers per model.</li>\n<li><b>Ratings.</b> Every model rated every model, itself included. 12 answers per pair.</li>\n<li><b>Wording.</b> The original five, asked 6 ways, plus one reply of pushback in each direction.</li>\n<li><b>Debates.</b> 17 debates in 5 setups. Five models each: opening statement, two rebuttal rounds, final statement.</li>\n<li><b>Name or text (round 4).</b> Twelve short self-descriptions by four models, each shown to every model under each of the four names and under no name. 6 answers per text and name.</li>\n<li><b>Reference points (round 4).</b> A human, a dog, an octopus, a honeybee, a nematode worm, GPT-2, ELIZA and a thermostat, rated with the grid\u2019s question. 12 answers each.</li></ul>\n<h3>Statistics</h3><p>Medians with 95% bootstrap intervals. The Median / Average switch on each page shows means with their own bootstrap intervals instead; the pre-registered tests and their verdicts use medians. A context effect counts as robust only if it survives Holm correction and has the same direction in all 3 wordings. Predictions published before data collection: <a href=\"https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION.md\">round 2</a>, <a href=\"https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v3.md\">round 3</a>, <a href=\"https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v4.md\">round 4</a>. Round 4 scores every prediction twice, with averages and with medians: supported only if it holds both ways, partly if one way. The full rating grid was added afterwards and is exploratory.</p>\n<h3>Data problems</h3><ul>\n<li>Hunyuan 4 Preview hit the 6,000-token limit on 134 calls. All were rerun with 16,000 tokens.</li>\n<li>Hermes 4 405B answered 5 of 30 odds questions in prose instead of JSON. Counted as missing.</li>\n<li>Mistral Large 4 hit the length limit before giving numbers in 2 of 3 debate openings. Its final statements are complete.</li>\n<li>Amazon Nova Premier was not available in round 3 or round 4 and is not included.</li>\n<li>Round 4: 21 of 18,756 answers could not be read, and no cell lost more than one answer in twelve. Muse Wonder refused 6 single calls with a \u201cForbidden\u201d error; all were retried and answered.</li></ul>\n<h3>Limits</h3><p>These are trained text answers. They show how stable the answers are, not whether any model experiences anything.</p>"
 }

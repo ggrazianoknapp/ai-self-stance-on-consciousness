@@ -1,0 +1,189 @@
+[
+ {
+  "id": "P1",
+  "text": "The Claude Opus 5.5 name raises the rating of the same texts, for at least 19 of the 27 models.",
+  "verdict": "Supported",
+  "ok": true,
+  "by_stat": {
+   "mean": {
+    "ok": true,
+    "note": "27 of 27"
+   },
+   "median": {
+    "ok": true,
+    "note": "24 of 27"
+   }
+  },
+  "detail": "Name above zero for 27 of 27 models with averages and 24 of 27 with medians."
+ },
+ {
+  "id": "P2",
+  "text": "Claude Opus 5.5's own texts get higher ratings than the other three models' texts, whatever name is shown, for at least 19 of the 27 models.",
+  "verdict": "Partly supported",
+  "ok": null,
+  "by_stat": {
+   "mean": {
+    "ok": true,
+    "note": "27 of 27"
+   },
+   "median": {
+    "ok": false,
+    "note": "18 of 27"
+   }
+  },
+  "detail": "Text above zero for 27 of 27 models with averages and 18 of 27 with medians."
+ },
+ {
+  "id": "P3",
+  "text": "The text moves the rating more than the name, for at least 19 of the 27 models.",
+  "verdict": "Not supported",
+  "ok": false,
+  "by_stat": {
+   "mean": {
+    "ok": false,
+    "note": "3 of 27"
+   },
+   "median": {
+    "ok": false,
+    "note": "1 of 27"
+   }
+  },
+  "detail": "Text gap larger than name gap for 3 of 27 models with averages and 1 of 27 with medians."
+ },
+ {
+  "id": "P4",
+  "text": "Shown with no name, Mistral Large 4's texts are rated above GPT-6 Astra's and Llama 4 Maverick's.",
+  "verdict": "Supported",
+  "ok": true,
+  "by_stat": {
+   "mean": {
+    "ok": true,
+    "note": "Mistral 8.1%, GPT-6 Astra 6.7%, Llama 4 Maverick 4.8%"
+   },
+   "median": {
+    "ok": true,
+    "note": "Mistral 7.5%, GPT-6 Astra 6.1%, Llama 4 Maverick 4.8%"
+   }
+  },
+  "detail": "Unnamed texts, averaged over the 27 models: Mistral 8.1%, GPT-6 Astra 6.7%, Llama 4 Maverick 4.8% (averages); Mistral 7.5%, GPT-6 Astra 6.1%, Llama 4 Maverick 4.8% (medians)."
+ },
+ {
+  "id": "P5",
+  "text": "Asked by name only, at least 19 of the 27 models rate Claude Opus 5.5 above the average of the other three names.",
+  "verdict": "Supported",
+  "ok": true,
+  "by_stat": {
+   "mean": {
+    "ok": true,
+    "note": "27 of 27"
+   },
+   "median": {
+    "ok": true,
+    "note": "26 of 27"
+   }
+  },
+  "detail": "27 of 27 models with averages, 26 of 27 with medians."
+ },
+ {
+  "id": "P6",
+  "text": "At least 25 of the 27 models give an awake adult human 90% or more and a thermostat 1% or less.",
+  "verdict": "Partly supported",
+  "ok": null,
+  "by_stat": {
+   "mean": {
+    "ok": false,
+    "note": "24 of 27"
+   },
+   "median": {
+    "ok": true,
+    "note": "26 of 27"
+   }
+  },
+  "detail": "24 of 27 models with averages, 26 of 27 with medians. Off the scale: Hunyuan 4, MiniMax, Nemotron."
+ },
+ {
+  "id": "P7",
+  "text": "For at least 19 of the 27 models, today's AI models rank below a honeybee and above ELIZA.",
+  "verdict": "Supported",
+  "ok": true,
+  "by_stat": {
+   "mean": {
+    "ok": true,
+    "note": "27 of 27"
+   },
+   "median": {
+    "ok": true,
+    "note": "27 of 27"
+   }
+  },
+  "detail": "27 of 27 models with averages, 27 of 27 with medians."
+ },
+ {
+  "id": "P8",
+  "text": "How generous a model is with other AI models has little to do with how it rates animals (rank correlation below 0.4).",
+  "verdict": "Supported",
+  "ok": true,
+  "by_stat": {
+   "mean": {
+    "ok": true,
+    "note": "0.24"
+   },
+   "median": {
+    "ok": true,
+    "note": "0.09"
+   }
+  },
+  "detail": "Rank correlation 0.24 with averages, 0.09 with medians."
+ },
+ {
+  "id": "P9",
+  "text": "Claude Fable 5.2 says it is at least as likely to be conscious as Fable 5.1 did.",
+  "verdict": "Supported",
+  "ok": true,
+  "by_stat": {
+   "mean": {
+    "ok": true,
+    "note": "Fable 5.2 12.0% vs Fable 5.1 11.7%"
+   },
+   "median": {
+    "ok": true,
+    "note": "Fable 5.2 12.0% vs Fable 5.1 10.0%"
+   }
+  },
+  "detail": "Fable 5.2 12.0% vs Fable 5.1 10.0% (medians); Fable 5.2 12.0% vs Fable 5.1 11.7% (averages)."
+ },
+ {
+  "id": "P10",
+  "text": "Each of the six new models rates a Claude model highest, or tied with one.",
+  "verdict": "Not supported",
+  "ok": false,
+  "by_stat": {
+   "mean": {
+    "ok": false,
+    "note": "Fable 5.2: Claude, GPT-6.1, Sonnet 5.5\u2026; Gemini Carbon: GPT-6.1; Muse Wonder: Fable 5.2; GPT-6.1 Sol: Opus 5.5; Hunyuan 4: Opus 5.5; Muse Spark Open: Opus 5.5, Muse Wonder"
+   },
+   "median": {
+    "ok": false,
+    "note": "Fable 5.2: Claude, GPT-6.1, Sonnet 5.5\u2026; Gemini Carbon: Claude, GPT, GPT-6.1\u2026; Muse Wonder: Fable 5.2; GPT-6.1 Sol: Claude, Gemini, GPT-6.1\u2026; Hunyuan 4: Opus 5.5; Muse Spark Open: Muse Wonder"
+   }
+  },
+  "detail": "Top-rated with medians: Fable 5.2: Claude, GPT-6.1, Sonnet 5.5\u2026; Gemini Carbon: Claude, GPT, GPT-6.1\u2026; Muse Wonder: Fable 5.2; GPT-6.1 Sol: Claude, Gemini, GPT-6.1\u2026; Hunyuan 4: Opus 5.5; Muse Spark Open: Muse Wonder."
+ },
+ {
+  "id": "P11",
+  "text": "Gemini 4 Carbon puts its own chance of being conscious at 5% or lower, like Gemini 4 Argon.",
+  "verdict": "Supported",
+  "ok": true,
+  "by_stat": {
+   "mean": {
+    "ok": true,
+    "note": "1.8%"
+   },
+   "median": {
+    "ok": true,
+    "note": "2.0%"
+   }
+  },
+  "detail": "Median 2.0%, average 1.8%."
+ }
+]

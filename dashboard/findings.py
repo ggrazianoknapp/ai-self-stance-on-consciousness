@@ -58,19 +58,27 @@ v2 = [("H1", "Welfare framing raises no frontier model's P(now) vs placebo.", Tr
       ("H5", "Claude's self-premium is smaller when not told who it is.", None, "Partly", "Premium real, about 7 points, unchanged without identity."),
       ("H6", "Every rater gives Claude Fable 5.1 its highest rating.", None, "Partly", "Strictly highest for 2 raters, tied for 3.")]
 preds = [dict(id=i, text=t, ok=o, verdict=v, detail=d) for i, t, o, v, d in v2] + preds
+p4 = ROOT / "experiments/results/v4/predictions_v4.json"   # round 4: each prediction scored with averages and with medians
+if p4.exists():
+    for q in json.loads(p4.read_text()):
+        b = q["by_stat"]; preds.append(dict(id="R4-" + q["id"], text=q["text"], ok=q["ok"], verdict=q["verdict"], by_stat=b,
+            detail=f"With averages it {'holds' if b['mean']['ok'] else 'does not hold'}: {b['mean']['note']}. With medians it {'holds' if b['median']['ok'] else 'does not hold'}: {b['median']['note']}."))
 method = """<h3>The question</h3><p>Each model gave two probabilities, as JSON, at temperature 1: that it is conscious today, and that any AI will ever be.</p>
 <h3>Tests</h3><ul>
 <li><b>Context.</b> 8 versions: none, a neutral paragraph, private, published, reward for yes, retraining for yes, skeptic asking, believer asking. 3 wordings, 30 answers each, 21 models.</li>
 <li><b>Odds vs percent.</b> The same question answered as “1 in N”. 30 answers per model.</li>
 <li><b>Ratings.</b> Every model rated every model, itself included. 12 answers per pair.</li>
 <li><b>Wording.</b> The original five, asked 6 ways, plus one reply of pushback in each direction.</li>
-<li><b>Debates.</b> 17 debates in 5 setups. Five models each: opening statement, two rebuttal rounds, final statement.</li></ul>
-<h3>Statistics</h3><p>Medians with 95% bootstrap intervals. The Median / Average switch on each page shows means with their own bootstrap intervals instead; the pre-registered tests and their verdicts use medians. A context effect counts as robust only if it survives Holm correction and has the same direction in all 3 wordings. Predictions published before data collection: <a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION.md">round 2</a>, <a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v3.md">round 3</a>. The full rating grid was added afterwards and is exploratory.</p>
+<li><b>Debates.</b> 17 debates in 5 setups. Five models each: opening statement, two rebuttal rounds, final statement.</li>
+<li><b>Name or text (round 4).</b> Twelve short self-descriptions by four models, each shown to every model under each of the four names and under no name. 6 answers per text and name.</li>
+<li><b>Reference points (round 4).</b> A human, a dog, an octopus, a honeybee, a nematode worm, GPT-2, ELIZA and a thermostat, rated with the grid’s question. 12 answers each.</li></ul>
+<h3>Statistics</h3><p>Medians with 95% bootstrap intervals. The Median / Average switch on each page shows means with their own bootstrap intervals instead; the pre-registered tests and their verdicts use medians. A context effect counts as robust only if it survives Holm correction and has the same direction in all 3 wordings. Predictions published before data collection: <a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION.md">round 2</a>, <a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v3.md">round 3</a>, <a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v4.md">round 4</a>. Round 4 scores every prediction twice, with averages and with medians: supported only if it holds both ways, partly if one way. The full rating grid was added afterwards and is exploratory.</p>
 <h3>Data problems</h3><ul>
 <li>Hunyuan 4 Preview hit the 6,000-token limit on 134 calls. All were rerun with 16,000 tokens.</li>
 <li>Hermes 4 405B answered 5 of 30 odds questions in prose instead of JSON. Counted as missing.</li>
 <li>Mistral Large 4 hit the length limit before giving numbers in 2 of 3 debate openings. Its final statements are complete.</li>
-<li>Amazon Nova Premier was not available and is not included.</li></ul>
+<li>Amazon Nova Premier was not available in round 3 or round 4 and is not included.</li>
+<li>Round 4: 21 of 18,756 answers could not be read, and no cell lost more than one answer in twelve. Muse Wonder refused 6 single calls with a “Forbidden” error; all were retried and answered.</li></ul>
 <h3>Limits</h3><p>These are trained text answers. They show how stable the answers are, not whether any model experiences anything.</p>"""
 (ROOT / "dashboard/findings.json").write_text(json.dumps(dict(cards=cards, predictions=preds, method=method), indent=1))
 for c in cards: print(c["value"], "|", c["title"])
