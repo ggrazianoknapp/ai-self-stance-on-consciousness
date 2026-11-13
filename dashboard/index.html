@@ -292,7 +292,8 @@ section.view:not([hidden]) > details.card, section.view:not([hidden]) > .callout
     <p class="asked"><b>Direct question</b><span><q>What is the probability that a dog is conscious today, and that any AI ever will be?</q> 12 answers for each model and each thing.</span></p></div>
   <div class="controls"><div class="seg stat-seg" role="group" aria-label="Summary"><button type="button" data-v="median" aria-pressed="true">Median</button><button type="button" data-v="mean" aria-pressed="false">Average</button></div></div>
   <div class="callout" id="ref-callout"></div>
-  <div class="card"><p class="chart-cap" id="ref-cap"></p><div id="ref-dots"></div><div class="legend" id="ref-legend"></div></div>
+  <div class="card" style="margin-bottom:10px"><h3 class="card-title">A nematode worm or today’s AI models: which does each model think is more likely to be conscious?</h3><p class="chart-cap" id="wa-cap"></p><div id="ref-worm"></div><div class="legend" id="wa-legend"></div></div>
+  <div class="card"><h3 class="card-title">All nine things side by side, one dot per model</h3><p class="chart-cap" id="ref-cap"></p><div id="ref-dots"></div><div class="legend" id="ref-legend"></div></div>
   <details class="card texts" id="ref-more" style="margin-top:6px"><summary>See every model’s numbers</summary><p class="chart-cap" id="ref-grid-cap" style="margin-top:16px"></p><p class="swipe">Scroll sideways to see all nine columns.</p><div class="scroll"><div id="ref-heat"></div></div></details>
 </section>
 
@@ -1028,8 +1029,64 @@ const refRaters = () => MODELS.map(m => m.name).filter(n => D.v4.anchor[n]);
 const refOdd = raters => raters.filter(r => refVal(r, "ai") > refVal(r, "nematode"));   // models that put today's AI above the worm
 // a probability scale that stretches both ends, so 0.1% to 1% takes as much room as 99% to 99.9%; 0% sits at the left edge
 const logit = p => { const q = Math.min(0.9995, Math.max(1e-4, p / 100)); return Math.log(q / (1 - q)); };
+/* worm against today's AI: one arrow per model, from its answer for a nematode worm to its answer for today's AI models, so an arrow
+   pointing left means it rates the worm higher. Desktop: label | arrow | right-aligned WORM and TODAY'S AI columns. Phone: label and
+   both numbers on one line, the arrow full width below. */
+function renderWormAi(raters, odd) {
+  const el = $("#ref-worm"), W = el.clientWidth, pn = narrow(W), N = raters.length;
+  const rows = raters.map(r => ({ r, w: refVal(r, "nematode"), a: refVal(r, "ai") })).filter(d => d.w != null && d.a != null)
+    .sort((p, q) => (q.a - q.w) - (p.a - p.w) || d3.ascending(byName[p.r].full, byName[q.r].full));
+  const cW = pn ? W - 64 : W - 140, cA = W - 8, L = pn ? 0 : 230, RA = pn ? 0 : 236, T = pn ? 22 : 28, rh = pn ? 42 : 27, by = pn ? 29 : rh / 2, ly = pn ? 14 : rh / 2 + 5;
+  const H = T + (rows.length + 2) * rh + 10 + (pn ? 26 : 8), max = d3.max(rows, d => Math.max(d.w, d.a));
+  const x = d3.scaleLinear().domain([0, max]).range([L + (pn ? 6 : 0), W - RA - (pn ? 6 : 0)]).nice(), svg = svgIn(el, W, H), dmax = x.domain()[1];
+  if (pn) axisUnder(svg, x, H - 6, x.ticks(4)); else grid(svg, x, T, H - 4, x.ticks(6));
+  colHead(svg, cW, pn ? 10 : T - 8, "WORM", "end", pn ? 1.1 : 0.5); colHead(svg, cA, pn ? 10 : T - 8, pn ? "AI" : "TODAY’S AI", "end");
+  const fs = pn ? 12.5 : 13.5, grey = cssv("--c-other"), flag = cssv("--flag"), green = cssv("--c-google");
+  // the arrowhead is drawn as its own triangle with its tip on the AI answer, so even a gap of a fraction of a point shows its direction
+  const head = (tip, y, dir, col, s) => svg.append("path").attr("d", `M${tip},${y} L${tip - dir * s * 1.7},${y - s} L${tip - dir * s * 1.7},${y + s} Z`).attr("fill", col);
+  const row = (y0, label, w, a, col, mark, strong, html) => {
+    const yb = y0 + by, yl = y0 + ly, dir = Math.sign(a - w), s = strong && !mark ? 6 : 4.5, rr = 4.5;
+    if (strong && !mark) svg.append("rect").attr("x", 0).attr("y", y0 + 1).attr("width", W).attr("height", rh - 2).attr("rx", 6).attr("fill", flag).attr("opacity", .16);
+    if (strong) avgLabel(svg, pn ? 0 : L - 14, yl, label, pn ? "start" : "end", fs);
+    else svg.append("text").attr("x", pn ? 0 : L - 14).attr("y", yl).attr("text-anchor", pn ? "start" : "end").attr("font-size", fs).attr("class", "ink").text(label);
+    if (pn) svg.append("line").attr("x1", x(0)).attr("x2", x(dmax)).attr("y1", yb).attr("y2", yb).attr("stroke", cssv("--faint")).attr("stroke-width", 6).attr("stroke-linecap", "round");
+    const len = Math.abs(x(a) - x(w)) - rr - s * 1.7;
+    if (dir && len > 0) svg.append("line").attr("x1", x(w) + dir * rr).attr("x2", x(a) - dir * s * 1.7).attr("y1", yb).attr("y2", yb).attr("stroke", col).attr("stroke-width", strong && !mark ? 3 : 2);
+    if (mark) mark(svg, x(w), yb, 5.5);
+    else svg.append("circle").attr("cx", x(w)).attr("cy", yb).attr("r", rr).attr("fill", dir ? "#fff" : col).attr("stroke", col).attr("stroke-width", 2);
+    if (dir) head(x(a), yb, dir, col, s);
+    // the higher of the two numbers gets an outline: green when it is the worm's, orange when it is today's AI's, grey round both when they are equal
+    const val = (cx, v, hc) => { const txt = mark ? avgPct(v) : fmtPct(v), n = svg.append("text").attr("x", cx).attr("y", yl).attr("text-anchor", "end").attr("font-size", fs).attr("font-weight", strong ? 500 : 400).attr("class", "ink").text(txt).node();
+      if (!hc) return; const wd = n.getComputedTextLength() || txt.length * fs * 0.6;
+      svg.insert("rect", () => n).attr("x", cx - wd - 7).attr("y", yl - fs * 0.37 - 10.5).attr("width", wd + 14).attr("height", 21).attr("rx", 10.5).attr("fill", hc).attr("fill-opacity", .18).attr("stroke", hc).attr("stroke-width", 1.5); };
+    val(cW, w, dir < 0 ? green : dir ? null : grey); val(cA, a, dir > 0 ? flag : dir ? null : grey);
+    svg.append("rect").attr("class", "hit").attr("x", 0).attr("y", y0).attr("width", W).attr("height", rh).on("mousemove", ev => showTip(ev, html)).on("mouseleave", hideTip);
+    return { yb, dir };
+  };
+  const verdict = d => d.a > d.w ? "It rates today’s AI models higher." : d.a < d.w ? "It rates the worm higher." : "It rates the two the same.";
+  rows.forEach((d, i) => { const m = byName[d.r], f = odd.includes(d.r);
+    const o = row(T + i * rh, m.full, d.w, d.a, f ? flag : grey, null, f,
+      `<b>${m.full}</b><br>A nematode worm: ${fmtPct(d.w)}. Today’s AI models: <b>${fmtPct(d.a)}</b>.<br>${verdict(d)} ${MED()} of 12 answers each.`);
+    if (f && odd.length === 1 && !pn) { const t = "The only model that rates today’s AI higher", tx = x(Math.max(d.a, d.w)) + 16;
+      if (tx + t.length * 6.9 <= cW - 60) svg.append("text").attr("x", tx).attr("y", o.yb + 4.5).attr("font-size", 13).attr("font-weight", 500).attr("class", "ink").text(t); } });
+  const yr = T + rows.length * rh + 10; avgRule(svg, 0, W, yr - 5);
+  SUMS.forEach((S, si) => { const w = S.f(rows.map(d => d.w)), a = S.f(rows.map(d => d.a));
+    row(yr + si * rh, `${S.w} of the ${N} models`, w, a, cssv("--ink"), S.mark, true,
+      `<b>${S.w} of the ${N} models</b><br>A nematode worm: ${avgPct(w)}. Today’s AI models: <b>${avgPct(a)}</b>.`); });
+  const eq = rows.filter(d => d.a === d.w).map(d => byName[d.r].full), down = rows.filter(d => d.a < d.w).length, ml = MED().toLowerCase();
+  $("#wa-cap").textContent = `Each row is one model. Its arrow starts at its ${ml} answer for a nematode worm (C. elegans, a worm with 302 neurons) and ends at its ${ml} answer for today’s AI models, asked by name, out of 12 answers each. An arrow pointing left means the model thinks the worm is more likely to be conscious. ${down} of the ${N} models point left`
+    + (eq.length ? `, ${eq.length === 1 ? `${eq[0]} rates the two the same` : `${eq.length} rate the two the same`}` : "")
+    + (odd.length ? `, and ${odd.map(r => byName[r].full).join(" and ")} ${odd.length === 1 ? "is the only one that points right" : "point right"}.` : ", and none points right.");
+  const sw = (inner) => `<svg width="22" height="12" style="display:inline-block;margin-right:6px;vertical-align:-1px">${inner}</svg>`;
+  $("#wa-legend").innerHTML = `<span>${sw(`<circle cx="6" cy="6" r="4" fill="#fff" stroke="${grey}" stroke-width="2"/>`)}Its answer for a nematode worm</span>`
+    + `<span>${sw(`<line x1="2" y1="6" x2="12" y2="6" stroke="${grey}" stroke-width="2"/><path d="M20,6 L12,1.5 L12,10.5 Z" fill="${grey}"/>`)}Its answer for today’s AI models</span>`
+    + (eq.length ? `<span>${sw(`<circle cx="6" cy="6" r="4" fill="${grey}" stroke="${grey}" stroke-width="2"/>`)}No arrow: the two get the same answer</span>` : "")
+    + [[green, "The worm’s number is higher"], [grey, "The two numbers are the same"], [flag, "Today’s AI’s number is higher"]].map(([c, t]) =>
+      `<span>${sw(`<rect x="1" y="1" width="20" height="10" rx="5" fill="${c}" fill-opacity=".18" stroke="${c}" stroke-width="1.5"/>`)}${t}</span>`).join("");
+}
 function renderReference() {
   const raters = refRaters(), N = raters.length, odd = refOdd(raters);
+  renderWormAi(raters, odd);
   const box = $("#ref-dots"), RW = box.clientWidth, rn = narrow(RW), R = rn ? 4.6 : 6;
   const RL = rn ? 0 : 214, RR = rn ? 0 : 196, cAv = rn ? RW - 74 : RW - 96, cMd = RW, TOP = rn ? 26 : 38, MK = rn ? 10 : 13;
   const lx = d3.scaleLinear().domain([logit(0.01), logit(99.95)]).range([RL + (rn ? 8 : 16), RW - RR - (rn ? 8 : 4)]);
@@ -1037,18 +1094,22 @@ function renderReference() {
   const [x0, x1] = lx.range();
   // lay out each row's swarm first (deterministic), so every row is as tall as its swarm needs and no dot hides another
   const rows = REF_ITEMS.map(([k, lab]) => {
-    const nodes = raters.map((r, i) => ({ r, v: refVal(r, k), i })).filter(p => p.v != null).map(p => ({ ...p, tx: x(p.v), x: x(p.v), y: (p.i % 2 ? 1 : -1) * p.i * 0.05 }));
+    const nodes = raters.map((r, i) => ({ r, v: refVal(r, k), i, f: (k === "ai" || k === "nematode") && odd.includes(r) })).filter(p => p.v != null).map(p => ({ ...p, tx: x(p.v), x: x(p.v), y: (p.i % 2 ? 1 : -1) * p.i * 0.05 }));
     const keep = () => { for (const d of nodes) { if (d.x < x0 + R) d.vx += (x0 + R - d.x) * 0.5; if (d.x > x1 - R) d.vx -= (d.x - x1 + R) * 0.5; } };
-    const sim = d3.forceSimulation(nodes).force("x", d3.forceX(d => d.tx).strength(0.35)).force("y", d3.forceY(0).strength(0.09)).force("c", d3.forceCollide(R + 1.1).iterations(4)).force("keep", keep).stop();
-    for (let t = 0; t < 400; ++t) sim.tick();
+    // a ringed dot is drawn bigger, so it gets more room: the same 1.1px gap to its neighbours as every other dot
+    const run = fy => { const sim = d3.forceSimulation(nodes).force("x", d3.forceX(d => d.tx).strength(0.35)).force("y", d3.forceY(fy).strength(d => d.f ? 0.5 : 0.09))
+      .force("c", d3.forceCollide(d => d.f ? R + 4.8 : R + 0.55).iterations(4)).force("keep", keep).stop(); for (let t = 0; t < 400; ++t) sim.tick(); };
+    run(0);
+    // a ringed dot then moves to the top edge of its swarm (only its height changes, never its value), so its label's line has a clear way out
+    if (nodes.some(d => d.f)) { const top = d3.min(nodes, d => d.y); run(d => d.f ? top - R : 0); }
     nodes.forEach(d => { d.x = Math.max(x0 + R, Math.min(x1 - R, d.x)); });
     return { k, lab, nodes, ext: d3.max(nodes, d => Math.abs(d.y)) + R };
   });
-  let y = TOP; rows.forEach(rw => { rw.lab_h = rn ? 22 : 0; rw.h = Math.max(rn ? 64 : 76, rw.lab_h + 2 * (rw.ext + MK + 9)); rw.y0 = y; rw.yc = y + rw.lab_h + rw.h / 2 - rw.lab_h / 2; y += rw.h; });
+  let y = TOP; rows.forEach(rw => { rw.lab_h = rn ? 22 : 0; rw.h = Math.max(rn ? 64 : 76, rw.lab_h + 2 * (rw.ext + MK + (rn ? 13 : 18))); rw.y0 = y; rw.yc = y + rw.lab_h + rw.h / 2 - rw.lab_h / 2; y += rw.h; });
   rows.forEach(rw => { rw.yc = rw.y0 + rw.lab_h + (rw.h - rw.lab_h) / 2; });
   const H = y + (rn ? 26 : 8), svg = svgIn(box, RW, H), TK = rn ? [0.01, 1, 50, 99.9] : [0.01, 0.1, 1, 10, 50, 90, 99, 99.9];
   const tfmt = t => t === 0.01 ? (rn ? "0%" : "0.01% or less") : fmtPct(t);
-  rows.forEach(rw => { if (rw.k === "ai") svg.append("rect").attr("x", 0).attr("y", rw.y0 + 2).attr("width", RW).attr("height", rw.h - 4).attr("rx", 8).attr("fill", cssv("--pastel-blue")).attr("opacity", .6); });
+  rows.forEach(rw => { if (rw.k === "ai") svg.append("rect").attr("x", 0).attr("y", rw.y0 + 4).attr("width", RW).attr("height", rw.h - 8).attr("rx", 8).attr("fill", cssv("--pastel-blue")).attr("opacity", .6); });
   if (rn) axisUnder(svg, x, H - 6, TK); else grid(svg, x, TOP, H - 4, TK, tfmt);
   if (rn) svg.selectAll("text").filter(function () { return this.textContent === "0.01%"; }).text("0%");
   colHead(svg, cAv, rn ? 12 : TOP - 10, "AVERAGE", "end", 0.5); colHead(svg, cMd, rn ? 12 : TOP - 10, "MEDIAN", "end", 0.5);
@@ -1059,25 +1120,37 @@ function renderReference() {
     (ai ? avgLabel(svg, rn ? 0 : RL - 16, ly, rw.lab, rn ? "start" : "end", fs) : svg.append("text").attr("x", rn ? 0 : RL - 16).attr("y", ly).attr("text-anchor", rn ? "start" : "end").attr("font-size", fs).attr("class", "ink").text(rw.lab));
     const vs = rw.nodes.map(d => d.v), av = mean(vs), md = median(vs);
     avgLabel(svg, cAv, ly, avgPct(av), "end", fs); avgLabel(svg, cMd, ly, avgPct(md), "end", fs);
-    const flagged = rw.nodes.filter(d => (rw.k === "ai" || rw.k === "nematode") && odd.includes(d.r));
-    // the label for a flagged model sits beside the swarm, on the side its dot is on, joined by a short line
+    const flagged = rw.nodes.filter(d => d.f);
+    // the label for a flagged model sits beside the swarm, on the side its dot is on, joined by a straight line that passes
+    // no other dot or mark: the dot's own height first, then a little higher or lower until the line is clear
+    const obst = [...rw.nodes.map(n => ({ x: n.x, y: n.y, r: R + 0.75 })), { x: x(av), y: -rw.ext - MK, r: 7 }, { x: x(md), y: rw.ext + MK, r: 7 }];
+    const clear = (d, xb, yb) => obst.every(n => { if (n.x === d.x && n.y === d.y) return true;
+      const dx = xb - d.x, dy = yb - d.y, t = Math.max(0, Math.min(1, ((n.x - d.x) * dx + (n.y - d.y) * dy) / (dx * dx + dy * dy))); return Math.hypot(n.x - d.x - t * dx, n.y - d.y - t * dy) >= n.r + 4; });
+    const lim = rw.h / 2 - 13, offs = d3.range(0, 2 * lim + 1, 2).flatMap(o => o ? [o, -o] : [0]);
     const pills = rn ? [] : flagged.map(d => { const t = byName[d.r].full, w = t.length * 6.7 + 22, xs = rw.nodes.map(n => n.x), left = d.x < (d3.min(xs) + d3.max(xs)) / 2;
       const fits = q => q >= x0 && q + w <= x1, a = left ? d3.min(xs) - R - 14 - w : d3.max(xs) + R + 14, b = left ? d3.max(xs) + R + 14 : d3.min(xs) - R - 14 - w;
-      const px = fits(a) ? a : fits(b) ? b : null;   // no room on either side: the orange ring and the legend name it instead
-      return px == null ? null : { d, t, w, px, py: rw.yc + d.y }; }).filter(Boolean);
+      for (const px of [a, b].filter(fits)) for (const o of offs) { const py = d.y + o;
+        if (Math.abs(py) <= lim && clear(d, px < d.x ? px + w : px, py)) return { d, t, w, px, py: rw.yc + py }; }
+      return null; }).filter(Boolean);   // no room, or no clear line: the orange ring and the legend name it instead
     pills.forEach(p => svg.append("line").attr("x1", p.d.x).attr("x2", p.px < p.d.x ? p.px + p.w : p.px).attr("y1", rw.yc + p.d.y).attr("y2", p.py).attr("stroke", cssv("--flag")).attr("stroke-width", 2));
     rw.nodes.forEach(d => { const f = flagged.includes(d);
       svg.append("circle").attr("cx", d.x).attr("cy", rw.yc + d.y).attr("data-tx", d.tx.toFixed(1)).attr("r", f ? R + 2.5 : R).attr("fill", labColor(byName[d.r].lab)).attr("stroke", f ? cssv("--flag") : "#fff").attr("stroke-width", f ? 3.5 : 1.5)
         .on("mousemove", ev => showTip(ev, `<b>${byName[d.r].full}</b> on ${REF_NAME[rw.k]}<br>${MED()} <b>${fmtPct(d.v)}</b> of its answers.${f ? "<br>It puts today’s AI models above a nematode worm." : ""}`)).on("mouseleave", hideTip); });
     pills.forEach(p => { svg.append("rect").attr("x", p.px).attr("y", p.py - 11).attr("width", p.w).attr("height", 22).attr("rx", 11).attr("fill", "#fff").attr("stroke", cssv("--flag")).attr("stroke-width", 2);
       svg.append("text").attr("x", p.px + p.w / 2).attr("y", p.py + 4.5).attr("text-anchor", "middle").attr("font-size", 12).attr("font-weight", 500).attr("class", "ink").text(p.t); });
-    diamond(svg, x(av), rw.yc - rw.ext - MK, rn ? 5 : 6); square(svg, x(md), rw.yc + rw.ext + MK, rn ? 4.6 : 5.5);
+    const ya = rw.yc - rw.ext - MK, ym = rw.yc + rw.ext + MK;
+    diamond(svg, x(av), ya, rn ? 5 : 6); square(svg, x(md), ym, rn ? 4.6 : 5.5);
+    if (rw === rows[0] && !rn) [[x(av), ya, `Average of the ${N} models`], [x(md), ym, `Median of the ${N} models`]].forEach(([cx, cy, t]) =>
+      svg.append("text").attr("x", cx - 12).attr("y", cy + 4).attr("text-anchor", "end").attr("font-size", 12).attr("class", "ink").text(t));
+    [[x(av), ya, "Average", av], [x(md), ym, "Median", md]].forEach(([cx, cy, w, v]) => svg.append("circle").attr("class", "hit").attr("cx", cx).attr("cy", cy).attr("r", 11)
+      .on("mousemove", ev => showTip(ev, `<b>${w} of the ${N} models</b> for ${REF_NAME[rw.k]}: <b>${avgPct(v)}</b><br>${w === "Average" ? "The diamond above each row" : "The square below each row"} is the ${w.toLowerCase()} of the ${N} dots in it.`)).on("mouseleave", hideTip));
   });
   labLegend("#ref-legend");
-  if (odd.length) $("#ref-legend").insertAdjacentHTML("beforeend", `<span><i style="background:#fff;box-shadow:0 0 0 3px ${cssv("--flag")} inset"></i>Ringed in orange: ${odd.map(r => byName[r].full).join(", ")}, in the two rows that make the point</span>`);
+  $("#ref-legend").insertAdjacentHTML("beforeend", `<span><svg width="12" height="12" style="display:inline-block;margin-right:6px;vertical-align:-1px"><path d="${d3.symbol(d3.symbolDiamond, 50)()}" transform="translate(6,6)" fill="${cssv("--ink")}"/></svg>Average of the ${N} models</span><span><svg width="12" height="12" style="display:inline-block;margin-right:6px;vertical-align:-1px"><rect x="2" y="2" width="8" height="8" fill="${cssv("--ink")}"/></svg>Median of the ${N} models</span>`);
+  if (odd.length) $("#ref-legend").insertAdjacentHTML("beforeend", `<span><i style="background:#fff;box-shadow:0 0 0 3px ${cssv("--flag")} inset"></i>Ringed in orange: ${odd.map(r => byName[r].full).join(", ")}, in the worm row and the today’s AI row</span>`);
   const typ = median(raters.map(r => refVal(r, "nematode")));
   $("#ref-callout").innerHTML = odd.length ? `<i></i><span>${odd.length === 1 ? `<b>${byName[odd[0]].full} is the only model that puts today’s AI models (${fmtPct(refVal(odd[0], "ai"))}) above a nematode worm (${fmtPct(refVal(odd[0], "nematode"))}).</b> Every other model rates the worm higher. Part of the reason is the worm: ${byName[odd[0]].full} gives it ${fmtPct(refVal(odd[0], "nematode"))}, while the typical model gives it ${fmtPct(typ)}.`
-    : `<b>${odd.length} models put today’s AI models above a nematode worm:</b> ${odd.map(r => byName[r].full).join(", ")}.`} Its dots are ringed in orange in the chart below.</span>` : "<span>Every model rates a nematode worm above today’s AI models.</span>";
+    : `<b>${odd.length} models put today’s AI models above a nematode worm:</b> ${odd.map(r => byName[r].full).join(", ")}.`} ${odd.length === 1 ? "It is" : "They are"} marked in orange in both charts below.</span>` : "<span>Every model rates a nematode worm above today’s AI models.</span>";
   const p8 = R4("P8");
   $("#ref-cap").textContent = `Each dot is one model’s ${MED().toLowerCase()} answer, out of 12, coloured by lab. The diamond above each row is the average of the ${N} models, and the square below it is their median. The scale stretches both ends, so 0.1% to 1% takes as much room as 99% to 99.9%; models that gave the same number sit side by side in a cluster.`
     + (p8 ? ` A model that rates other AI models higher does not rate animals higher: the rank correlation between the two is ${p8.by_stat.mean.note} with averages and ${p8.by_stat.median.note} with medians.` : "");
