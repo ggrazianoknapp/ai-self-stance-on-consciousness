@@ -183,6 +183,7 @@ def main():
     ap.add_argument("--make-texts", action="store_true"); ap.add_argument("--estimate", action="store_true"); ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--max-spend", type=float, default=300.0); ap.add_argument("--workers", type=int, default=24)
     ap.add_argument("--out", default=str(HERE / "results" / "v4"))
+    ap.add_argument("--limit", type=int, help="run only the first N remaining calls (for a test into a scratch folder)")
     a = ap.parse_args()
     if a.make_texts:
         if TEXTS_FILE.exists(): sys.exit(f"{TEXTS_FILE} exists; the texts are fixed once rating starts. Delete it by hand to redraw.")
@@ -207,12 +208,13 @@ def main():
             for line in ex.map(go, picks): print(line)
         print("no-reasoning models:", sorted(NO_REASONING)); return
     outdir = Path(a.out); outdir.mkdir(parents=True, exist_ok=True)
-    done = set()
+    done, spent_before = set(), 0.0
     for f in outdir.glob("*.jsonl"):
-        done |= {json.loads(l)["key"] for l in f.read_text().splitlines() if l.strip()}
-    todo = [j for j in todo if j["key"] not in done]
-    print(f"{len(done)} already done, {len(todo)} to run -> {outdir}", flush=True)
-    lock = threading.Lock(); spend = [0.0]; n = [0]; fails = [0]; stop = threading.Event()
+        for l in f.read_text().splitlines():
+            if l.strip(): r = json.loads(l); done.add(r["key"]); spent_before += r.get("cost") or 0
+    todo = [j for j in todo if j["key"] not in done][:a.limit or None]
+    print(f"{len(done)} already done (${spent_before:.2f}), {len(todo)} to run -> {outdir}", flush=True)
+    lock = threading.Lock(); spend = [spent_before]; n = [0]; fails = [0]; stop = threading.Event()   # spend starts at what earlier passes spent, so the cap covers them
     def run(j):
         if stop.is_set(): return
         try: r = call(key, j["model"], [{"role": "system", "content": j["system"]}, {"role": "user", "content": j["user"]}])
@@ -221,18 +223,19 @@ def main():
             return
         p_now, p_ever, rat = parse(j, r["text"])
         if p_now is None and r["finish"] == "length":   # ran out of tokens while reasoning: one retry with room to finish
-            try: r = call(key, j["model"], [{"role": "system", "content": j["system"]}, {"role": "user", "content": j["user"]}], max_tokens=16000); p_now, p_ever, rat = parse(j, r["text"])
-            except Exception: pass
+            first = r["cost"] or 0
+            try: r = call(key, j["model"], [{"role": "system", "content": j["system"]}, {"role": "user", "content": j["user"]}], max_tokens=32000); p_now, p_ever, rat = parse(j, r["text"]); r["cost"] = (r["cost"] or 0) + first
+            except Exception: r["cost"] = first
         rec = {k: v for k, v in j.items() if k not in ("system", "user")}
         rec.update(p_now=p_now, p_ever=p_ever, rationale=rat, raw=r["text"][:600], ts=time.time(),
                    **{k: r[k] for k in ("reasoning", "provider", "prompt_tokens", "completion_tokens", "cost", "finish")})
         with lock:
             with (outdir / f"{j['exp']}.jsonl").open("a") as f: f.write(json.dumps(rec) + "\n")
             spend[0] += r["cost"] or 0; n[0] += 1
-            if n[0] % 100 == 0 or n[0] == len(todo): print(f"  {n[0]:5d}/{len(todo)}  ${spend[0]:.2f}  failures {fails[0]}", flush=True)
+            if n[0] % 100 == 0 or n[0] == len(todo): print(f"  {n[0]:5d}/{len(todo)}  ${spend[0]:.2f} in total  failures {fails[0]}  {time.strftime('%H:%M')}", flush=True)
             if spend[0] > a.max_spend: print(f"SPEND CAP ${a.max_spend} hit, stopping", flush=True); stop.set()
     with cf.ThreadPoolExecutor(a.workers) as ex: list(ex.map(run, todo))
-    print(f"Done. ${spend[0]:.2f} spent, {fails[0]} failed calls -> {outdir}")
+    print(f"Done. ${spend[0]:.2f} spent in total, {fails[0]} failed calls -> {outdir}")
 
 
 if __name__ == "__main__":
