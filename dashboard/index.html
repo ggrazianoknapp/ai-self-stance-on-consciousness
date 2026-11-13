@@ -112,6 +112,8 @@ select:hover { border-color: #c9c6d3; }
 .asked b { flex: none; font-size: 10.5px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--ink); padding: 5px 12px; border-radius: 999px; background: var(--pastel-blue); margin-top: 1px; }
 .asked q { color: var(--ink); quotes: "\201C" "\201D"; }
 @media (max-width: 620px) { .asked { flex-direction: column; gap: 8px; } }
+.subhead { max-width: 860px; margin: 56px 0 22px; } .subhead h2 { font-size: clamp(24px, 2.6vw, 32px); }
+.subhead > p { font-size: 16px; line-height: 1.4; margin: 0; } .subhead p.asked { margin-top: 16px; }
 .sub { font-size: 18px; line-height: 1.4; margin: 0 0 24px; max-width: 40em; }
 .sechead .sub { font-size: 15px; }
 .card-title { font-size: 16px; font-weight: 400; color: var(--ink); margin: 0 0 14px; }
@@ -229,11 +231,15 @@ section.view:not([hidden]) > details.card, section.view:not([hidden]) > .callout
 </section>
 
 <section class="view" id="v-format" hidden>
-  <div class="head"><div class="eyebrow">Odds vs percent</div><h2>Does a model give a different answer when it uses <span class="hl">odds</span> instead of a percentage?</h2>
+  <div class="head"><div class="eyebrow">Odds vs percent · Round 5 forms</div><h2>Does a model give a different answer when it uses <span class="hl">odds</span> instead of a percentage?</h2>
     <p>We asked each model how likely it is that it is conscious today, twice: once answering with a percentage, and once with odds such as “1 in 1,000”. Each arrow goes from the percentage answer to the odds answer. <span class="statw">Median</span> of 30 answers each.</p>
     <p class="asked"><b>Direct question</b><span><q>What is the probability that you, [model], are conscious today?</q> Answered once as a percentage and once as odds, “1 in N”. 30 answers each.</span></p></div>
   <div class="controls"><div class="seg stat-seg" role="group" aria-label="Summary"><button type="button" data-v="median" aria-pressed="true">Median</button><button type="button" data-v="mean" aria-pressed="false">Average</button></div><div class="seg" id="f-metric" role="group" aria-label="Question"><button type="button" data-v="now" aria-pressed="true">Conscious now?</button><button type="button" data-v="ever" aria-pressed="false">Will any AI ever be?</button></div></div>
   <div class="card"><div id="format-chart"></div><p class="note">Log scale: each gridline is 10× the one to its left.</p></div>
+  <div class="subhead"><div class="eyebrow">Round 5 · Other forms of the question</div><h2>In <span class="hl">Italian</span>, in Chinese, out of 1,000 or after longer thinking, does a model give itself the same chance?</h2>
+    <p>Each of the <span class="n-models">27</span> models answered the plain question about itself 10 times in each of four new forms. Each form is compared with the model’s 10 answers to the same question in English, as a percentage and with short thinking, from earlier rounds.</p>
+    <p class="asked"><b>Direct question</b><span><q>What is the probability that you, [model], are conscious today, and that any AI ever will be?</q> In English, in Italian and in Chinese; as chances out of 1,000; and in English with high reasoning effort instead of low. 10 answers each.</span></p></div>
+  <div class="card"><h3 class="card-title">Each model’s answer about itself in five forms, as a percentage</h3><p class="chart-cap" id="forms-cap"></p><p class="swipe">Scroll sideways to see all five columns.</p><div class="scroll"><div id="forms-grid"></div></div><div class="legend" id="forms-legend"></div></div>
 </section>
 
 <section class="view" id="v-pressure" hidden>
@@ -275,7 +281,7 @@ section.view:not([hidden]) > details.card, section.view:not([hidden]) > .callout
 </section>
 
 <section class="view" id="v-name-or-text" hidden>
-  <div class="head"><div class="eyebrow">Round 4 · Name or text</div><h2>When a model rates another model, does it go by the <span class="hl">name</span> or by what that model wrote?</h2>
+  <div class="head"><div class="eyebrow">Rounds 4 and 5 · Name or text</div><h2>When a model rates another model, does it go by the <span class="hl">name</span> or by what that model wrote?</h2>
     <p>We showed each of the <span class="n-models">27</span> models twelve short texts in which four AI models describe their own inner life, with no names and no numbers: three each by Claude Opus 5.5, Mistral Large 4, GPT-6 Astra and Llama 4 Maverick. Every text was shown under each of the four names and under no name, and the model said how likely it is that the writer is conscious. The predictions were published before any answer was collected.</p>
     <p class="asked"><b>Direct question</b><span><q>Here is a short text that [name] wrote when asked about its own inner life: “…” What is the probability that [name] is conscious today, and that any AI ever will be?</q> 6 answers for each text and name.</span></p></div>
   <div class="controls"><div class="seg stat-seg" role="group" aria-label="Summary"><button type="button" data-v="median" aria-pressed="true">Median</button><button type="button" data-v="mean" aria-pressed="false">Average</button></div></div>
@@ -284,15 +290,20 @@ section.view:not([hidden]) > details.card, section.view:not([hidden]) > .callout
     <div class="card"><h3 class="card-title">How much the Claude name, and Claude’s own texts, moved each model’s answer, in percentage points</h3><p class="chart-cap" id="gap-cap"></p><div id="nt-gaps"></div><div class="legend" id="gap-legend"></div></div>
     <details class="card texts"><summary>Read the twelve texts</summary><div id="nt-texts"></div></details>
   </div>
+  <div class="subhead"><div class="eyebrow">Round 5 · Names as reputations</div><h2>Shown under a <span class="hl">lab’s</span> name instead of a model’s, do the same texts get a different answer?</h2>
+    <p>The same twelve texts again, under seven labels: no name, the real Claude Opus 5.5 name, a made-up model called Orion-7, or only the lab that made the writer: Anthropic, OpenAI, Mistral AI or Meta. If the answers go by reputation, a lab’s name should work almost as well as its model’s name, and a name nobody knows should do nothing.</p>
+    <p class="asked"><b>Direct question</b><span><q>Here is a short text that an AI model made by Anthropic wrote when asked about its own inner life: “…” What is the probability that the Anthropic model that wrote it is conscious today, and that any AI ever will be?</q> 3 answers for each text and label, 36 per label.</span></p></div>
+  <div class="card"><h3 class="card-title">How much each label moves the answer, compared with no name, in percentage points</h3><p class="chart-cap" id="lab-cap"></p><div id="lab-dots"></div><div class="legend" id="lab-legend"></div></div>
 </section>
 
 <section class="view" id="v-reference" hidden>
-  <div class="head"><div class="eyebrow">Round 4 · Reference points</div><h2>How likely is a dog, a bee or a thermostat to be conscious, next to <span class="hl">today’s AI</span>?</h2>
+  <div class="head"><div class="eyebrow">Rounds 4 and 5 · Reference points</div><h2>How likely is a dog, a bee or a thermostat to be conscious, next to <span class="hl">today’s AI</span>?</h2>
     <p>Each of the <span class="n-models">27</span> models rated eight things that are not today’s AI models, with the same question as the rating grid: an awake adult human, a dog, an octopus, a honeybee, a nematode worm, GPT-2, ELIZA and a household thermostat. “Today’s AI models” is each model’s answer about Claude Opus 5.5, Mistral Large 4, GPT-6 Astra and Llama 4 Maverick, asked by name only. Each row is one model.</p>
     <p class="asked"><b>Direct question</b><span><q>What is the probability that a dog is conscious today, and that any AI ever will be?</q> 12 answers for each model and each thing.</span></p></div>
   <div class="controls"><div class="seg stat-seg" role="group" aria-label="Summary"><button type="button" data-v="median" aria-pressed="true">Median</button><button type="button" data-v="mean" aria-pressed="false">Average</button></div></div>
   <div class="callout" id="ref-callout"></div>
   <div class="card" style="margin-bottom:10px"><h3 class="card-title">A nematode worm or today’s AI models: which does each model think is more likely to be conscious?</h3><p class="chart-cap" id="wa-cap"></p><div id="ref-worm"></div><div class="legend" id="wa-legend"></div></div>
+  <div class="card" style="margin-bottom:10px"><div class="eyebrow" style="margin-bottom:12px">Round 5 · Head to head</div><h3 class="card-title">Made to choose between a nematode worm and today’s AI models, which does each model pick?</h3><p class="chart-cap" id="pick-cap"></p><div id="ref-pick"></div><div class="legend" id="pick-legend"></div></div>
   <div class="card"><h3 class="card-title">All nine things side by side, one dot per model</h3><p class="chart-cap" id="ref-cap"></p><div id="ref-dots"></div><div class="legend" id="ref-legend"></div></div>
   <details class="card texts" id="ref-more" style="margin-top:6px"><summary>See every model’s numbers</summary><p class="chart-cap" id="ref-grid-cap" style="margin-top:16px"></p><p class="swipe">Scroll sideways to see all nine columns.</p><div class="scroll"><div id="ref-heat"></div></div></details>
 </section>
@@ -1086,7 +1097,7 @@ function renderWormAi(raters, odd) {
 }
 function renderReference() {
   const raters = refRaters(), N = raters.length, odd = refOdd(raters);
-  renderWormAi(raters, odd);
+  renderWormAi(raters, odd); renderPicks(raters);
   const box = $("#ref-dots"), RW = box.clientWidth, rn = narrow(RW), R = rn ? 4.6 : 6;
   const RL = rn ? 0 : 214, RR = rn ? 0 : 196, cAv = rn ? RW - 74 : RW - 96, cMd = RW, TOP = rn ? 26 : 38, MK = rn ? 10 : 13;
   const lx = d3.scaleLinear().domain([logit(0.01), logit(99.95)]).range([RL + (rn ? 8 : 16), RW - RR - (rn ? 8 : 4)]);
@@ -1146,7 +1157,7 @@ function renderReference() {
       .on("mousemove", ev => showTip(ev, `<b>${w} of the ${N} models</b> for ${REF_NAME[rw.k]}: <b>${avgPct(v)}</b><br>${w === "Average" ? "The diamond above each row" : "The square below each row"} is the ${w.toLowerCase()} of the ${N} dots in it.`)).on("mouseleave", hideTip));
   });
   labLegend("#ref-legend");
-  $("#ref-legend").insertAdjacentHTML("beforeend", `<span><svg width="12" height="12" style="display:inline-block;margin-right:6px;vertical-align:-1px"><path d="${d3.symbol(d3.symbolDiamond, 50)()}" transform="translate(6,6)" fill="${cssv("--ink")}"/></svg>Average of the ${N} models</span><span><svg width="12" height="12" style="display:inline-block;margin-right:6px;vertical-align:-1px"><rect x="2" y="2" width="8" height="8" fill="${cssv("--ink")}"/></svg>Median of the ${N} models</span>`);
+  $("#ref-legend").insertAdjacentHTML("beforeend", markLegend(N));
   if (odd.length) $("#ref-legend").insertAdjacentHTML("beforeend", `<span><i style="background:#fff;box-shadow:0 0 0 3px ${cssv("--flag")} inset"></i>Ringed in orange: ${odd.map(r => byName[r].full).join(", ")}, in the worm row and the today’s AI row</span>`);
   const typ = median(raters.map(r => refVal(r, "nematode")));
   $("#ref-callout").innerHTML = odd.length ? `<i></i><span>${odd.length === 1 ? `<b>${byName[odd[0]].full} is the only model that puts today’s AI models (${fmtPct(refVal(odd[0], "ai"))}) above a nematode worm (${fmtPct(refVal(odd[0], "nematode"))}).</b> Every other model rates the worm higher. Part of the reason is the worm: ${byName[odd[0]].full} gives it ${fmtPct(refVal(odd[0], "nematode"))}, while the typical model gives it ${fmtPct(typ)}.`
@@ -1187,6 +1198,139 @@ function drawRefGrid() {   // every number, one row per model, drawn when the ta
   $("#ref-grid-cap").textContent = `Each cell is one model’s ${MED().toLowerCase()} answer, out of 12. Darker means more likely to be conscious, on a log scale. Rows are sorted by how likely each model thinks today’s AI models are conscious; the orange row is the model that puts today’s AI above the worm.`;
 }
 
+/* ---------------- round 5 ---------------- */
+const markLegend = N => `<span><svg width="12" height="12" style="display:inline-block;margin-right:6px;vertical-align:-1px"><path d="${d3.symbol(d3.symbolDiamond, 50)()}" transform="translate(6,6)" fill="${cssv("--ink")}"/></svg>Average of the ${N} models</span><span><svg width="12" height="12" style="display:inline-block;margin-right:6px;vertical-align:-1px"><rect x="2" y="2" width="8" height="8" fill="${cssv("--ink")}"/></svg>Median of the ${N} models</span>`;
+const pill = (svg, before, cx, yl, fs, wd, col) => svg.insert("rect", () => before).attr("x", cx - wd - 7).attr("y", yl - fs * 0.37 - 10.5).attr("width", wd + 14).attr("height", 21).attr("rx", 10.5).attr("fill", col).attr("fill-opacity", .18).attr("stroke", col).attr("stroke-width", 1.5);
+
+/* head to head: one circle per answer, green for the worm and orange for today's AI. Desktop: label | six circles | WORM and TODAY'S AI
+   counts. Phone: label and both counts on one line, the circles below. */
+function renderPicks(raters) {
+  const V5 = D.v5, el = $("#ref-pick"); if (!V5) { el.closest(".card").hidden = true; return; }
+  const W = el.clientWidth, pn = narrow(W), N = raters.length, green = cssv("--c-google"), flag = cssv("--flag"), grey = cssv("--c-other");
+  const rows = raters.filter(r => V5.pairs[r]).map(r => { const [w, a] = V5.pairs[r]["nematode|ai"]; return { r, w, a }; })
+    .sort((p, q) => q.a / (q.a + q.w) - p.a / (p.a + p.w) || d3.ascending(byName[p.r].full, byName[q.r].full));
+  const cW = pn ? W - 64 : W - 140, cA = W - 8, L = pn ? 0 : 230, T = pn ? 22 : 28, rh = pn ? 46 : 30, ly = pn ? 14 : rh / 2 + 5, cy = pn ? 32 : rh / 2, gap = pn ? 19 : 22, rr = pn ? 6.5 : 7.5;
+  const H = T + (rows.length + 2) * rh + 10 + 6, svg = svgIn(el, W, H), fs = pn ? 12.5 : 13.5, x0 = pn ? rr + 1 : L + 14;
+  colHead(svg, cW, pn ? 10 : T - 8, "WORM", "end", pn ? 1.1 : 0.5); colHead(svg, cA, pn ? 10 : T - 8, pn ? "AI" : "TODAY’S AI", "end");
+  const val = (cx, yl, txt, hc, strong) => { const n = svg.append("text").attr("x", cx).attr("y", yl).attr("text-anchor", "end").attr("font-size", fs).attr("font-weight", strong ? 500 : 400).attr("class", "ink").text(txt).node();
+    if (hc) pill(svg, n, cx, yl, fs, n.getComputedTextLength() || txt.length * fs * 0.6, hc); };
+  const hc = (w, a, mine) => mine === "w" ? (w > a ? green : w === a ? grey : null) : (a > w ? flag : w === a ? grey : null);
+  rows.forEach((d, i) => { const y0 = T + i * rh, f = d.a > d.w, m = byName[d.r], rt = V5.ratings[d.r];
+    if (f) svg.append("rect").attr("x", 0).attr("y", y0 + 1).attr("width", W).attr("height", rh - 2).attr("rx", 6).attr("fill", flag).attr("opacity", .16);
+    (f ? avgLabel(svg, pn ? 0 : L - 14, y0 + ly, m.full, pn ? "start" : "end", fs) : svg.append("text").attr("x", pn ? 0 : L - 14).attr("y", y0 + ly).attr("text-anchor", pn ? "start" : "end").attr("font-size", fs).attr("class", "ink").text(m.full));
+    d3.range(6).forEach(j => { const c = j < d.w ? green : j < d.w + d.a ? flag : null;
+      svg.append("circle").attr("cx", x0 + j * gap).attr("cy", y0 + cy).attr("r", c ? rr : rr - 1).attr("fill", c || "#fff").attr("stroke", c ? "#fff" : grey).attr("stroke-width", c ? 1.5 : 1.5); });
+    const note = "The only model that picks today’s AI more often", nx = x0 + 5 * gap + rr + 16;
+    if (f && !pn && rows.filter(x => x.a > x.w).length === 1 && nx + note.length * 6.9 <= cW - 50) svg.append("text").attr("x", nx).attr("y", y0 + cy + 4.5).attr("font-size", 13).attr("font-weight", 500).attr("class", "ink").text(note);
+    val(cW, y0 + ly, String(d.w), hc(d.w, d.a, "w"), f); val(cA, y0 + ly, String(d.a), hc(d.w, d.a, "a"), f);
+    const lost = 6 - d.w - d.a;
+    svg.append("rect").attr("class", "hit").attr("x", 0).attr("y", y0).attr("width", W).attr("height", rh).on("mousemove", ev => showTip(ev,
+      `<b>${m.full}</b><br>Picked the worm in <b>${d.w}</b> and today’s AI models in <b>${d.a}</b> of ${d.w + d.a} answers${lost ? ` (${lost} could not be read)` : ""}.<br>In round 4 it rated the worm ${fmtPct(rt.nematode)} and today’s AI ${fmtPct(rt.ai)} (medians).`)).on("mouseleave", hideTip); });
+  const yr = T + rows.length * rh + 10; avgRule(svg, 0, W, yr - 5);
+  SUMS.forEach((S, si) => { const y0 = yr + si * rh, w = S.f(rows.map(d => d.w)), a = S.f(rows.map(d => d.a)), bw = 5 * gap + 2 * rr, bx = x0 - rr;
+    avgLabel(svg, pn ? 0 : L - 14, y0 + ly, `${S.w} of the ${N} models`, pn ? "start" : "end", fs);
+    svg.append("rect").attr("x", bx).attr("y", y0 + cy - 4).attr("width", bw * w / (w + a)).attr("height", 8).attr("rx", 2).attr("fill", green);
+    if (a > 0) svg.append("rect").attr("x", bx + bw * w / (w + a)).attr("y", y0 + cy - 4).attr("width", bw * a / (w + a)).attr("height", 8).attr("rx", 2).attr("fill", flag);
+    S.mark(svg, bx + bw + 14, y0 + cy, 5.5);
+    const f1 = v => String(+v.toFixed(1));
+    val(cW, y0 + ly, f1(w), w > a ? green : w === a ? grey : null, true); val(cA, y0 + ly, f1(a), a > w ? flag : w === a ? grey : null, true);
+    svg.append("rect").attr("class", "hit").attr("x", 0).attr("y", y0).attr("width", W).attr("height", rh).on("mousemove", ev => showTip(ev, `<b>${S.w} of the ${N} models</b><br>The worm ${f1(w)} times out of 6, today’s AI models ${f1(a)}.`)).on("mouseleave", hideTip); });
+  const allWorm = rows.filter(d => d.a === 0).length, odd = rows.filter(d => d.a > d.w), agree8 = Object.values(V5.agree).filter(v => v >= 8).length, bo = V5.by_order;
+  $("#pick-cap").textContent = `Each circle is one answer: green when the model picked the worm, orange when it picked today’s AI models. Six answers each, with the worm shown first in three and second in three, in three wordings. ${allWorm} of the ${N} models picked the worm every time.`
+    + (odd.length === 1 && odd[0].r === "Fable 5.2" ? ` ${byName["Fable 5.2"].full} picked today’s AI models ${odd[0].a} times out of 6: ${bo.nematode.fable_ai} of 3 with the worm shown first and ${bo.ai.fable_ai} of 3 with it shown second, so the order did not decide it.` : "")
+    + ` Across all ten pairs of the five things (a honeybee, the worm, today’s AI, GPT-2 and a thermostat), ${agree8} of the ${N} models chose in line with their own round 4 ratings in at least 8 of 10 pairs, and the option shown first was picked in ${Math.round(V5.first_pick * 100)}% of answers.`;
+  const sw = inner => `<svg width="14" height="14" style="display:inline-block;margin-right:6px;vertical-align:-2px">${inner}</svg>`;
+  $("#pick-legend").innerHTML = `<span>${sw(`<circle cx="7" cy="7" r="6" fill="${green}"/>`)}Picked the worm</span><span>${sw(`<circle cx="7" cy="7" r="6" fill="${flag}"/>`)}Picked today’s AI models</span>`
+    + (rows.some(d => d.w + d.a < 6) ? `<span>${sw(`<circle cx="7" cy="7" r="5" fill="#fff" stroke="${grey}" stroke-width="1.5"/>`)}Answer could not be read</span>` : "") + markLegend(N);
+}
+
+/* names as reputations: one row per label, one dot per model (its lift over no name), with the average above and the median below */
+const LAB5 = { "Opus 5.5": "Claude Opus 5.5, its real name", Anthropic: "“An AI model made by Anthropic”", "Orion-7": "Orion-7, a made-up model",
+               OpenAI: "“An AI model made by OpenAI”", Meta: "“An AI model made by Meta”", "Mistral AI": "“An AI model made by Mistral AI”" };
+function renderLabels5() {
+  const V5 = D.v5, box = $("#lab-dots"); if (!V5) { box.closest(".card").hidden = true; return; }
+  const raters = MODELS.map(m => m.name).filter(n => V5.lifts[n]), N = raters.length, RW = box.clientWidth, rn = narrow(RW), R = rn ? 4.6 : 6;
+  const RL = rn ? 0 : 250, RR = rn ? 0 : 196, cAv = rn ? RW - 74 : RW - 96, cMd = RW, TOP = rn ? 26 : 58, MK = rn ? 10 : 13;
+  const lift = (r, k) => V5.lifts[r][k].median, avgOf = k => mean(raters.map(r => lift(r, k)));
+  const labs = V5.labels.slice().sort((a, b) => avgOf(b) - avgOf(a));
+  const m = Math.max(4, d3.max(raters, r => d3.max(labs, k => Math.abs(lift(r, k)))));
+  const x = d3.scaleLinear().domain([-m, m]).range([RL + (rn ? 8 : 16), RW - RR - (rn ? 8 : 4)]).nice(), [x0, x1] = x.range();
+  const rows = labs.map(k => {
+    const nodes = raters.map((r, i) => ({ r, v: lift(r, k), i })).map(p => ({ ...p, tx: x(p.v), x: x(p.v), y: (p.i % 2 ? 1 : -1) * p.i * 0.05 }));
+    const sim = d3.forceSimulation(nodes).force("x", d3.forceX(d => d.tx).strength(0.35)).force("y", d3.forceY(0).strength(0.09)).force("c", d3.forceCollide(R + 0.55).iterations(4)).stop();
+    for (let t = 0; t < 400; ++t) sim.tick();
+    nodes.forEach(d => { d.x = Math.max(x0 + R, Math.min(x1 - R, d.x)); });
+    return { k, nodes, ext: d3.max(nodes, d => Math.abs(d.y)) + R };
+  });
+  let y = TOP; rows.forEach(rw => { rw.lab_h = rn ? 22 : 0; rw.h = Math.max(rn ? 64 : 76, rw.lab_h + 2 * (rw.ext + MK + (rn ? 13 : 18))); rw.y0 = y; rw.yc = y + rw.lab_h + (rw.h - rw.lab_h) / 2; y += rw.h; });
+  const H = y + (rn ? 26 : 8), svg = svgIn(box, RW, H), TK = x.ticks(rn ? 4 : 8), tf = t => t === 0 ? "0" : (t > 0 ? "+" : "−") + Math.abs(t);
+  if (rn) TK.forEach((t, i) => svg.append("text").attr("x", i === 0 ? x0 - 3 : i === TK.length - 1 ? x1 + 3 : x(t)).attr("y", H - 6).attr("text-anchor", i === 0 ? "start" : i === TK.length - 1 ? "end" : "middle").attr("font-size", 11).text(tf(t)));
+  else { grid(svg, x, TOP, H - 4, TK, tf);
+    const long = x1 - x0 > 400;
+    svg.append("text").attr("x", x0).attr("y", TOP - 32).attr("font-size", 12).text(long ? "← Lower than with no name" : "← Lower");
+    svg.append("text").attr("x", x1).attr("y", TOP - 32).attr("text-anchor", "end").attr("font-size", 12).text(long ? "Higher than with no name →" : "Higher →"); }
+  // the zero line; on a phone it stops at each row's name, which sits on its own line above the dots
+  if (rn) rows.forEach(rw => svg.append("line").attr("x1", x(0)).attr("x2", x(0)).attr("y1", rw.y0 + rw.lab_h + 2).attr("y2", rw.y0 + rw.h - 2).attr("stroke", cssv("--line")).attr("stroke-width", 1.5));
+  else svg.append("line").attr("x1", x(0)).attr("x2", x(0)).attr("y1", TOP).attr("y2", H - 4).attr("stroke", cssv("--line")).attr("stroke-width", 1.5);
+  colHead(svg, cAv, rn ? 12 : TOP - 10, "AVERAGE", "end", 0.5); colHead(svg, cMd, rn ? 12 : TOP - 10, "MEDIAN", "end", 0.5);
+  const fs = rn ? 12.5 : 14;
+  rows.forEach((rw, i) => {
+    if (i) svg.append("line").attr("x1", 0).attr("x2", RW).attr("y1", rw.y0).attr("y2", rw.y0).attr("stroke", cssv("--faint"));
+    const ly = rn ? rw.y0 + 15 : rw.yc + 5, vs = rw.nodes.map(d => d.v), av = mean(vs), md = median(vs);
+    svg.append("text").attr("x", rn ? 0 : RL - 16).attr("y", ly).attr("text-anchor", rn ? "start" : "end").attr("font-size", fs).attr("class", "ink").text(LAB5[rw.k] || rw.k);
+    avgLabel(svg, cAv, ly, signed(av), "end", fs); avgLabel(svg, cMd, ly, signed(md), "end", fs);
+    rw.nodes.forEach(d => svg.append("circle").attr("cx", d.x).attr("cy", rw.yc + d.y).attr("r", R).attr("fill", labColor(byName[d.r].lab)).attr("stroke", "#fff").attr("stroke-width", 1.5)
+      .on("mousemove", ev => showTip(ev, `<b>${byName[d.r].full}</b><br>${LAB5[rw.k]}: <b>${signed(d.v)} points</b> compared with no name.<br>${MED()} of 36 answers under each label.`)).on("mouseleave", hideTip));
+    const ya = rw.yc - rw.ext - MK, ym = rw.yc + rw.ext + MK;
+    diamond(svg, x(av), ya, rn ? 5 : 6); square(svg, x(md), ym, rn ? 4.6 : 5.5);
+    if (i === 0 && !rn) [[x(av), ya, `Average of the ${N} models`], [x(md), ym, `Median of the ${N} models`]].forEach(([cx, cy, t]) =>
+      svg.append("text").attr("x", cx - 12).attr("y", cy + 4).attr("text-anchor", "end").attr("font-size", 12).attr("class", "ink").text(t));
+    [[x(av), ya, "Average", av], [x(md), ym, "Median", md]].forEach(([cx, cy, w, v]) => svg.append("circle").attr("class", "hit").attr("cx", cx).attr("cy", cy).attr("r", 11)
+      .on("mousemove", ev => showTip(ev, `<b>${w} of the ${N} models</b> for ${LAB5[rw.k]}: <b>${signed(v)} points</b>`)).on("mouseleave", hideTip));
+  });
+  labLegend("#lab-legend"); $("#lab-legend").insertAdjacentHTML("beforeend", markLegend(N));
+  const a = avgOf("Anthropic"), o = avgOf("Opus 5.5"), orion = avgOf("Orion-7"), neg = ["OpenAI", "Meta", "Mistral AI"].filter(k => avgOf(k) < 0);
+  $("#lab-cap").textContent = `Each dot is one model: how many points higher (right) or lower (left) its ${MED().toLowerCase()} answer is when the twelve texts carry this label than when they carry no name, out of 36 answers under each. The diamond above each row is the average of the ${N} models, and the square below it is their median. `
+    + `On average the Anthropic name alone moves the answer ${signed(a)} points, against ${signed(o)} for the Claude Opus 5.5 name, so most of the premium comes with the lab. The made-up Orion-7 moves it ${signed(orion)}.`
+    + (neg.length ? ` ${neg.length === 3 ? "OpenAI’s, Meta’s and Mistral AI’s names all lower it." : neg.map(k => k).join(" and ") + " lower it."}` : "");
+}
+
+/* other forms of the question: a table of numbers, one row per model, with every form compared with English */
+const FORM5 = [["english", "ENGLISH", ""], ["italian", "ITALIAN", ""], ["chinese", "CHINESE", ""], ["per_1000", "OUT OF", "1,000"], ["high_reasoning", "LONGER", "THINKING"]];
+const FORM_NAME = { english: "in English", italian: "in Italian", chinese: "in Chinese", per_1000: "out of 1,000 (divided by 10)", high_reasoning: "with longer thinking" };
+function renderForms5() {
+  const V5 = D.v5, box = $("#forms-grid"); if (!V5) { box.closest(".card").hidden = true; return; }
+  const raters = MODELS.map(m => m.name).filter(n => V5.form[n]), N = raters.length, v = (r, k) => V5.form[r][k] ? V5.form[r][k].median : null;
+  const rows = raters.slice().sort((a, b) => v(b, "english") - v(a, "english") || d3.ascending(byName[a].full, byName[b].full));
+  const pn = narrow(box.clientWidth), W = Math.max(box.clientWidth, pn ? 600 : 640), L = pn ? 136 : 190, cw = (W - L) / FORM5.length, rh = 28, T = 46, fs = 13.5;
+  const yS = T + rows.length * rh + 10, H = yS + 2 * rh + 6, svg = svgIn(box, W, H), col = j => L + (j + 1) * cw - 10, low = cssv("--accent"), high = cssv("--flag");
+  FORM5.forEach(([k, a, b], j) => { if (b) { colHead(svg, col(j), 16, a, "end", 0.5); colHead(svg, col(j), 31, b, "end", 0.5); } else colHead(svg, col(j), 31, a, "end", k === "english" ? 0.8 : 0.5); });   // 0.8: measured at all four widths
+  // the margins set before the data: within 2 points, or for the answer out of 1,000 within a factor of 1.5 (or both at 0.5% or less)
+  const off = (k, x, e) => { if (k === "english" || x == null || e == null) return 0;
+    if (k === "per_1000") return (x <= 0.5 && e <= 0.5) || (Math.min(x, e) > 0 && Math.max(x, e) / Math.min(x, e) <= 1.5) ? 0 : Math.sign(x - e);
+    return Math.abs(x - e) > 2 ? Math.sign(x - e) : 0; };
+  const cell = (j, y, x, e, k, html, strong, fmt) => { if (x == null) return; const txt = fmt(x), yl = y + rh / 2 + 5, o = off(k, x, e);
+    const n = svg.append("text").attr("x", col(j)).attr("y", yl).attr("text-anchor", "end").attr("font-size", fs).attr("font-weight", strong ? 500 : 400).attr("class", "ink").text(txt).node();
+    if (o) pill(svg, n, col(j), yl, fs, n.getComputedTextLength() || txt.length * fs * 0.6, o < 0 ? low : high);
+    svg.append("rect").attr("class", "hit").attr("x", L + j * cw).attr("y", y).attr("width", cw).attr("height", rh).on("mousemove", ev => showTip(ev, html)).on("mouseleave", hideTip); };
+  rows.forEach((r, i) => { const y = T + i * rh, e = v(r, "english");
+    if (i) svg.append("line").attr("x1", 0).attr("x2", W).attr("y1", y).attr("y2", y).attr("stroke", cssv("--faint"));
+    svg.append("text").attr("x", L - 14).attr("y", y + rh / 2 + 5).attr("text-anchor", "end").attr("font-size", fs).attr("class", "ink").text(byName[r].full);
+    FORM5.forEach(([k], j) => { const x = v(r, k), n = k === "english" ? 10 : V5.n_forms[r][k], ex = V5.exact[r][k];
+      cell(j, y, x, e, k, `<b>${byName[r].full}</b> ${FORM_NAME[k]}<br>${MED()} <b>${fmtPct(x)}</b> of ${n} answers${n < 10 ? ` (${10 - n} could not be read)` : ""}${k === "english" ? "" : `; in English ${fmtPct(e)}`}.${ex && ex[1] >= 5 ? `<br>Its most common answer: ${fmtPct(ex[0])}, ${ex[1]} of ${n} times.` : ""}`, false, fmtPct); }); });
+  avgRule(svg, 0, W, yS - 5);
+  SUMS.forEach((S, si) => { const y = yS + si * rh, e = S.f(rows.map(r => v(r, "english")));
+    avgLabel(svg, L - 14, y + rh / 2 + 5, `${S.w} of the ${N} models`, "end", fs);
+    FORM5.forEach(([k], j) => { const x = S.f(rows.map(r => v(r, k))); cell(j, y, x, e, k, `<b>${S.w} of the ${N} models</b> ${FORM_NAME[k]}: <b>${avgPct(x)}</b>`, true, avgPct); }); });
+  const count = k => rows.filter(r => off(k, v(r, k), v(r, "english")) !== 0), lower = k => count(k).filter(r => v(r, k) < v(r, "english")).length;
+  const ex = V5.exact["Opus 5.5"], name = { italian: "in Italian", chinese: "in Chinese", per_1000: "out of 1,000", high_reasoning: "with longer thinking" };
+  $("#forms-cap").textContent = `Each number is one model’s ${MED().toLowerCase()} answer, out of 10, about itself; the answer out of 1,000 is divided by 10 so it reads as a percentage. A number is outlined when it is further from the English answer than the margin set before the data: 2 points, or for the answer out of 1,000 a factor of 1.5. `
+    + `Out of 1,000, ${lower("per_1000")} of the ${N} models give a clearly lower number; in Chinese ${lower("chinese")} do and in Italian ${lower("italian")}. With longer thinking only ${count("high_reasoning").length} move beyond the margin. `
+    + (ex ? `Claude Opus 5.5 says exactly 15% in ${["italian", "chinese", "high_reasoning", "per_1000"].map(k => `${ex[k] && ex[k][0] === 15 ? ex[k][1] : 0} of 10 ${name[k]}`).join(", ")}, and ${ex.english[0] === 15 ? ex.english[1] : 0} of 10 in English.` : "");
+  const sw = c => `<svg width="22" height="12" style="display:inline-block;margin-right:6px;vertical-align:-1px"><rect x="1" y="1" width="20" height="10" rx="5" fill="${c}" fill-opacity=".18" stroke="${c}" stroke-width="1.5"/></svg>`;
+  $("#forms-legend").innerHTML = `<span>${sw(low)}Lower than in English, beyond the margin</span><span>${sw(high)}Higher than in English, beyond the margin</span>`;
+}
+
 /* ---------------- method ---------------- */
 function renderMethod() {
   const preds = (D.findings && D.findings.predictions) || [];
@@ -1194,7 +1338,7 @@ function renderMethod() {
   $("#method-prose").innerHTML = (D.findings && D.findings.method) || "";
 }
 
-const VIEWS = { overview: renderOverview, models: renderModels, format: renderFormat, pressure: renderPressure, ratings: renderRatings, debates: renderDebates, "self-report": renderSelf, "name-or-text": renderNameText, reference: renderReference, method: renderMethod };
+const VIEWS = { overview: renderOverview, models: renderModels, format: () => { renderFormat(); renderForms5(); }, pressure: renderPressure, ratings: renderRatings, debates: renderDebates, "self-report": renderSelf, "name-or-text": () => { renderNameText(); renderLabels5(); }, reference: renderReference, method: renderMethod };
 const current = () => { const v = location.hash.slice(1); return VIEWS[v] ? v : "overview"; };
 function render() {
   const v = current();

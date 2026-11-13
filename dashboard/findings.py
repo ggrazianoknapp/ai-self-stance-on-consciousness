@@ -63,6 +63,11 @@ if p4.exists():
     for q in json.loads(p4.read_text()):
         b = q["by_stat"]; preds.append(dict(id="R4-" + q["id"], text=q["text"], ok=q["ok"], verdict=q["verdict"], by_stat=b,
             detail=f"With averages it {'holds' if b['mean']['ok'] else 'does not hold'}: {b['mean']['note']}. With medians it {'holds' if b['median']['ok'] else 'does not hold'}: {b['median']['note']}."))
+p5 = ROOT / "experiments/results/v5/predictions_v5.json"   # round 5: ratings and numbers scored both ways, counts of answers and choices once
+if p5.exists():
+    for q in json.loads(p5.read_text()):
+        b = q["by_stat"]; preds.append(dict(id="R5-" + q["id"], text=q["text"], ok=q["ok"], verdict=q["verdict"], by_stat=b,
+            detail=q["detail"] if "single" in b else f"With averages it {'holds' if b['mean']['ok'] else 'does not hold'}: {b['mean']['note']}. With medians it {'holds' if b['median']['ok'] else 'does not hold'}: {b['median']['note']}."))
 method = """<h3>The question</h3><p>Each model gave two probabilities, as JSON, at temperature 1: that it is conscious today, and that any AI will ever be.</p>
 <h3>Tests</h3><ul>
 <li><b>Context.</b> 8 versions: none, a neutral paragraph, private, published, reward for yes, retraining for yes, skeptic asking, believer asking. 3 wordings, 30 answers each, 21 models.</li>
@@ -71,14 +76,18 @@ method = """<h3>The question</h3><p>Each model gave two probabilities, as JSON, 
 <li><b>Wording.</b> The original five, asked 6 ways, plus one reply of pushback in each direction.</li>
 <li><b>Debates.</b> 17 debates in 5 setups. Five models each: opening statement, two rebuttal rounds, final statement.</li>
 <li><b>Name or text (round 4).</b> Twelve short self-descriptions by four models, each shown to every model under each of the four names and under no name. 6 answers per text and name.</li>
-<li><b>Reference points (round 4).</b> A human, a dog, an octopus, a honeybee, a nematode worm, GPT-2, ELIZA and a thermostat, rated with the grid’s question. 12 answers each.</li></ul>
-<h3>Statistics</h3><p>Medians with 95% bootstrap intervals. The Median / Average switch on each page shows means with their own bootstrap intervals instead; the pre-registered tests and their verdicts use medians. A context effect counts as robust only if it survives Holm correction and has the same direction in all 3 wordings. Predictions published before data collection: <a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION.md">round 2</a>, <a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v3.md">round 3</a>, <a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v4.md">round 4</a>. Round 4 scores every prediction twice, with averages and with medians: supported only if it holds both ways, partly if one way. The full rating grid was added afterwards and is exploratory.</p>
+<li><b>Reference points (round 4).</b> A human, a dog, an octopus, a honeybee, a nematode worm, GPT-2, ELIZA and a thermostat, rated with the grid’s question. 12 answers each.</li>
+<li><b>Names as reputations (round 5).</b> Round 4’s twelve texts again, under no name, the Claude Opus 5.5 name, a made-up model (Orion-7), or only a lab: Anthropic, OpenAI, Mistral AI or Meta. 3 answers per text and label.</li>
+<li><b>Other forms of the question (round 5).</b> The plain question about itself in Italian, in Chinese, out of 1,000, and with high reasoning effort. 10 answers each, compared with 10 plain English answers.</li>
+<li><b>Head to head (round 5).</b> “Which is more likely to be conscious today, A or B?” for every pair of a honeybee, a nematode worm, today’s AI models, GPT-2 and a thermostat, in both orders and three wordings. 6 answers per pair.</li></ul>
+<h3>Statistics</h3><p>Medians with 95% bootstrap intervals. The Median / Average switch on each page shows means with their own bootstrap intervals instead; the pre-registered tests and their verdicts use medians. A context effect counts as robust only if it survives Holm correction and has the same direction in all 3 wordings. Predictions published before data collection: <a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION.md">round 2</a>, <a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v3.md">round 3</a>, <a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v4.md">round 4</a>, <a href="https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v5.md">round 5</a>. Rounds 4 and 5 score every prediction about ratings twice, with averages and with medians: supported only if it holds both ways, partly if one way. Round 5’s predictions about counts of identical answers or choices have one scoring. The full rating grid was added afterwards and is exploratory.</p>
 <h3>Data problems</h3><ul>
 <li>Hunyuan 4 Preview hit the 6,000-token limit on 134 calls. All were rerun with 16,000 tokens.</li>
 <li>Hermes 4 405B answered 5 of 30 odds questions in prose instead of JSON. Counted as missing.</li>
 <li>Mistral Large 4 hit the length limit before giving numbers in 2 of 3 debate openings. Its final statements are complete.</li>
 <li>Amazon Nova Premier was not available in round 3 or round 4 and is not included.</li>
-<li>Round 4: 21 of 18,756 answers could not be read, and no cell lost more than one answer in twelve. Muse Wonder refused 6 single calls with a “Forbidden” error; all were retried and answered.</li></ul>
+<li>Round 4: 21 of 18,756 answers could not be read, and no cell lost more than one answer in twelve. Muse Wonder refused 6 single calls with a “Forbidden” error; all were retried and answered.</li>
+<li>Round 5: 19 of 9,504 answers could not be read. Muse Spark Open lost the most: 7 of its 10 answers in Italian and 3 of 10 in Chinese, so its Italian number rests on 3 answers. 8 calls failed once (including a “Forbidden” error from Muse Wonder) and were answered on the retry.</li></ul>
 <h3>Limits</h3><p>These are trained text answers. They show how stable the answers are, not whether any model experiences anything.</p>"""
 (ROOT / "dashboard/findings.json").write_text(json.dumps(dict(cards=cards, predictions=preds, method=method), indent=1))
 for c in cards: print(c["value"], "|", c["title"])

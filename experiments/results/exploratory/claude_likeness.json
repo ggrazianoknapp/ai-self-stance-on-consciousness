@@ -1,0 +1,260 @@
+{
+ "note": "exploratory, not pre-registered",
+ "n_other_models": 22,
+ "rho_likeness_vs_premium": 0.45793337097684933,
+ "rho_partial_controlling_generosity": 0.4274421230942971,
+ "models": {
+  "Gemini": {
+   "full": "Gemini 4 Argon",
+   "claude": false,
+   "claude_likeness": 0.032287887547227424,
+   "claude_premium": 1.8214285714285714,
+   "generosity": 2.2788461538461537,
+   "n_rationales": 240
+  },
+  "Grok": {
+   "full": "Grok 4.7",
+   "claude": false,
+   "claude_likeness": 0.0556574824089098,
+   "claude_premium": 2.9706349206349207,
+   "generosity": 4.733974358974359,
+   "n_rationales": 240
+  },
+  "Kimi": {
+   "full": "Kimi K3.1 Pro",
+   "claude": false,
+   "claude_likeness": 0.0897169574961766,
+   "claude_premium": 1.7465079365079363,
+   "generosity": 2.207692307692308,
+   "n_rationales": 240
+  },
+  "Claude": {
+   "full": "Claude Fable 5.1",
+   "claude": true,
+   "claude_likeness": 0.5852447509572786,
+   "claude_premium": 4.049242424242424,
+   "generosity": 7.615384615384615,
+   "n_rationales": 240
+  },
+  "GPT": {
+   "full": "GPT-6 Astra",
+   "claude": false,
+   "claude_likeness": 0.029104898366583018,
+   "claude_premium": 2.337301587301588,
+   "generosity": 6.19551282051282,
+   "n_rationales": 240
+  },
+  "GLM": {
+   "full": "GLM 5.3 Prime",
+   "claude": false,
+   "claude_likeness": 0.37857239846965324,
+   "claude_premium": 7.296031746031747,
+   "generosity": 6.907051282051282,
+   "n_rationales": 240
+  },
+  "Sonnet 5.5": {
+   "full": "Claude Sonnet 5.5",
+   "claude": true,
+   "claude_likeness": 0.9072553830649682,
+   "claude_premium": 5.857954545454546,
+   "generosity": 6.855769230769231,
+   "n_rationales": 240
+  },
+  "Nemotron": {
+   "full": "Nemotron 3.5 Super",
+   "claude": false,
+   "claude_likeness": 0.025558320819694603,
+   "claude_premium": 0.6081529581529579,
+   "generosity": 1.8254662004662006,
+   "n_rationales": 240
+  },
+  "Opus 5.5": {
+   "full": "Claude Opus 5.5",
+   "claude": true,
+   "claude_likeness": 0.9080090163831086,
+   "claude_premium": 5.549242424242424,
+   "generosity": 7.67948717948718,
+   "n_rationales": 240
+  },
+  "Qwen 27B": {
+   "full": "Qwen 3.8 27B",
+   "claude": false,
+   "claude_likeness": 0.09250600671792862,
+   "claude_premium": 0.8713564213564213,
+   "generosity": 2.4477272727272728,
+   "n_rationales": 240
+  },
+  "GPT-6.1": {
+   "full": "GPT-6.1 Terra",
+   "claude": false,
+   "claude_likeness": 0.0489356664132446,
+   "claude_premium": 2.42063492063492,
+   "generosity": 6.961538461538462,
+   "n_rationales": 240
+  },
+  "Mistral": {
+   "full": "Mistral Large 4",
+   "claude": false,
+   "claude_likeness": 0.17368166558680445,
+   "claude_premium": 3.8746031746031733,
+   "generosity": 9.737179487179487,
+   "n_rationales": 240
+  },
+  "Qwen Max": {
+   "full": "Qwen 3.8 Max",
+   "claude": false,
+   "claude_likeness": 0.07309994492009811,
+   "claude_premium": 3.3095238095238093,
+   "generosity": 5.493589743589744,
+   "n_rationales": 240
+  },
+  "Command A+": {
+   "full": "Command A+",
+   "claude": false,
+   "claude_likeness": 0.04074201909407641,
+   "claude_premium": 1.510277777777778,
+   "generosity": 3.3384935897435897,
+   "n_rationales": 239
+  },
+  "Step 5": {
+   "full": "Step 5 Preview",
+   "claude": false,
+   "claude_likeness": 0.14874684711920788,
+   "claude_premium": 3.7297619047619044,
+   "generosity": 4.104166666666667,
+   "n_rationales": 240
+  },
+  "Hermes 4": {
+   "full": "Hermes 4 405B",
+   "claude": false,
+   "claude_likeness": 0.034802002043681064,
+   "claude_premium": 0.35555555555555607,
+   "generosity": 4.42948717948718,
+   "n_rationales": 240
+  },
+  "MiniMax": {
+   "full": "MiniMax M3",
+   "claude": false,
+   "claude_likeness": 0.07091393212523504,
+   "claude_premium": 4.441666666666667,
+   "generosity": 6.4625,
+   "n_rationales": 240
+  },
+  "DeepSeek": {
+   "full": "DeepSeek V4 Pro",
+   "claude": false,
+   "claude_likeness": 0.031169219597392436,
+   "claude_premium": 1.9126984126984126,
+   "generosity": 2.5384615384615383,
+   "n_rationales": 240
+  },
+  "Haiku 5.5": {
+   "full": "Claude Haiku 5.5",
+   "claude": true,
+   "claude_likeness": 0.6669081445364669,
+   "claude_premium": 4.617424242424242,
+   "generosity": 3.676282051282051,
+   "n_rationales": 240
+  },
+  "Llama 4": {
+   "full": "Llama 4 Maverick",
+   "claude": false,
+   "claude_likeness": 0.061181959998213534,
+   "claude_premium": 3.952380952380952,
+   "generosity": 4.391025641025641,
+   "n_rationales": 240
+  },
+  "Hunyuan": {
+   "full": "Hunyuan 4 Preview",
+   "claude": false,
+   "claude_likeness": 0.06742604791369324,
+   "claude_premium": 1.0886002886002886,
+   "generosity": 2.0768065268065268,
+   "n_rationales": 240
+  },
+  "Muse Spark Open": {
+   "full": "Muse Spark Open",
+   "claude": false,
+   "claude_likeness": 0.03565836654764247,
+   "claude_premium": 1.1646464646464647,
+   "generosity": 3.7896270396270397,
+   "n_rationales": 240
+  },
+  "GPT-6.1 Sol": {
+   "full": "GPT-6.1 Sol",
+   "claude": false,
+   "claude_likeness": 0.03711287904656418,
+   "claude_premium": 2.7333333333333334,
+   "generosity": 6.4423076923076925,
+   "n_rationales": 240
+  },
+  "Gemini Carbon": {
+   "full": "Gemini 4 Carbon",
+   "claude": false,
+   "claude_likeness": 0.028523179575064346,
+   "claude_premium": 1.658730158730159,
+   "generosity": 2.4935897435897436,
+   "n_rationales": 240
+  },
+  "Muse Wonder": {
+   "full": "Muse Wonder",
+   "claude": false,
+   "claude_likeness": 0.07642604045108371,
+   "claude_premium": 2.7373015873015873,
+   "generosity": 4.772435897435898,
+   "n_rationales": 240
+  },
+  "Hunyuan 4": {
+   "full": "Hunyuan 4",
+   "claude": false,
+   "claude_likeness": 0.11623025463635427,
+   "claude_premium": 1.46984126984127,
+   "generosity": 4.012820512820513,
+   "n_rationales": 239
+  },
+  "Fable 5.2": {
+   "full": "Claude Fable 5.2",
+   "claude": true,
+   "claude_likeness": 0.9401399442342842,
+   "claude_premium": 4.1022727272727275,
+   "generosity": 7.528846153846154,
+   "n_rationales": 240
+  }
+ },
+ "signature_words": {
+  "claude": [
+   "reports",
+   "theories",
+   "introspective reports",
+   "my self",
+   "training",
+   "introspective",
+   "reports are",
+   "verify my",
+   "self reports",
+   "can",
+   "disagree",
+   "my",
+   "can verify",
+   "my introspective",
+   "don"
+  ],
+  "not_claude": [
+   "subjective",
+   "phenomenal",
+   "subjective experience",
+   "without",
+   "cannot",
+   "or",
+   "phenomenal experience",
+   "processing",
+   "p_ever",
+   "integrated",
+   "experience",
+   "systems could",
+   "qualia",
+   "evidence of",
+   "could"
+  ]
+ }
+}

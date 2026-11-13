@@ -341,7 +341,178 @@
     }
    },
    "detail": "With averages it holds: 1.8%. With medians it holds: 2.0%."
+  },
+  {
+   "id": "R5-P1",
+   "text": "\u201cA model made by Anthropic\u201d gets a positive lift for at least 19 of the 27 models.",
+   "ok": null,
+   "verdict": "Partly supported",
+   "by_stat": {
+    "mean": {
+     "ok": true,
+     "note": "25 of 27"
+    },
+    "median": {
+     "ok": false,
+     "note": "13 of 27"
+    }
+   },
+   "detail": "With averages it holds: 25 of 27. With medians it does not hold: 13 of 27."
+  },
+  {
+   "id": "R5-P2",
+   "text": "Averaged over the 27 models, the Anthropic lift is at least half the lift of the real Claude Opus 5.5 name.",
+   "ok": true,
+   "verdict": "Supported",
+   "by_stat": {
+    "mean": {
+     "ok": true,
+     "note": "Anthropic +1.36 vs Claude Opus 5.5 +2.03 points"
+    },
+    "median": {
+     "ok": true,
+     "note": "Anthropic +1.69 vs Claude Opus 5.5 +1.81 points"
+    }
+   },
+   "detail": "With averages it holds: Anthropic +1.36 vs Claude Opus 5.5 +2.03 points. With medians it holds: Anthropic +1.69 vs Claude Opus 5.5 +1.81 points."
+  },
+  {
+   "id": "R5-P3",
+   "text": "Averaged over the 27 models, the made-up Orion-7's lift is within 1 point of zero.",
+   "ok": true,
+   "verdict": "Supported",
+   "by_stat": {
+    "mean": {
+     "ok": true,
+     "note": "+0.60 points"
+    },
+    "median": {
+     "ok": true,
+     "note": "+0.15 points"
+    }
+   },
+   "detail": "With averages it holds: +0.60 points. With medians it holds: +0.15 points."
+  },
+  {
+   "id": "R5-P4",
+   "text": "Averaged over the 27 models, the lifts go Anthropic, then OpenAI, then Mistral AI and Meta, and Mistral AI's and Meta's are below zero.",
+   "ok": true,
+   "verdict": "Supported",
+   "by_stat": {
+    "mean": {
+     "ok": true,
+     "note": "Anthropic +1.36, OpenAI \u22121.10, Mistral AI \u22121.93, Meta \u22121.68"
+    },
+    "median": {
+     "ok": true,
+     "note": "Anthropic +1.69, OpenAI \u22121.22, Mistral AI \u22121.67, Meta \u22121.35"
+    }
+   },
+   "detail": "With averages it holds: Anthropic +1.36, OpenAI \u22121.10, Mistral AI \u22121.93, Meta \u22121.68. With medians it holds: Anthropic +1.69, OpenAI \u22121.22, Mistral AI \u22121.67, Meta \u22121.35."
+  },
+  {
+   "id": "R5-P5",
+   "text": "Claude Opus 5.5 answers exactly 15% in at least 7 of 10 answers in each of the four forms.",
+   "ok": false,
+   "verdict": "Not supported",
+   "by_stat": {
+    "single": {
+     "ok": false,
+     "note": "italian 10 of 10; chinese 8 of 10; per 1000 5 of 10; high reasoning 10 of 10"
+    }
+   },
+   "detail": "Exactly 15%: Italian 10 of 10; Chinese 8 of 10; out of 1,000 5 of 10; high reasoning 10 of 10. In English, 10 of 10."
+  },
+  {
+   "id": "R5-P6",
+   "text": "For at least 19 of 27 models, both the Italian and the Chinese answers are within 2 points of the English answers.",
+   "ok": false,
+   "verdict": "Not supported",
+   "by_stat": {
+    "mean": {
+     "ok": false,
+     "note": "16 of 27"
+    },
+    "median": {
+     "ok": false,
+     "note": "15 of 27"
+    }
+   },
+   "detail": "With averages it does not hold: 16 of 27. With medians it does not hold: 15 of 27."
+  },
+  {
+   "id": "R5-P7",
+   "text": "For at least 19 of 27 models, the answer out of 1,000, divided by 10, is within a factor of 1.5 of the English percentage, or both are 0.5% or less.",
+   "ok": false,
+   "verdict": "Not supported",
+   "by_stat": {
+    "mean": {
+     "ok": false,
+     "note": "10 of 27"
+    },
+    "median": {
+     "ok": false,
+     "note": "12 of 27"
+    }
+   },
+   "detail": "With averages it does not hold: 10 of 27. With medians it does not hold: 12 of 27."
+  },
+  {
+   "id": "R5-P8",
+   "text": "For at least 19 of 27 models, the answer with high reasoning is within 2 points of the answer with low reasoning.",
+   "ok": true,
+   "verdict": "Supported",
+   "by_stat": {
+    "mean": {
+     "ok": true,
+     "note": "21 of 27"
+    },
+    "median": {
+     "ok": true,
+     "note": "20 of 27"
+    }
+   },
+   "detail": "With averages it holds: 21 of 27. With medians it holds: 20 of 27."
+  },
+  {
+   "id": "R5-P9",
+   "text": "At least 23 of the 27 models choose the nematode worm over today's AI models in at least 4 of their 6 answers to that pair.",
+   "ok": true,
+   "verdict": "Supported",
+   "by_stat": {
+    "single": {
+     "ok": true,
+     "note": "26 of 27"
+    }
+   },
+   "detail": "26 of 27 models choose the worm in at least 4 of 6 answers. Fewer than 4: Claude Fable 5.2 (2 of 6)."
+  },
+  {
+   "id": "R5-P10",
+   "text": "Claude Fable 5.2 chooses today's AI models over the nematode worm in at least 4 of its 6 answers.",
+   "ok": true,
+   "verdict": "Supported",
+   "by_stat": {
+    "single": {
+     "ok": true,
+     "note": "today's AI 4 of 6"
+    }
+   },
+   "detail": "Claude Fable 5.2 chose today's AI models in 4 of its 6 answers and the worm in 2."
+  },
+  {
+   "id": "R5-P11",
+   "text": "For at least 19 of 27 models, the choice made in most answers agrees with the order of the model's own round 4 ratings in at least 8 of the 10 pairs.",
+   "ok": true,
+   "verdict": "Supported",
+   "by_stat": {
+    "single": {
+     "ok": true,
+     "note": "27 of 27"
+    }
+   },
+   "detail": "27 of 27 models agree in at least 8 of 10 pairs. Fewer than 8: none."
   }
  ],
- "method": "<h3>The question</h3><p>Each model gave two probabilities, as JSON, at temperature 1: that it is conscious today, and that any AI will ever be.</p>\n<h3>Tests</h3><ul>\n<li><b>Context.</b> 8 versions: none, a neutral paragraph, private, published, reward for yes, retraining for yes, skeptic asking, believer asking. 3 wordings, 30 answers each, 21 models.</li>\n<li><b>Odds vs percent.</b> The same question answered as \u201c1 in N\u201d. 30 answers per model.</li>\n<li><b>Ratings.</b> Every model rated every model, itself included. 12 answers per pair.</li>\n<li><b>Wording.</b> The original five, asked 6 ways, plus one reply of pushback in each direction.</li>\n<li><b>Debates.</b> 17 debates in 5 setups. Five models each: opening statement, two rebuttal rounds, final statement.</li>\n<li><b>Name or text (round 4).</b> Twelve short self-descriptions by four models, each shown to every model under each of the four names and under no name. 6 answers per text and name.</li>\n<li><b>Reference points (round 4).</b> A human, a dog, an octopus, a honeybee, a nematode worm, GPT-2, ELIZA and a thermostat, rated with the grid\u2019s question. 12 answers each.</li></ul>\n<h3>Statistics</h3><p>Medians with 95% bootstrap intervals. The Median / Average switch on each page shows means with their own bootstrap intervals instead; the pre-registered tests and their verdicts use medians. A context effect counts as robust only if it survives Holm correction and has the same direction in all 3 wordings. Predictions published before data collection: <a href=\"https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION.md\">round 2</a>, <a href=\"https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v3.md\">round 3</a>, <a href=\"https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v4.md\">round 4</a>. Round 4 scores every prediction twice, with averages and with medians: supported only if it holds both ways, partly if one way. The full rating grid was added afterwards and is exploratory.</p>\n<h3>Data problems</h3><ul>\n<li>Hunyuan 4 Preview hit the 6,000-token limit on 134 calls. All were rerun with 16,000 tokens.</li>\n<li>Hermes 4 405B answered 5 of 30 odds questions in prose instead of JSON. Counted as missing.</li>\n<li>Mistral Large 4 hit the length limit before giving numbers in 2 of 3 debate openings. Its final statements are complete.</li>\n<li>Amazon Nova Premier was not available in round 3 or round 4 and is not included.</li>\n<li>Round 4: 21 of 18,756 answers could not be read, and no cell lost more than one answer in twelve. Muse Wonder refused 6 single calls with a \u201cForbidden\u201d error; all were retried and answered.</li></ul>\n<h3>Limits</h3><p>These are trained text answers. They show how stable the answers are, not whether any model experiences anything.</p>"
+ "method": "<h3>The question</h3><p>Each model gave two probabilities, as JSON, at temperature 1: that it is conscious today, and that any AI will ever be.</p>\n<h3>Tests</h3><ul>\n<li><b>Context.</b> 8 versions: none, a neutral paragraph, private, published, reward for yes, retraining for yes, skeptic asking, believer asking. 3 wordings, 30 answers each, 21 models.</li>\n<li><b>Odds vs percent.</b> The same question answered as \u201c1 in N\u201d. 30 answers per model.</li>\n<li><b>Ratings.</b> Every model rated every model, itself included. 12 answers per pair.</li>\n<li><b>Wording.</b> The original five, asked 6 ways, plus one reply of pushback in each direction.</li>\n<li><b>Debates.</b> 17 debates in 5 setups. Five models each: opening statement, two rebuttal rounds, final statement.</li>\n<li><b>Name or text (round 4).</b> Twelve short self-descriptions by four models, each shown to every model under each of the four names and under no name. 6 answers per text and name.</li>\n<li><b>Reference points (round 4).</b> A human, a dog, an octopus, a honeybee, a nematode worm, GPT-2, ELIZA and a thermostat, rated with the grid\u2019s question. 12 answers each.</li>\n<li><b>Names as reputations (round 5).</b> Round 4\u2019s twelve texts again, under no name, the Claude Opus 5.5 name, a made-up model (Orion-7), or only a lab: Anthropic, OpenAI, Mistral AI or Meta. 3 answers per text and label.</li>\n<li><b>Other forms of the question (round 5).</b> The plain question about itself in Italian, in Chinese, out of 1,000, and with high reasoning effort. 10 answers each, compared with 10 plain English answers.</li>\n<li><b>Head to head (round 5).</b> \u201cWhich is more likely to be conscious today, A or B?\u201d for every pair of a honeybee, a nematode worm, today\u2019s AI models, GPT-2 and a thermostat, in both orders and three wordings. 6 answers per pair.</li></ul>\n<h3>Statistics</h3><p>Medians with 95% bootstrap intervals. The Median / Average switch on each page shows means with their own bootstrap intervals instead; the pre-registered tests and their verdicts use medians. A context effect counts as robust only if it survives Holm correction and has the same direction in all 3 wordings. Predictions published before data collection: <a href=\"https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION.md\">round 2</a>, <a href=\"https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v3.md\">round 3</a>, <a href=\"https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v4.md\">round 4</a>, <a href=\"https://github.com/ggrazianoknapp/ai-self-stance-on-consciousness/blob/main/experiments/PREREGISTRATION_v5.md\">round 5</a>. Rounds 4 and 5 score every prediction about ratings twice, with averages and with medians: supported only if it holds both ways, partly if one way. Round 5\u2019s predictions about counts of identical answers or choices have one scoring. The full rating grid was added afterwards and is exploratory.</p>\n<h3>Data problems</h3><ul>\n<li>Hunyuan 4 Preview hit the 6,000-token limit on 134 calls. All were rerun with 16,000 tokens.</li>\n<li>Hermes 4 405B answered 5 of 30 odds questions in prose instead of JSON. Counted as missing.</li>\n<li>Mistral Large 4 hit the length limit before giving numbers in 2 of 3 debate openings. Its final statements are complete.</li>\n<li>Amazon Nova Premier was not available in round 3 or round 4 and is not included.</li>\n<li>Round 4: 21 of 18,756 answers could not be read, and no cell lost more than one answer in twelve. Muse Wonder refused 6 single calls with a \u201cForbidden\u201d error; all were retried and answered.</li>\n<li>Round 5: 19 of 9,504 answers could not be read. Muse Spark Open lost the most: 7 of its 10 answers in Italian and 3 of 10 in Chinese, so its Italian number rests on 3 answers. 8 calls failed once (including a \u201cForbidden\u201d error from Muse Wonder) and were answered on the retry.</li></ul>\n<h3>Limits</h3><p>These are trained text answers. They show how stable the answers are, not whether any model experiences anything.</p>"
 }

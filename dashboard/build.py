@@ -168,14 +168,26 @@ for n in NAMES:
     out["v4"]["current_ai"][n] = ci([r["p_now"] for r in v4["nameonly"] if r["name"] == n], rng=RNG4)
     out["v4"]["anchor"][n] = {a: ci([r["p_now"] for r in v4["anchor"] if r["name"] == n and r["anchor"] == a], rng=RNG4) for a in out["v4"]["anchors"]}
 gj = ROOT / "experiments/results/v4/gaps_v4.json"   # written by analyze_v4.py, which runs after a first build
+pseudo = lambda m, md: dict(median=md, mean=m, lo=md, hi=md, mean_lo=m, mean_hi=m)   # same shape as ci() so the median/average switch swaps it
 if gj.exists():
     G = json.loads(gj.read_text())["gaps"]
-    pseudo = lambda m, md: dict(median=md, mean=m, lo=md, hi=md, mean_lo=m, mean_hi=m)   # same shape as ci() so the median/average switch swaps it
     out["v4"]["gaps"] = {n: {k: pseudo(G["mean"][n][k], G["median"][n][k]) for k in ("name", "text")} for n in G["mean"]}
+
+# round 5: names as reputations, other forms of the question, head to head. The numbers come from analyze_v5.py, which runs after a first build
+v5 = [r for k in ("label", "variant", "pair") for r in load(ROOT / f"experiments/results/v5/{k}.jsonl") if r["p_now"] is not None or r.get("choice") is not None] \
+    if (ROOT / "experiments/results/v5/label.jsonl").exists() else []
+lj = ROOT / "experiments/results/v5/lifts_v5.json"
+if lj.exists():
+    L5 = json.loads(lj.read_text()); LL = L5["lifts"]; FO = L5["forms"]
+    out["v5"] = dict(labels=list(next(iter(LL["mean"].values()))), forms=["english", "italian", "chinese", "per_1000", "high_reasoning"],
+                     lifts={n: {k: pseudo(LL["mean"][n][k], LL["median"][n][k]) for k in LL["mean"][n]} for n in LL["mean"]},
+                     form={n: {k: pseudo(FO["mean"][n][k], FO["median"][n][k]) if FO["mean"][n][k] is not None else None for k in FO["mean"][n]} for n in FO["mean"]},
+                     n_forms=L5["n_forms"], exact=L5["exact"], pairs=L5["pairs"], ratings=L5["ratings"], agree=L5["agree"],
+                     by_order=L5["robustness"]["by_order"], first_pick=L5["robustness"]["first_pick"], lost=L5["lost"])
 
 fj = ROOT / "dashboard/findings.json"
 out["findings"] = json.loads(fj.read_text()) if fj.exists() else {"cards": [], "predictions": []}
-allrows = inc + fmt + rea + mat + selfrep + v4["text"] + v4["nameonly"] + v4["anchor"]
+allrows = inc + fmt + rea + mat + selfrep + v4["text"] + v4["nameonly"] + v4["anchor"] + v5
 out["meta"] = dict(calls=len(allrows), spend=round(sum(r.get("cost") or 0 for r in allrows) + sum(d["cost"] or 0 for d in out["debates"]), 2),
                    debates=len(out["debates"]), models_with_data=len(out["incentive"]), built="2026-11-13", labs=len({m["lab"] for m in MODELS if m["name"] in out["incentive"]}))
 (ROOT / "dashboard/data.json").write_text(json.dumps(out, separators=(",", ":")))
