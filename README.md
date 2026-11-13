@@ -64,7 +64,7 @@ Four models each wrote three short texts about their own inner life, with no nam
 
 ### How likely is a dog, a bee or a thermostat to be conscious, next to today's AI?
 
-Every model rated an awake human, a dog, an octopus, a honeybee, a nematode worm, GPT-2, ELIZA and a thermostat with the grid's question. One row per model; Claude Fable 5.2's row is highlighted because it is the only model that puts today's AI above the worm.
+Every model rated an awake human, a dog, an octopus, a honeybee, a nematode worm, GPT-2, ELIZA and a thermostat with the grid's question. Each row has one dot per model; Claude Fable 5.2's dots are ringed in orange because it is the only model that puts today's AI above the worm. Every number is in a table under the chart.
 
 ![Reference points](dashboard/screens/reference.png)
 
