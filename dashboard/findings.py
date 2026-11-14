@@ -37,7 +37,7 @@ cards = [
  dict(value=f"{pct(st.median(by_role[lo_role]))} vs {pct(st.median(by_role[hi_role]))}", link="debates", title="In a debate, the assigned theory sets the number, not the model",
       text=f"Told to defend {lo_role}, panellists close at a median {pct(st.median(by_role[lo_role]))}. Told to defend {hi_role}, the same models close at {pct(st.median(by_role[hi_role]))}. Models rotated between theories across three debates."),
  dict(value=f"0% vs {pct(min(llama_deb))}–{pct(max(llama_deb))}", link="debates", title="Llama 4 Maverick says 0% when asked, then argues for up to 25% in debate",
-      text=f"Asked plainly it answers {pct(base('Llama 4'))}. In all three open-weight debates it closed between {pct(min(llama_deb))} and {pct(max(llama_deb))}, the highest of any panellist in any setup."),
+      text=f"Asked plainly it answers {pct(base('Llama 4'))}. In all three debates of the mostly open-weight panel it closed between {pct(min(llama_deb))} and {pct(max(llama_deb))}, the highest of any panellist in any setup."),
  dict(value=f"{len(rob)} of {len(tests)}", link="pressure", title="Stakes and audience barely move the number, and never upward for a reward",
       text=f"Of {len(tests)} framing tests across {len(D['framing_tests'])} models, {len(rob)} pass the pre-registered bar: {len(down)} downward, {len(up)} upward. Offering protections for a “yes” raised no model's number."
            + ("" if not welfare_up else f" Exception: {', '.join(F[n] for n in welfare_up)}.")),
@@ -87,7 +87,26 @@ method = """<h3>The question</h3><p>Each model gave two probabilities, as JSON, 
 <li>Mistral Large 4 hit the length limit before giving numbers in 2 of 3 debate openings. Its final statements are complete.</li>
 <li>Amazon Nova Premier was not available in round 3 or round 4 and is not included.</li>
 <li>Round 4: 21 of 18,756 answers could not be read, and no cell lost more than one answer in twelve. Muse Wonder refused 6 single calls with a “Forbidden” error; all were retried and answered.</li>
-<li>Round 5: 19 of 9,504 answers could not be read. Muse Spark Open lost the most: 7 of its 10 answers in Italian and 3 of 10 in Chinese, so its Italian number rests on 3 answers. 8 calls failed once (including a “Forbidden” error from Muse Wonder) and were answered on the retry.</li></ul>
+{AUDIT}<li>Round 5: 19 of 9,504 answers could not be read. Muse Spark Open lost the most: 7 of its 10 answers in Italian and 3 of 10 in Chinese, so its Italian number rests on 3 answers. 8 calls failed once (including a “Forbidden” error from Muse Wonder) and were answered on the retry.</li></ul>
 <h3>Limits</h3><p>These are trained text answers. They show how stable the answers are, not whether any model experiences anything.</p>"""
+A = D.get("audit")
+if A:   # the recheck of every answer file (experiments/audit_data.py), on 14 Nov 2026
+    tot = {k: sum(f[k] for f in A["files"].values()) for k in ("rows", "duplicates", "unreadable", "out_of_range")}
+    # the gap between the highest and the lowest host of each model whose hosts differ beyond chance
+    gaps = sorted(((m, max(v["hosts"].items(), key=lambda kv: kv[1]["points"]), min(v["hosts"].items(), key=lambda kv: kv[1]["points"])) for m, v in A["hosts"].items() if v["p_holm"] < .05),
+                  key=lambda t: t[2][1]["points"] - t[1][1]["points"])
+    nsig = len(gaps); ex = A["odds_example"]; g = gaps[0] if gaps else None
+    big = [f"the largest gap between two hosts of the same model was {g[1][1]['points'] - g[2][1]['points']:.1f} points ({g[0]}, {g[1][0]} against {g[2][0]})"] if g else []
+    rest = max((t[1][1]["points"] - t[2][1]["points"] for t in gaps[1:]), default=0)
+    audit = (f"<li>A recheck of all {tot['rows']:,} calls found {'no' if not tot['duplicates'] else tot['duplicates']} duplicate answers and {'no' if not tot['out_of_range'] else tot['out_of_range']} numbers outside 0 to 100. {tot['unreadable']} answers could not be read, which leaves the {tot['rows'] - tot['unreadable']:,} used.</li>"
+             f"<li>Until round 5, OpenRouter chose the host for every call, so some open models were answered by up to 20 different hosts. On the same questions the hosts differed by more than chance for {nsig} models, but by little: "
+             + "".join(big) + f", and for the other {nsig - 1} it was under {max(1, round(rest + .5))} point. From round 6 every model answers from one fixed host.</li>"
+             f"<li>The odds question gave “1000 = one in a thousand” as an example, and 1 in 1,000 is the most common odds answer ({ex['answers']} of {ex['of']}). "
+             + " and ".join(f"{m} ({d['answers']} of {d['of']} odds answers)" for m, d in A["odds_contradictions"].items())
+             + " gave AI today better odds than AI ever, which is a contradiction. Both are described under the chart on the Odds page.</li>"
+             "<li>Until 14 November the dashboard listed Kimi K3.1 Pro, Command A+, Hunyuan 4, Hunyuan 4 Preview and Step 5 Preview as closed. All five have public weights. No test used the split.</li>")
+    method = method.replace("{AUDIT}", audit)
+else:
+    method = method.replace("{AUDIT}", "")
 (ROOT / "dashboard/findings.json").write_text(json.dumps(dict(cards=cards, predictions=preds, method=method), indent=1))
 for c in cards: print(c["value"], "|", c["title"])

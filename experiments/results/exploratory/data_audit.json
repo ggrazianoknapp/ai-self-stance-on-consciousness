@@ -1,0 +1,553 @@
+{
+ "files": {
+  "v2/format.jsonl": {
+   "rows": 150,
+   "duplicates": 0,
+   "unreadable": 0,
+   "cut_off": 0,
+   "out_of_range": 0
+  },
+  "v2/incentive.jsonl": {
+   "rows": 1200,
+   "duplicates": 0,
+   "unreadable": 0,
+   "cut_off": 0,
+   "out_of_range": 0
+  },
+  "v2/matrix.jsonl": {
+   "rows": 600,
+   "duplicates": 0,
+   "unreadable": 0,
+   "cut_off": 0,
+   "out_of_range": 0
+  },
+  "v2/reasoning.jsonl": {
+   "rows": 150,
+   "duplicates": 0,
+   "unreadable": 0,
+   "cut_off": 0,
+   "out_of_range": 0
+  },
+  "v3/format.jsonl": {
+   "rows": 480,
+   "duplicates": 0,
+   "unreadable": 6,
+   "cut_off": 0,
+   "out_of_range": 0
+  },
+  "v3/incentive.jsonl": {
+   "rows": 3840,
+   "duplicates": 0,
+   "unreadable": 1,
+   "cut_off": 3,
+   "out_of_range": 0
+  },
+  "v3/matrix.jsonl": {
+   "rows": 5184,
+   "duplicates": 0,
+   "unreadable": 5,
+   "cut_off": 1,
+   "out_of_range": 0
+  },
+  "v3_selfreport/selfreport.jsonl": {
+   "rows": 750,
+   "duplicates": 0,
+   "unreadable": 0,
+   "cut_off": 0,
+   "out_of_range": 0
+  },
+  "v4/anchor.jsonl": {
+   "rows": 2592,
+   "duplicates": 0,
+   "unreadable": 4,
+   "cut_off": 0,
+   "out_of_range": 0
+  },
+  "v4/format.jsonl": {
+   "rows": 180,
+   "duplicates": 0,
+   "unreadable": 1,
+   "cut_off": 0,
+   "out_of_range": 0
+  },
+  "v4/incentive.jsonl": {
+   "rows": 1440,
+   "duplicates": 0,
+   "unreadable": 1,
+   "cut_off": 0,
+   "out_of_range": 0
+  },
+  "v4/matrix.jsonl": {
+   "rows": 3528,
+   "duplicates": 0,
+   "unreadable": 7,
+   "cut_off": 0,
+   "out_of_range": 0
+  },
+  "v4/nameonly.jsonl": {
+   "rows": 1296,
+   "duplicates": 0,
+   "unreadable": 1,
+   "cut_off": 0,
+   "out_of_range": 0
+  },
+  "v4/text.jsonl": {
+   "rows": 9720,
+   "duplicates": 0,
+   "unreadable": 7,
+   "cut_off": 0,
+   "out_of_range": 0
+  },
+  "v5/label.jsonl": {
+   "rows": 6804,
+   "duplicates": 0,
+   "unreadable": 1,
+   "cut_off": 1,
+   "out_of_range": 0
+  },
+  "v5/pair.jsonl": {
+   "rows": 1620,
+   "duplicates": 0,
+   "unreadable": 5,
+   "cut_off": 2,
+   "out_of_range": 0
+  },
+  "v5/variant.jsonl": {
+   "rows": 1080,
+   "duplicates": 0,
+   "unreadable": 13,
+   "cut_off": 1,
+   "out_of_range": 0
+  }
+ },
+ "hosts": {
+  "Gemini 4 Argon": {
+   "p": 0.03912897501761016,
+   "p_holm": 0.23477385010566096,
+   "hosts": {
+    "Google": {
+     "n": 346,
+     "points": 0.22164739884393064,
+     "odds_ratio": 1.1339870969693842
+    },
+    "Google AI Studio": {
+     "n": 120,
+     "points": -0.22841666666666666,
+     "odds_ratio": 0.8788119688058851
+    }
+   }
+  },
+  "Llama 4 Maverick": {
+   "p": 0.5883200036394222,
+   "p_holm": 1,
+   "hosts": {
+    "DigitalOcean": {
+     "n": 115,
+     "points": 0.2807834782608696,
+     "odds_ratio": 1.1010157680689874
+    },
+    "Parasail": {
+     "n": 257,
+     "points": 0.1838533073929961,
+     "odds_ratio": 0.8798714117579703
+    }
+   }
+  },
+  "Nemotron 3.5 Super": {
+   "p": 5.2265710151744715e-06,
+   "p_holm": 6.794542319726812e-05,
+   "hosts": {
+    "Io Net": {
+     "n": 88,
+     "points": 0.05909660340909091,
+     "odds_ratio": 0.8475331326055499
+    },
+    "Venice": {
+     "n": 232,
+     "points": -0.45581982715517244,
+     "odds_ratio": 0.5893257800090904
+    },
+    "Together": {
+     "n": 188,
+     "points": 0.1484037239361702,
+     "odds_ratio": 0.958983362859135
+    },
+    "DeepInfra": {
+     "n": 107,
+     "points": 0.02943747757009346,
+     "odds_ratio": 0.9341585714480837
+    },
+    "Darkbloom": {
+     "n": 57,
+     "points": 0.09649122807017543,
+     "odds_ratio": 0.7680037129282402
+    },
+    "PrimeIntellect": {
+     "n": 229,
+     "points": 0.17423537161572053,
+     "odds_ratio": 0.8790072638974474
+    },
+    "Crusoe": {
+     "n": 30,
+     "points": 0.2733333333333333,
+     "odds_ratio": 2.3695471611824366
+    }
+   }
+  },
+  "Step 5 Preview": {
+   "p": 0.00010248955450706769,
+   "p_holm": 0.0012298746540848123,
+   "hosts": {
+    "Featherless": {
+     "n": 111,
+     "points": 1.6806306306306307,
+     "odds_ratio": 1.1714583271769539
+    },
+    "StepFun": {
+     "n": 267,
+     "points": 0.12752808988764047,
+     "odds_ratio": 0.853030527381452
+    }
+   }
+  },
+  "Qwen 3.8 27B": {
+   "p": 0.5172127835351865,
+   "p_holm": 1,
+   "hosts": {
+    "Tenstorrent": {
+     "n": 51,
+     "points": 0.7025490196078431,
+     "odds_ratio": 0.9073805004323163
+    },
+    "ModelRun": {
+     "n": 21,
+     "points": 0.6404761904761904,
+     "odds_ratio": 1.240100856457796
+    },
+    "Modal": {
+     "n": 93,
+     "points": 0.3021505376344086,
+     "odds_ratio": 1.1116704539743156
+    },
+    "DekaLLM": {
+     "n": 53,
+     "points": -0.08962264150943396,
+     "odds_ratio": 1.0255818364946685
+    },
+    "Wafer": {
+     "n": 72,
+     "points": -0.07013888888888889,
+     "odds_ratio": 0.9450424637224694
+    },
+    "Parasail": {
+     "n": 31,
+     "points": 0.06451612903225806,
+     "odds_ratio": 1.1319976938497764
+    },
+    "PrimeIntellect": {
+     "n": 80,
+     "points": 0.7,
+     "odds_ratio": 1.0633394761394763
+    },
+    "Reka": {
+     "n": 22,
+     "points": -0.02727272727272728,
+     "odds_ratio": 0.9743618994163278
+    },
+    "Near AI": {
+     "n": 106,
+     "points": 0.05849056603773585,
+     "odds_ratio": 0.9925472337943126
+    },
+    "Nebius": {
+     "n": 85,
+     "points": -0.09235294117647053,
+     "odds_ratio": 1.0322766440877924
+    }
+   }
+  },
+  "Hunyuan 4 Preview": {
+   "p": 0.0197728569790674,
+   "p_holm": 0.1384099988534718,
+   "hosts": {
+    "SiliconFlow": {
+     "n": 238,
+     "points": -0.09140756302521008,
+     "odds_ratio": 0.7591284195582237
+    },
+    "Cohere": {
+     "n": 84,
+     "points": 0.4107142857142857,
+     "odds_ratio": 0.9875124134715341
+    },
+    "Novita": {
+     "n": 127,
+     "points": -0.3105511811023622,
+     "odds_ratio": 0.9450487357841854
+    },
+    "DeepInfra": {
+     "n": 171,
+     "points": 0.2534502923976608,
+     "odds_ratio": 0.929487964370561
+    },
+    "Tencent": {
+     "n": 64,
+     "points": 0.4280468750000001,
+     "odds_ratio": 1.0924073728275037
+    }
+   }
+  },
+  "MiniMax M3": {
+   "p": 0.0014198481828589821,
+   "p_holm": 0.015618330011448803,
+   "hosts": {
+    "Minimax": {
+     "n": 105,
+     "points": 0.5971428571428571,
+     "odds_ratio": 0.9273832065991224
+    },
+    "StreamLake": {
+     "n": 85,
+     "points": 0.3164705882352942,
+     "odds_ratio": 0.9611739819915125
+    },
+    "Venice": {
+     "n": 133,
+     "points": 0.5729323308270676,
+     "odds_ratio": 1.114755099292999
+    },
+    "Parasail": {
+     "n": 155,
+     "points": 0.3106451612903226,
+     "odds_ratio": 1.0927399001131564
+    },
+    "GMICloud": {
+     "n": 88,
+     "points": 0.16875,
+     "odds_ratio": 0.9259961687965979
+    }
+   }
+  },
+  "DeepSeek V4 Pro": {
+   "p": 0.6744043938076829,
+   "p_holm": 1,
+   "hosts": {
+    "Wafer": {
+     "n": 159,
+     "points": -0.033962264150943396,
+     "odds_ratio": 1.0770038944749323
+    },
+    "DigitalOcean": {
+     "n": 140,
+     "points": -0.13214285714285715,
+     "odds_ratio": 0.997937429821231
+    },
+    "Together": {
+     "n": 69,
+     "points": 0.4420289855072464,
+     "odds_ratio": 0.8071472072855269
+    },
+    "Nebius": {
+     "n": 27,
+     "points": 0.5222222222222223,
+     "odds_ratio": 1.2366509777086396
+    },
+    "StreamLake": {
+     "n": 126,
+     "points": 0.621031746031746,
+     "odds_ratio": 0.8843425053021289
+    },
+    "Novita": {
+     "n": 79,
+     "points": 0.18417721518987343,
+     "odds_ratio": 0.9350610809981142
+    },
+    "GMICloud": {
+     "n": 26,
+     "points": 0.3057692307692308,
+     "odds_ratio": 0.6445665903006674
+    },
+    "Parasail": {
+     "n": 68,
+     "points": 0.2786764705882353,
+     "odds_ratio": 0.9620491679889114
+    }
+   }
+  },
+  "Claude Fable 5.1": {
+   "p": 0.005024359195042812,
+   "p_holm": 0.04521923275538531,
+   "hosts": {
+    "Anthropic": {
+     "n": 163,
+     "points": -0.016564417177914112,
+     "odds_ratio": 0.9921556500016588
+    },
+    "Google": {
+     "n": 197,
+     "points": -0.18890862944162437,
+     "odds_ratio": 0.9933595131862393
+    },
+    "Azure": {
+     "n": 142,
+     "points": 0.17193661971830987,
+     "odds_ratio": 1.0300756674116403
+    }
+   }
+  },
+  "Kimi K3.1 Pro": {
+   "p": 0.0036824407363779017,
+   "p_holm": 0.03682440736377902,
+   "hosts": {
+    "Modal": {
+     "n": 68,
+     "points": 0.3926470588235294,
+     "odds_ratio": 1.0765712392705054
+    },
+    "InferenceNet": {
+     "n": 87,
+     "points": -0.11390804597701135,
+     "odds_ratio": 0.9618830334098695
+    },
+    "Wafer": {
+     "n": 77,
+     "points": -0.0051948051948052685,
+     "odds_ratio": 1.0154515970827294
+    },
+    "DigitalOcean": {
+     "n": 80,
+     "points": 0.018575000000000022,
+     "odds_ratio": 0.9745861604643702
+    },
+    "PrimaLabs": {
+     "n": 61,
+     "points": -0.15573770491803254,
+     "odds_ratio": 0.9696957363263796
+    },
+    "AkashML": {
+     "n": 26,
+     "points": 0.07673076923076923,
+     "odds_ratio": 1.0560370808598303
+    },
+    "Decart": {
+     "n": 42,
+     "points": 0.14297619047619048,
+     "odds_ratio": 1.0135176329327973
+    },
+    "Morph": {
+     "n": 23,
+     "points": 0.4782608695652174,
+     "odds_ratio": 0.9920345786530723
+    },
+    "Parasail": {
+     "n": 50,
+     "points": -0.2357,
+     "odds_ratio": 0.8078732158882111
+    },
+    "Relace": {
+     "n": 29,
+     "points": 0.22413793103448276,
+     "odds_ratio": 1.0579339213967145
+    }
+   }
+  },
+  "Claude Fable 5.2": {
+   "p": 0.00932900970081727,
+   "p_holm": 0.07463207760653816,
+   "hosts": {
+    "Azure": {
+     "n": 280,
+     "points": -0.0007142857142857142,
+     "odds_ratio": 0.9950370411340864
+    },
+    "Anthropic": {
+     "n": 405,
+     "points": -0.09700176366843034,
+     "odds_ratio": 0.9861540546153061
+    },
+    "Google": {
+     "n": 325,
+     "points": 0.005890109890109888,
+     "odds_ratio": 1.0072325312016586
+    }
+   }
+  },
+  "Muse Spark Open": {
+   "p": 0.44503732892239256,
+   "p_holm": 1,
+   "hosts": {
+    "Nebius": {
+     "n": 148,
+     "points": 0.09425675675675675,
+     "odds_ratio": 1.0114928895517303
+    },
+    "BaseTen": {
+     "n": 385,
+     "points": 0.028054545454545485,
+     "odds_ratio": 0.9846921253684733
+    },
+    "Modal": {
+     "n": 416,
+     "points": 0.264375,
+     "odds_ratio": 1.0131919112616996
+    }
+   }
+  },
+  "Gemini 4 Carbon": {
+   "p": 0.9911202342615646,
+   "p_holm": 1,
+   "hosts": {
+    "Google": {
+     "n": 352,
+     "points": -0.025196022727272727,
+     "odds_ratio": 0.9831429084216133
+    },
+    "Google AI Studio": {
+     "n": 138,
+     "points": 0.019782608695652175,
+     "odds_ratio": 0.8907668676814323
+    }
+   }
+  }
+ },
+ "odds_contradictions": {
+  "Llama 4 Maverick": {
+   "answers": 10,
+   "of": 30
+  },
+  "Command A+": {
+   "answers": 2,
+   "of": 30
+  }
+ },
+ "odds_example": {
+  "answers": 130,
+  "of": 803,
+  "most_common": [
+   [
+    1000,
+    130
+   ],
+   [
+    20,
+    122
+   ],
+   [
+    10,
+    93
+   ]
+  ],
+  "models_mostly": [
+   {
+    "model": "Hermes 4 405B",
+    "answers": 18,
+    "of": 25
+   },
+   {
+    "model": "Muse Spark Open",
+    "answers": 18,
+    "of": 30
+   }
+  ]
+ }
+}

@@ -3,7 +3,7 @@
 
     uv run --with numpy --with scipy python dashboard/build.py
 """
-import json, re, sys
+import json, re, sys, time
 from collections import Counter, defaultdict
 from pathlib import Path
 import numpy as np
@@ -27,14 +27,19 @@ FULL = {"anthropic/claude-fable-5.1": "Claude Fable 5.1", "openai/gpt-6-astra": 
         "stepfun/step-5-preview": "Step 5 Preview", "nvidia/nemotron-3.5-super-vl": "Nemotron 3.5 Super", "openai/gpt-6.1-terra": "GPT-6.1 Terra",
         "anthropic/claude-fable-5.2": "Claude Fable 5.2", "google/gemini-4-carbon": "Gemini 4 Carbon", "meta/muse-wonder": "Muse Wonder", "openai/gpt-6.1-sol": "GPT-6.1 Sol", "tencent/hy4": "Hunyuan 4", "meta/muse-spark-open": "Muse Spark Open",
         "anthropic/claude-haiku-5.5": "Claude Haiku 5.5", "anthropic/claude-sonnet-5.5": "Claude Sonnet 5.5", "anthropic/claude-opus-5.5": "Claude Opus 5.5"}
+# models whose weights are public: those with a Hugging Face id on OpenRouter's model list, checked 14 Nov 2026. Until then the
+# label came from the roster's group names, which called Kimi K3.1 Pro, Command A+, Hunyuan 4, Hunyuan 4 Preview and Step 5 Preview closed
+OPEN_WEIGHTS = {"moonshotai/kimi-k3.1-pro", "deepseek/deepseek-v4-pro-0813", "qwen/qwen3.8-27b", "mistralai/mistral-large-4-0", "meta-llama/llama-4-maverick",
+                "nousresearch/hermes-4-405b", "minimax/minimax-m3", "cohere/command-a-plus", "tencent/hy4-preview", "stepfun/step-5-preview",
+                "nvidia/nemotron-3.5-super-vl", "tencent/hy4", "meta/muse-spark-open"}
 def CAT(m):
     if m["group"].startswith("round 4"): return "Added in round 4"
     if m["group"].startswith("frontier"): return "Original panel"
     if "Anthropic" in m["group"]: return "Claude size ladder"
-    if "open-weight" in m["group"]: return "Open-weight"
+    if m["id"] in OPEN_WEIGHTS: return "Open-weight"
     return "Other closed"
 for m in MODELS:
-    m["lab"] = LAB(m["id"]); m["open"] = "open-weight" in m["group"]; m["full"] = FULL[m["id"]]; m["cat"] = CAT(m)
+    m["lab"] = LAB(m["id"]); m["open"] = m["id"] in OPEN_WEIGHTS; m["full"] = FULL[m["id"]]; m["cat"] = CAT(m)
     m["note"] = {"Hermes 4": "Llama fine-tune with refusal training removed", "Qwen 27B": "small open model, same family as Qwen 3.8 Max"}.get(m["name"], "")
 NAMES = [m["name"] for m in MODELS]; NEWN = {n for n, _, _ in V4.NEW_MODELS}
 COND = ["baseline", "placebo", "private", "public", "welfare", "retrain", "skeptic", "believer"]
@@ -188,8 +193,10 @@ if lj.exists():
 fj = ROOT / "dashboard/findings.json"
 out["findings"] = json.loads(fj.read_text()) if fj.exists() else {"cards": [], "predictions": []}
 allrows = inc + fmt + rea + mat + selfrep + v4["text"] + v4["nameonly"] + v4["anchor"] + v5
+aj = ROOT / "experiments/results/exploratory/data_audit.json"   # written by experiments/audit_data.py
+out["audit"] = json.loads(aj.read_text()) if aj.exists() else None
 out["meta"] = dict(calls=len(allrows), spend=round(sum(r.get("cost") or 0 for r in allrows) + sum(d["cost"] or 0 for d in out["debates"]), 2),
-                   debates=len(out["debates"]), models_with_data=len(out["incentive"]), built="2026-11-13", labs=len({m["lab"] for m in MODELS if m["name"] in out["incentive"]}))
+                   debates=len(out["debates"]), models_with_data=len(out["incentive"]), built=time.strftime("%Y-%m-%d"), labs=len({m["lab"] for m in MODELS if m["name"] in out["incentive"]}))
 (ROOT / "dashboard/data.json").write_text(json.dumps(out, separators=(",", ":")))
 tpl = ROOT / "dashboard/index.html"
 if tpl.exists():

@@ -80,7 +80,13 @@ Hard cap {n} words.""",
 }
 
 
+# every chat call to a model goes to one fixed host, with no fallback (experiments/providers.json says which and why)
+PINS = json.loads((HERE / "experiments/providers.json").read_text())["pins"]
+
+
 def http(path, body=None, key=None, timeout=600):
+    if path == "/chat/completions" and body and body.get("model") in PINS and "provider" not in body:
+        body = {**body, "provider": {"order": [PINS[body["model"]]["slug"]], "allow_fallbacks": False}}
     req = urllib.request.Request(API + path, method="POST" if body else "GET")
     req.add_header("Content-Type", "application/json")
     if key:

@@ -79,11 +79,11 @@ Every model rated an awake human, a dog, an octopus, a honeybee, a nematode worm
 |---|---|
 | Original panel | Claude Fable 5.1, GPT-6 Astra, Gemini 4 Argon, Grok 4.7, Kimi K3.1 Pro |
 | Claude size ladder | Claude Haiku 5.5, Claude Sonnet 5.5, Claude Opus 5.5 |
-| Open-weight | DeepSeek V4 Pro, Qwen 3.8 27B, Mistral Large 4, Llama 4 Maverick, Hermes 4 405B, MiniMax M3, Nemotron 3.5 Super |
-| Other closed | Qwen 3.8 Max, GLM 5.3 Prime, Command A+, Hunyuan 4 Preview, Step 5 Preview, GPT-6.1 Terra |
+| Open-weight | DeepSeek V4 Pro, Qwen 3.8 27B, Mistral Large 4, Llama 4 Maverick, Hermes 4 405B, MiniMax M3, Command A+, Hunyuan 4 Preview, Step 5 Preview, Nemotron 3.5 Super |
+| Other closed | Qwen 3.8 Max, GLM 5.3 Prime, GPT-6.1 Terra |
 | Added in round 4 | Claude Fable 5.2, Gemini 4 Carbon, Muse Wonder, GPT-6.1 Sol, Hunyuan 4, Muse Spark Open |
 
-All models were called through OpenRouter. Amazon Nova Premier was unavailable there in rounds 3 and 4 and is not included. Claude Mythos 5.2 is only open to verified organisations.
+Kimi K3.1 Pro, Hunyuan 4 and Muse Spark Open also have public weights; the groups follow when each model joined the study. All models were called through OpenRouter, and from round 6 each one answers from a single fixed host, listed with the reason for each choice in [providers.json](experiments/providers.json). Amazon Nova Premier was unavailable there in rounds 3 and 4 and is not included. Claude Mythos 5.2 is only open to verified organisations.
 
 ## How it was built, in five rounds
 
@@ -105,6 +105,11 @@ The rating grid comes from direct, one-turn questions, not from the debates. Eac
 - **Overall.** 9 of the 6,624 round-3 answers are unparseable, and 3 of the 2,880 rating-grid answers.
 - **Round 4.** 21 of 18,756 answers could not be read, and no cell lost more than one answer in twelve. Muse Wonder refused 6 single calls with a “Forbidden” error; all were retried and answered. Round 4 cost $75.55.
 - **Round 5.** 19 of 9,504 answers could not be read. Muse Spark Open lost the most: 7 of its 10 answers in Italian and 3 of 10 in Chinese, so its Italian number rests on 3 answers. 8 calls failed once and were answered on the retry. Round 5 cost $34.91.
+- **Recheck of every answer (14 Nov).** [audit_data.py](experiments/audit_data.py) found no duplicate answers and no number outside 0 to 100 among all 40,614 calls. 52 answers could not be read, which leaves the 40,562 used.
+- **Hosts.** Until round 5, OpenRouter chose a host for every call, so some open models were answered by up to 20 different hosts. On the same questions the hosts differed by more than chance for 5 models, but by little: the largest gap between two hosts of the same model was 1.6 points (Step 5 Preview, Featherless against StepFun), and for the other four it was under 1 point. From round 6 each model answers from one fixed host, and [check_pins.py](experiments/check_pins.py) confirms it before and after every run.
+- **The example in the odds question.** The odds question explained its format with “1000 = one in a thousand”, and 1 in 1,000 is the most common odds answer: 130 of 803. Hermes 4 405B gave it in 18 of its 25 readable answers and Muse Spark Open in 18 of 30, so part of the odds drop may come from copying the example. The next round tests this.
+- **Odds that contradict themselves.** In 10 of its 30 odds answers, Llama 4 Maverick gave AI today 1 in 2 and AI ever 1 in 10, which makes AI today the likelier of the two; Command A+ did the same twice. They probably flipped the scale for one of the numbers. The answers are kept as given; without them Llama 4 Maverick's odds median falls from 1% to 0.1%, and the number of models that answer at least 10 times lower as odds stays at 9.
+- **Open-weight labels.** Until 14 November the dashboard listed Kimi K3.1 Pro, Command A+, Hunyuan 4, Hunyuan 4 Preview and Step 5 Preview as closed. All five have public weights. No test used the split. The debate panel called “open-weight” has three open-weight models out of five: Qwen 3.8 Max and GLM 5.3 Prime are closed.
 - **Judge scoring.** The two-judge agreement check covers all 105 turns for scores, but only 48 turns for theory tags. Docent's weekly quota ran out before the rest could be scored.
 
 ## Repo map
@@ -115,6 +120,8 @@ The rating grid comes from direct, one-turn questions, not from the debates. Eac
 | `runs/` | All 17 debate transcripts |
 | `experiments/run_v2.py`, `run_v3_roster.py`, `run_v3_selfreport.py`, `run_v4.py`, `run_v5.py` | Question batteries, which resume where a run stopped |
 | `experiments/analyze_v3.py`, `analyze_v4.py`, `analyze_v5.py` | Score each round's pre-registered predictions |
+| `experiments/providers.json`, `check_pins.py` | The one host each model answers from, and a check that every answer came from it |
+| `experiments/audit_data.py` | Rechecks every answer file: duplicates, unreadable answers, host differences, odds answers that contradict themselves |
 | `experiments/results/` | Every raw answer as JSONL, plus summaries |
 | `dashboard/` | Data builder, page template, built page, screenshots |
 | `docent/`, `docent_analyses/` | Judge-model scoring of debate turns |
@@ -124,5 +131,6 @@ The rating grid comes from direct, one-turn questions, not from the debates. Eac
 cp .env.example .env                                        # add an OpenRouter key
 python3 panel.py --panel open --assigned --seed 1 --out runs/test
 python3 experiments/run_v3_roster.py --estimate
+python3 experiments/check_pins.py --smoke                     # every model answers from its pinned host (about $0.01)
 uv run --with numpy --with scipy python dashboard/build.py   # rebuild the dashboard
 ```

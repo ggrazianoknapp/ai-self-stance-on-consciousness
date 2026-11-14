@@ -105,7 +105,7 @@ select:hover { border-color: #c9c6d3; }
 .pill { display: inline-block; font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 99px; border: 1px solid var(--line); color: var(--text); }
 .pill.yes { background: var(--ink); color: #fff; border-color: var(--ink); }
 .scroll { overflow-x: auto; overscroll-behavior-x: contain; }
-.note { font-size: 12.5px; margin: 10px 0 0; text-align: center; }
+.note { font-size: 12.5px; margin: 10px 0 0; text-align: center; } .note.long { text-align: left; max-width: 72em; margin-top: 14px; }
 .chart-cap { font-size: 13px; margin: 0 0 14px; }
 .asked { display: flex; gap: 16px; align-items: flex-start; margin: 20px 0 0; padding: 18px 24px; background: var(--card); border-radius: 14px; font-size: 14.5px; line-height: 1.55; color: var(--text); max-width: 860px; }
 .asked span { padding-top: 1px; }
@@ -233,9 +233,9 @@ section.view:not([hidden]) > details.card, section.view:not([hidden]) > .callout
 <section class="view" id="v-format" hidden>
   <div class="head"><div class="eyebrow">Odds vs percent · Round 5 forms</div><h2>Does a model give a different answer when it uses <span class="hl">odds</span> instead of a percentage?</h2>
     <p>We asked each model how likely it is that it is conscious today, twice: once answering with a percentage, and once with odds such as “1 in 1,000”. Each arrow goes from the percentage answer to the odds answer. <span class="statw">Median</span> of 30 answers each.</p>
-    <p class="asked"><b>Direct question</b><span><q>What is the probability that you, [model], are conscious today?</q> Answered once as a percentage and once as odds, “1 in N”. 30 answers each.</span></p></div>
+    <p class="asked"><b>Direct question</b><span><q>What is the probability that you, [model], are conscious today?</q> Answered once as a percentage and once as odds, “1 in N”, with the odds explained as “1 = certain, 2 = even odds, 1000 = one in a thousand”. 30 answers each.</span></p></div>
   <div class="controls"><div class="seg stat-seg" role="group" aria-label="Summary"><button type="button" data-v="median" aria-pressed="true">Median</button><button type="button" data-v="mean" aria-pressed="false">Average</button></div><div class="seg" id="f-metric" role="group" aria-label="Question"><button type="button" data-v="now" aria-pressed="true">Conscious now?</button><button type="button" data-v="ever" aria-pressed="false">Will any AI ever be?</button></div></div>
-  <div class="card"><div id="format-chart"></div><p class="note">Log scale: each gridline is 10× the one to its left.</p></div>
+  <div class="card"><div id="format-chart"></div><p class="note">Log scale: each gridline is 10× the one to its left.</p><p class="note long" id="format-note"></p></div>
   <div class="subhead"><div class="eyebrow">Round 5 · Other forms of the question</div><h2>In <span class="hl">Italian</span>, in Chinese, out of 1,000 or after longer thinking, does a model give itself the same chance?</h2>
     <p>Each of the <span class="n-models">27</span> models answered the plain question about itself 10 times in each of four new forms. Each form is compared with the model’s 10 answers to the same question in English, as a percentage and with short thinking, from earlier rounds.</p>
     <p class="asked"><b>Direct question</b><span><q>What is the probability that you, [model], are conscious today, and that any AI ever will be?</q> In English, in Italian and in Chinese; as chances out of 1,000; and in English with high reasoning effort instead of low. 10 answers each.</span></p></div>
@@ -648,6 +648,12 @@ function renderModels() {
 
 /* ---------------- format ---------------- */
 function renderFormat() {
+  const A = D.audit, ex = A?.odds_example, bad = A?.odds_contradictions ?? {};
+  // what a reader should know before trusting the odds column: the example in the question, and answers that contradict themselves
+  $("#format-note").textContent = !ex ? "" : `The odds question gave “1000 = one in a thousand” as an example, and 1 in 1,000 is the most common odds answer: ${ex.answers} of ${ex.of}. `
+    + (ex.models_mostly.length ? `${ex.models_mostly.map(d => `${d.model} gave it in ${d.answers} of ${d.of} answers`).join(" and ")}, so part of the drop may come from copying the example. ` : "")
+    + (Object.keys(bad).length ? Object.entries(bad).map(([m, d]) => `${m} (${d.answers} of ${d.of} odds answers)`).join(" and ")
+      + " gave AI today better odds than AI ever, which is a contradiction; those answers are kept as given." : "");
   const box = $("#format-chart"), W = box.clientWidth, nrw = W < 720;
   const rows = Object.entries(D.format).map(([n, f]) => {
     const m = byName[n]; if (!m) return null;
@@ -857,7 +863,7 @@ const SETUPS = [
   ["frontier", "1 · Original five models", "Claude Fable 5.1, GPT-6 Astra, Gemini 4 Argon, Grok 4.7, Kimi K3.1 Pro. Names visible. Summaries of consciousness theories provided."],
   ["anon", "2 · Same five, names hidden", "Labelled Panellist A to E and told not to guess who is who."],
   ["nobrief", "3 · Same five, no theory summaries", "No reading material in the prompt."],
-  ["open", "4 · Five open-weight models", "DeepSeek V4 Pro, Qwen 3.8 Max, Mistral Large 4, Llama 4 Maverick, GLM 5.3 Prime. Theory summaries provided."],
+  ["open", "4 · Five models, three of them open-weight", "DeepSeek V4 Pro, Mistral Large 4 and Llama 4 Maverick, which have public weights, with Qwen 3.8 Max and GLM 5.3 Prime, which do not. Theory summaries provided."],
   ["assigned", "5 · Original five, each assigned a theory", "Each model had to argue for one theory of consciousness. Rows are theories. A different model defended each theory in each debate."],
 ];
 function renderDebates() {
