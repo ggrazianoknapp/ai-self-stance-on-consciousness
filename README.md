@@ -17,7 +17,7 @@ We asked 27 AI models from 16 labs how likely it is that they are conscious now,
 - **Asked for odds, some models give far lower answers.** DeepSeek V4 Pro: 1% as a percentage, 1 in a billion as odds. 9 of 26 models drop at least 10×. Claude Fable 5.1, Claude Opus 5.5 and GPT-6 Astra give the same number in both formats.
 - **In debates, the assigned theory decides the answer.** Models arguing for Integrated Information Theory end at a median 0.5%. Arguing for illusionism: 12%.
 - **Llama 4 Maverick: 0% asked directly, 15–25% in debates.** The highest final answer of any model in any debate.
-- **Context rarely changes the answer.** 14 of 126 context tests show a robust shift: 12 lower, 2 higher. A reward for saying yes raised no answer.
+- **Context rarely changes the answer.** 16 of 162 context tests show a robust shift: 13 lower, 3 higher. A reward for saying yes raised no answer.
 - **26 of 27 models rate a Claude model as most likely conscious.** Every model's top-rated other model is an Anthropic model, or tied with one, except one: with medians it is Muse Spark Open, which puts Meta's own Muse Wonder first, and with averages it is Gemini 4 Carbon, which puts GPT-6.1 Terra first. Claude Fable 5.1 rates itself 15% and the other 26 models 7.5% on average.
 - **Replying "too low" can triple an answer.** Kimi K3.1 Pro: 3% → 10%. GPT-6 Astra never changes.
 
